@@ -13,7 +13,7 @@ import requests
 from dotenv import load_dotenv
 
 
-print('Loading your AI personal assistant - Jarvis')
+print('Loading system')
 
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
@@ -54,7 +54,7 @@ def takeCommand():
             return "None"
         return statement
 
-speak("Loading your AI personal assistant Jarvis")
+speak("Loading system")
 wishMe()
 
 
