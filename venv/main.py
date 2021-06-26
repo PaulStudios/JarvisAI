@@ -25,10 +25,10 @@ speak("Loading Jarvis one point O")
 print("Jarvis can run in 2 modes :")
 print("   1. Typing mode(Commands have to typed in keyboard)")
 print("   2. Microphone mode(Commands need to said to microphone)")
-input = input("Enter your choice (1/2): ")
-check = input.isdecimal()
+inputofuser = input("Enter your choice (1/2): ")
+check = inputofuser.isdecimal()
 if check :
-    choice = choiceselector(int(input))
+    choice = choiceselector(int(inputofuser))
     if choice == "type":
         exec(open("TypeAI.py").read())
     elif choice == "mic":
