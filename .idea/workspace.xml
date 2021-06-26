@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dba405ec-2413-4b4e-a9f3-414b8db349bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/venv/MicAI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/TypeAI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AI-Personal-Voice-assistant-using-Python.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AI-Personal-Voice-assistant-using-Python.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/typerai.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/virtual.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
