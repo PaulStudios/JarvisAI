@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dba405ec-2413-4b4e-a9f3-414b8db349bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/venv/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/chatbot/chatgui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/chatbot/intents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/chatbot/train_chatbot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/chatgui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/intents.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/venv/train_chatbot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
