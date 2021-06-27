@@ -2,33 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dba405ec-2413-4b4e-a9f3-414b8db349bc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/estimator_ckpt_converter.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/google-oauthlib-tool.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/import_pb_to_tensorboard.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/markdown_py.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/nltk.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-decrypt.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-encrypt.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-keygen.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-priv2pub.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-sign.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/pyrsa-verify.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/saved_model_cli.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/tensorboard.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/tf_upgrade_v2.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/tflite_convert.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/toco.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/toco_from_protos.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/tqdm.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/Scripts/wheel.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/chatbot.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/chatbot_model.h5" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/classes.pkl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/venv/words.pkl" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/Scripts/f2py.exe" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Scripts/f2py.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/chatgui.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/chatgui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/train_chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/train_chatbot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/MicAI.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/MicAI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/TypeAI.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/TypeAI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/chatbot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +39,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/venv/main.py" />
     <property name="run.code.analysis.last.selected.profile" value="aDefault" />
   </component>
-  <component name="RunManager" selected="Python.chatbot">
+  <component name="RunManager" selected="Python.Main">
     <configuration name="Main" type="PythonConfigurationType" factoryName="Python">
       <module name="AI-Personal-Voice-assistant-using-Python" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -76,6 +53,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="TypeAI" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AI-Personal-Voice-assistant-using-Python" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/venv" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/venv/TypeAI.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -150,6 +148,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.chatbot" />
+        <item itemvalue="Python.TypeAI" />
         <item itemvalue="Python.chatgui" />
         <item itemvalue="Python.train_chatbot" />
       </list>
