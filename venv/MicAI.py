@@ -11,6 +11,7 @@ import wolframalpha
 import json
 import requests
 from dotenv import load_dotenv
+import chatbot
 
 
 print('Loading system')
@@ -174,6 +175,10 @@ if __name__=='__main__':
         elif "log off" in statement or "sign out" in statement:
             speak("Ok , your pc will log off in 10 sec make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
+        else:
+            chat = chatbot.sendmsg(statement)
+            print(chat)
+            speak(chat)
 
 time.sleep(3)
 

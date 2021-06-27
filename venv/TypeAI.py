@@ -1,3 +1,4 @@
+import chatbot
 import pyttsx3
 import datetime
 import wikipedia
@@ -10,15 +11,16 @@ import wolframalpha
 import json
 import requests
 from dotenv import load_dotenv
+import chatbot
 
 
 print('Loading System')
-
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 engine.setProperty('voice','voices[1].id')
 load_dotenv()
 wolframapiid=os.getenv('WOLFRAMAPI')
+
 
 
 def speak(text):
@@ -164,6 +166,10 @@ if __name__=='__main__':
             speak("Ok , your pc will log off in 10 sec make sure you exit from all applications")
             break
             subprocess.call(["shutdown", "/l"])
+        else:
+            chat = chatbot.sendmsg(statement)
+            print(chat)
+            speak(chat)
 
 
 time.sleep(3)
