@@ -1,2 +1,2 @@
 # Jarvis
-A custom Voice Assistant for android.
+A custom AI Assistant.
