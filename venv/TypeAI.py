@@ -1,4 +1,4 @@
-import chatbot
+import chatbot.chatbot as chatbot
 import pyttsx3
 import datetime
 import wikipedia
@@ -11,7 +11,6 @@ import wolframalpha
 import json
 import requests
 from dotenv import load_dotenv
-import chatbot
 
 
 print('Loading System')

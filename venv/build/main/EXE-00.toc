@@ -39,7 +39,7 @@
  [],
  False,
  False,
- 1624781382,
+ 1624787441,
  [('run.exe',
    'c:\\users\\indra\\documents\\github\\jarvis\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])
