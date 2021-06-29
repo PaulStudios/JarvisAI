@@ -1,4 +1,5 @@
-import chatbot.chatbot as chatbot
+from BrainshopChatbotAPI.chatbasics import sendmsg
+from BrainshopChatbotAPI.chatbasics import chatbotsetup
 import pyttsx3
 import datetime
 import wikipedia
@@ -19,6 +20,7 @@ voices=engine.getProperty('voices')
 engine.setProperty('voice','voices[1].id')
 load_dotenv()
 wolframapiid=os.getenv('WOLFRAMAPI')
+chatbotsetup("156099","4TG9iu82pFOu9XjD","JarvisAI")
 
 
 
@@ -43,6 +45,11 @@ def takeCommand():
     statement = input("Enter your command, sir : ")
     return statement
 
+def talk(msg1):
+    chat = sendmsg(msg1)
+    print(chat)
+    speak(chat)
+
 speak('Loading System')
 wishMe()
 
@@ -55,6 +62,7 @@ if __name__=='__main__':
             continue
 
         if "good bye" in statement or "ok bye" in statement or "stop" in statement:
+            talk(statement)
             speak('your personal assistant Jarvis is shutting down,Good bye')
             print('your personal assistant Jarvis is shutting down,Good bye')
             break
@@ -166,9 +174,10 @@ if __name__=='__main__':
             break
             subprocess.call(["shutdown", "/l"])
         else:
-            chat = chatbot.sendmsg(statement)
+            chat = sendmsg(statement)
             print(chat)
             speak(chat)
 
 
 time.sleep(3)
+print("Shutdown Successful")

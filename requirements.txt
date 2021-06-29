@@ -2,6 +2,7 @@ absl-py==0.13.0
 altgraph==0.17
 astunparse==1.6.3
 beautifulsoup4==4.9.3
+BrainshopChatbotAPI==1.1
 cachetools==4.2.2
 certifi==2021.5.30
 cffi==1.14.5
@@ -40,7 +41,6 @@ pipwin==0.5.1
 protobuf==3.17.3
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio @ file:///C:/Users/indra/pipwin/PyAudio-0.2.11-cp39-cp39-win_amd64.whl
 pycparser==2.20
 pyinstaller==4.3
 pyinstaller-hooks-contrib==2021.2

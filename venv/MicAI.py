@@ -1,3 +1,5 @@
+from BrainshopChatbotAPI.chatbasics import sendmsg
+from BrainshopChatbotAPI.chatbasics import chatbotsetup
 import speech_recognition as sr
 import pyttsx3
 import datetime
@@ -21,6 +23,7 @@ voices=engine.getProperty('voices')
 engine.setProperty('voice','voices[1].id')
 load_dotenv()
 wolframapiid=os.getenv('WOLFRAMAPI')
+chatbotsetup("156099","4TG9iu82pFOu9XjD","JarvisAI")
 
 
 def speak(text):
@@ -176,7 +179,7 @@ if __name__=='__main__':
             speak("Ok , your pc will log off in 10 sec make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         else:
-            chat = chatbot.sendmsg(statement)
+            chat = sendmsg(statement)
             print(chat)
             speak(chat)
 
