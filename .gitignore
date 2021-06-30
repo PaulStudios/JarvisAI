@@ -17,6 +17,7 @@ eggs/
 lib/
 venv/.env
 lib64/
+venv\.idea
 parts/
 sdist/
 var/
