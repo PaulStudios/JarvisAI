@@ -13,7 +13,6 @@ import wolframalpha
 import json
 import requests
 from dotenv import load_dotenv
-import chatbot
 
 
 print('Loading system')
@@ -58,6 +57,11 @@ def takeCommand():
             return "None"
         return statement
 
+def talk(msg1):
+    chat = sendmsg(msg1)
+    print(chat)
+    speak(chat)
+
 speak("Loading system")
 wishMe()
 
@@ -72,6 +76,7 @@ if __name__=='__main__':
             continue
 
         if "good bye" in statement or "ok bye" in statement or "stop" in statement:
+            talk(statement)
             speak('your personal assistant Jarvis is shutting down,Good bye')
             print('your personal assistant Jarvis is shutting down,Good bye')
             break
@@ -137,15 +142,6 @@ if __name__=='__main__':
             strTime=datetime.datetime.now().strftime("%H:%M:%S")
             speak(f"the time is {strTime}")
 
-        elif 'who are you' in statement or 'what can you do' in statement:
-            speak('I am Jarvis version 1 point O your persoanl assistant. I am programmed to minor tasks like'
-                  'opening youtube,google chrome,gmail and stackoverflow ,predict time,take a photo,search wikipedia,predict weather' 
-                  'in different cities , get top headline news from times of india and you can ask me computational or geographical questions too!')
-
-
-        elif "who made you" in statement or "who created you" in statement or "who discovered you" in statement:
-            speak("I was built by Hilfing")
-            print("I was built by HilFing")
 
         elif "open stackoverflow" in statement:
             webbrowser.open_new_tab("https://stackoverflow.com/login")
@@ -176,12 +172,11 @@ if __name__=='__main__':
 
 
         elif "log off" in statement or "sign out" in statement:
+            talk(statement)
             speak("Ok , your pc will log off in 10 sec make sure you exit from all applications")
             subprocess.call(["shutdown", "/l"])
         else:
-            chat = sendmsg(statement)
-            print(chat)
-            speak(chat)
+            talk(statement)
 
 time.sleep(3)
 
