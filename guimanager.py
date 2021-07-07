@@ -1,5 +1,5 @@
 from tkinter import *
-from basicfuncs import speak, talk
+from basicfuncs import speak, talk2
 import main
 import time
 shutdown = 0
@@ -7,11 +7,11 @@ def get_response(msg1):
     msg = msg1.lower()
     global shutdown
     if "good bye" in msg or "goodbye" in msg or "ok bye" in msg:
-        chat = talk(msg)
+        chat = talk2(msg)
         shutdown = 1
         return chat
 
-    chat = talk(msg)
+    chat = talk2(msg)
     return chat
 
 BG_GRAY = "#ABB2B9"
