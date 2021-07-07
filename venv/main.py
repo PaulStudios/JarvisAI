@@ -1,7 +1,6 @@
 import time
-
 print('Loading your AI personal assistant - Jarvis')
-
+import sys
 from basicfuncs import speak
 import basicfuncs
 
@@ -50,6 +49,9 @@ def login():
 def start():
     speak("Loading Jarvis one point O")
     basicfuncs.init()
+    if sys.argv[1] == "devmode":
+        if sys.argv[2] == basicfuncs.getownerkey(sys.argv[1]):
+            pass
     connection = basicfuncs.checkconnect()
     time.sleep(1)
     if connection == "failed":
@@ -72,25 +74,6 @@ def start():
 
 
 def start2():
-    speak("Loading Jarvis one point O")
-    basicfuncs.init()
-    connection = basicfuncs.checkconnect()
-    time.sleep(1)
-    if connection == "failed":
-        exit(0)
-
-    print("You must login to use JarvisAI")
-    print("    1. Register")
-    print("    2. Login")
-    registered = input("Pls enter your answer (1/2): ")
-    if registered.isdecimal():
-        rchoice = basicfuncs.choiceselector(int(registered))
-        if rchoice == "one":
-            register()
-        elif rchoice == "two":
-            login()
-
-
     print("Jarvis can run in 2 modes :")
     print("   1. Typing mode(Commands have to typed in keyboard)")
     print("   2. Microphone mode(Commands need to said to microphone)")
