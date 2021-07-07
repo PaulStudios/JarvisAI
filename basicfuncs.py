@@ -1,5 +1,5 @@
 import json
-
+from ecapture import ecapture as ec
 from BrainshopChatbotAPI.chatbasics import sendmsg
 from BrainshopChatbotAPI.chatbasics import chatbotsetup
 import pyttsx3
@@ -14,7 +14,7 @@ engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 engine.setProperty('voice', 'voices[1].id')
 load_dotenv()
-apiurl = os.getenv("URL")
+apiurl = os.getenv("MAINAPI")
 useruid = 0
 
 
@@ -61,7 +61,20 @@ def talk(msg1):
     return chat
 
 def talk2(msg1):
-    pass
+    if useruid == "":
+        print("Pls Login!")
+        return "not logged in"
+    chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
+    chat = sendmsg(msg1)
+    return chat
+
+def takepic(delay = 0):
+    x = datetime.datetime.now()
+    y = "img-" + x.strftime("%f") + ".jpg"
+    if delay == 0:
+        ec.capture(0, False, y)
+    elif delay >= 0:
+        ec.delay_imcapture(0, False, y, delay)
 
 
 def checkmail(email):
@@ -90,10 +103,10 @@ def checkconnect():
 
 def login(username, password):
     global useruid
-    users = requests.get(apiurl + "/users").json()
+    users = json.loads(requests.get(apiurl + "/customers").text)
     print("Trying to log in through PaulStudiosAPI")
     time.sleep(1)
-    usersdata = [i['name'] for i in users.values()]
+    usersdata = [i['name'] for i in users]
     if username in usersdata:
         for name in usersdata:
             if name == username:
@@ -105,8 +118,8 @@ def login(username, password):
     print("Found username. Fetching User data")
     time.sleep(1)
     userindex = usersdata.index(nameofuser) + 1
-    userdata = requests.get(apiurl + "/users/" + str(userindex)).json()
-    userpass = userdata['password']
+    userdata = json.loads(requests.get(apiurl + "/customers/" + str(userindex)).text)
+    userpass = userdata['pass']
     if userpass == password:
         print("Password Matched. Logging in")
         time.sleep(1)
@@ -119,11 +132,11 @@ def login(username, password):
 
 
 def register(rname, rpass, rmail):
-    users = requests.get(apiurl + "/users").json()
+    users = json.loads(requests.get(apiurl + "/customers").text)
     print("Trying to register through PaulStudiosAPI")
     time.sleep(2)
-    usernames = [i['name'] for i in users.values()]
-    useremails = [i['email'] for i in users.values()]
+    usernames = [i['name'] for i in users]
+    useremails = [i['email'] for i in users]
     if rname in usernames:
         print("Username already exists.")
         return "same name"
@@ -131,10 +144,10 @@ def register(rname, rpass, rmail):
         print("Email already exists.")
         return "same mail"
     rdata = {
+        'email': rmail,
         'name': rname,
-        'password': rpass,
-        'rank': "user",
-        'email': rmail
+        'pass': rpass,
+        'active': 1
     }
-    response = requests.post(apiurl + "/users", data=rdata)
-    return response.text
+    response = requests.post(apiurl + "/customers", data=rdata)
+    return json.loads(response.text)

@@ -20,7 +20,7 @@ def register():
             print("Shutting down...")
             time.sleep(1)
             exit(0)
-        elif do == "new user added":
+        elif do['name'] == username:
             print("You have been successfully registered. Logging you in")
             time.sleep(1.5)
             basicfuncs.login(username, password)

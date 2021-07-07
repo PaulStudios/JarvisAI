@@ -1,4 +1,6 @@
 from tkinter import *
+
+import basicfuncs
 from basicfuncs import speak, talk2
 import main
 import time
@@ -7,10 +9,13 @@ def get_response(msg1):
     msg = msg1.lower()
     global shutdown
     if "good bye" in msg or "goodbye" in msg or "ok bye" in msg:
-        chat = talk2(msg)
+        chat = talk2(msg) + "I am going to sleep now. BYE!"
         shutdown = 1
         return chat
-
+    elif "take my photo" in msg or "take my pic" in msg or "take my picture" in msg or "say cheese" in msg:
+        chat = "Taking your photo..."
+        basicfuncs.takepic()
+        return chat
     chat = talk2(msg)
     return chat
 
@@ -75,6 +80,7 @@ class ChatApplication:
         msg = self.msg_entry.get()
         if shutdown == 1:
             self._insert_message(msg, "You")
+            time.sleep(2)
             print('your personal assistant Jarvis is shutting down,Good bye')
             speak('your personal assistant Jarvis is shutting down,Good bye')
             time.sleep(2)
