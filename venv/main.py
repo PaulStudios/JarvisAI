@@ -46,6 +46,7 @@ def login():
         exit(0)
     else:
         print("You are now logged in as " + uid + ".")
+        basicfuncs.addlogs("usermode", uid)
 
 def devcheck():
     basicfuncs.init()
