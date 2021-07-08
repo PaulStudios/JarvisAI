@@ -3,6 +3,8 @@ print('Loading your AI personal assistant - Jarvis')
 import sys
 from basicfuncs import speak
 import basicfuncs
+dev = 0
+
 
 def register():
     username = input("Pls enter your new username: ")
@@ -45,13 +47,24 @@ def login():
     else:
         print("You are now logged in as " + uid + ".")
 
+def devcheck():
+    basicfuncs.init()
+    if len(sys.argv) == 4:
+        if sys.argv[1] == "devmode":
+            print("Initializing Devmode")
+            argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
+            if argcode == "dkhgsfiyg6s897fyges83i4ryo3efyiufw87rfwo87t":
+                res = basicfuncs.devmode("devmode", "test")
+                if res == "Authentication Successful":
+                    global dev
+                    dev = 1
+                    return 1
+
 
 def start():
-    speak("Loading Jarvis one point O")
     basicfuncs.init()
-    if sys.argv[1] == "devmode":
-        if sys.argv[2] == basicfuncs.getownerkey(sys.argv[1]):
-            pass
+    speak("Loading Jarvis one point O")
+
     connection = basicfuncs.checkconnect()
     time.sleep(1)
     if connection == "failed":
@@ -67,6 +80,8 @@ def start():
             register()
         elif rchoice == "two":
             login()
+        else:
+            return "choice"
     else:
         print("Invalid Choice")
         exit(0)

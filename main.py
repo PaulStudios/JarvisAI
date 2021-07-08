@@ -1,9 +1,10 @@
 import time
-
 print('Loading your AI personal assistant - Jarvis')
-
+import sys
 from basicfuncs import speak
 import basicfuncs
+dev = 0
+
 
 def register():
     username = input("Pls enter your new username: ")
@@ -46,10 +47,24 @@ def login():
     else:
         print("You are now logged in as " + uid + ".")
 
+def devcheck():
+    basicfuncs.init()
+    if len(sys.argv) == 4:
+        if sys.argv[1] == "devmode":
+            print("Initializing Devmode")
+            argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
+            if argcode == "dkhgsfiyg6s897fyges83i4ryo3efyiufw87rfwo87t":
+                res = basicfuncs.devmode("devmode", "test")
+                if res == "Authentication Successful":
+                    global dev
+                    dev = 1
+                    return 1
+
 
 def start():
-    speak("Loading Jarvis one point O")
     basicfuncs.init()
+    speak("Loading Jarvis one point O")
+
     connection = basicfuncs.checkconnect()
     time.sleep(1)
     if connection == "failed":
@@ -65,6 +80,8 @@ def start():
             register()
         elif rchoice == "two":
             login()
+        else:
+            return "choice"
     else:
         print("Invalid Choice")
         exit(0)
@@ -72,25 +89,6 @@ def start():
 
 
 def start2():
-    speak("Loading Jarvis one point O")
-    basicfuncs.init()
-    connection = basicfuncs.checkconnect()
-    time.sleep(1)
-    if connection == "failed":
-        exit(0)
-
-    print("You must login to use JarvisAI")
-    print("    1. Register")
-    print("    2. Login")
-    registered = input("Pls enter your answer (1/2): ")
-    if registered.isdecimal():
-        rchoice = basicfuncs.choiceselector(int(registered))
-        if rchoice == "one":
-            register()
-        elif rchoice == "two":
-            login()
-
-
     print("Jarvis can run in 2 modes :")
     print("   1. Typing mode(Commands have to typed in keyboard)")
     print("   2. Microphone mode(Commands need to said to microphone)")

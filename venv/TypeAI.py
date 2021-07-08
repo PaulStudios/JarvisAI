@@ -45,7 +45,9 @@ if __name__=='__main__':
         if 'wikipedia' in statement:
             speak('Searching Wikipedia...')
             statement = statement.replace("wikipedia", "")
-            results = wikipedia.summary(statement, sentences=3)
+            r = wikipedia.search(statement)
+            print(r)
+            results = wikipedia.summary(r[0], sentences=3)
             speak("According to Wikipedia")
             print(results)
             speak(results)

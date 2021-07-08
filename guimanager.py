@@ -4,6 +4,7 @@ import basicfuncs
 from basicfuncs import speak, talk2
 import main
 import time
+import wikipedia
 shutdown = 0
 def get_response(msg1):
     msg = msg1.lower()
@@ -15,7 +16,17 @@ def get_response(msg1):
     elif "take my photo" in msg or "take my pic" in msg or "take my picture" in msg or "say cheese" in msg:
         chat = "Taking your photo..."
         basicfuncs.takepic()
+        print("Pls ignore the warn. It is harmless")
         return chat
+    if 'wikipedia' in msg:
+        try:
+            statement = msg.replace("wikipedia", "")
+            r = wikipedia.search(statement)
+            print(r)
+            results = "According to Wikipedia" + wikipedia.summary(r[0], sentences=3)
+            return results
+        except IndexError:
+            return "No results found."
     chat = talk2(msg)
     return chat
 
@@ -37,13 +48,13 @@ class ChatApplication:
         self.window.mainloop()
 
     def _setup_main_window(self):
-        self.window.title("Chat")
+        self.window.title("JarvisAI")
         self.window.resizable(width=False, height=False)
-        self.window.configure(width=470, height=550, bg=BG_COLOR)
+        self.window.configure(width=1080, height=720, bg=BG_COLOR)
 
         # head label
         head_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
-                           text="Welcome", font=FONT_BOLD, pady=10)
+                           text="Welcome to JarvisAI", font=FONT_BOLD, pady=10)
         head_label.place(relwidth=1)
 
         # tiny divider
@@ -58,7 +69,7 @@ class ChatApplication:
 
         # scroll bar
         scrollbar = Scrollbar(self.text_widget)
-        scrollbar.place(relheight=1, relx=0.974)
+        scrollbar.place(relheight=1, relx=0.987)
         scrollbar.configure(command=self.text_widget.yview)
 
         # bottom label
@@ -106,10 +117,12 @@ class ChatApplication:
         self.text_widget.see(END)
 
 
-
-
-
 if __name__ == "__main__":
-    main.start()
+    r = 0
+    r = main.devcheck()
+    if r == 0:
+        r = main.start()
+    if r == "choice":
+        exit(0)
     app = ChatApplication()
     app.run()

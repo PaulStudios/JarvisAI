@@ -10,16 +10,21 @@ import requests
 import re
 from dotenv import load_dotenv
 
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', 'voices[1].id')
-load_dotenv()
-apiurl = os.getenv("MAINAPI")
+engine = 0
+voices = 0
+apiurl = 0
+testapi = 0
 useruid = 0
 
 
 def init():
-    global  useruid
+    global  useruid, engine, voices, apiurl, testapi
+    load_dotenv()
+    engine = pyttsx3.init('sapi5')
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', 'voices[1].id')
+    testapi = os.getenv("TESTAPI")
+    apiurl = os.getenv("MAINAPI")
     useruid = ""
 
 def speak(text):
@@ -92,11 +97,15 @@ def checkconnect():
     global apiurl
     print("Connecting to PaulStudiosAPI...")
     time.sleep(2)
-    checkapi = requests.get(apiurl)
-    if checkapi.status_code == 200:
-        print("Successfully connected to server")
-        return "success"
-    else:
+    try:
+        checkapi = requests.get(apiurl)
+        if checkapi.status_code == 200:
+            print("Successfully connected to server")
+            return "success"
+        else:
+            print("Cannot connect to server")
+            return "failed"
+    except requests.exceptions.ConnectionError:
         print("Cannot connect to server")
         return "failed"
 
@@ -151,3 +160,30 @@ def register(rname, rpass, rmail):
     }
     response = requests.post(apiurl + "/customers", data=rdata)
     return json.loads(response.text)
+
+
+def getownerkey(mode, user, key):
+    print("Connecting to PaulStudiosAPI Key Database.")
+    time.sleep(2)
+    spcauth = {
+        "key" : key,
+        "mode" : mode,
+        "user" : user
+    }
+    r = requests.get(testapi + "/keys", spcauth).text
+    print(r)
+    return r
+
+
+def devmode(mode, user):
+    print("Authenticating " + mode + " from user " + user)
+    time.sleep(1)
+    auth = {
+        "mode": mode,
+        "user": user
+    }
+    r = requests.post(testapi + "/log", data=auth).text
+    print(r)
+    if user == "test":
+        login("test", "testing")
+    return r
