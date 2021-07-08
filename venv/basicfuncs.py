@@ -16,10 +16,11 @@ apiurl = 0
 testapi = 0
 useruid = 0
 dev = 0
+authdata = {}
 
 
 def init():
-    global  useruid, engine, voices, apiurl, testapi
+    global  useruid, engine, voices, apiurl, testapi, authdata
     load_dotenv()
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
@@ -27,6 +28,16 @@ def init():
     testapi = os.getenv("TESTAPI")
     apiurl = os.getenv("MAINAPI")
     useruid = ""
+    authdata = {
+        "test": {
+            "name": "testing",
+            "email": "testing"
+        },
+        "owner": {
+            "name": "pass132",
+            "email": "owner@ps.com"
+        }
+    }
 
 def speak(text):
     engine.say(text)
@@ -57,7 +68,7 @@ def choiceselector(argument):
 
 
 def talk(msg1):
-    if useruid == "":
+    if useruid == "" or useruid == 0:
         print("Pls Login!")
         return "not logged in"
     chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
@@ -67,7 +78,7 @@ def talk(msg1):
     return chat
 
 def talk2(msg1):
-    if useruid == "":
+    if useruid == "" or useruid == 0:
         print("Pls Login!")
         return "not logged in"
     chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
@@ -165,7 +176,6 @@ def register(rname, rpass, rmail):
 
 def getownerkey(mode, user, key):
     print("Connecting to PaulStudiosAPI Key Database.")
-    time.sleep(2)
     spcauth = {
         "key" : key,
         "mode" : mode,
@@ -182,14 +192,13 @@ def devmode(mode, user):
     r = addlogs(mode, user)
     print(r)
     dev = 1
-    if user == "test":
-        login("test", "testing")
+    login(user, authdata[user]["name"])
     return r
 
 
 def checklogs():
     if dev == 1:
-        r = requests.get(testapi + "/log").text
+        r = "Here are the Logs  :\n" + requests.get(testapi + "/log").text
         return r
     else:
         return "Devmode is not enabled!"

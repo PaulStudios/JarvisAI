@@ -28,7 +28,7 @@ def get_response(msg1):
         except IndexError:
             return "No results found."
     if 'check access logs' in msg:
-        r = "Here are the Logs  :\n" + basicfuncs.checklogs()
+        r = basicfuncs.checklogs()
         return r
 
     chat = talk2(msg)
