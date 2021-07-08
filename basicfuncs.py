@@ -171,7 +171,6 @@ def getownerkey(mode, user, key):
         "user" : user
     }
     r = requests.get(testapi + "/keys", spcauth).text
-    print(r)
     return r
 
 
