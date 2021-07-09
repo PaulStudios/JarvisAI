@@ -10,7 +10,7 @@ def get_response(msg1):
     msg = msg1.lower()
     global shutdown
     if "good bye" in msg or "goodbye" in msg or "ok bye" in msg:
-        chat = talk2(msg) + "I am going to sleep now. BYE!"
+        chat = talk2(msg)
         shutdown = 1
         return chat
     elif "take my photo" in msg or "take my pic" in msg or "take my picture" in msg or "say cheese" in msg:
@@ -22,14 +22,19 @@ def get_response(msg1):
         try:
             statement = msg.replace("wikipedia", "")
             r = wikipedia.search(statement)
-            print(r)
-            results = "According to Wikipedia" + wikipedia.summary(r[0], sentences=3)
+            results = "According to Wikipedia :\n" + wikipedia.summary(r[0], sentences=3)
             return results
         except IndexError:
             return "No results found."
-    if 'check access logs' in msg:
+    elif 'check access logs' in msg:
         r = basicfuncs.checklogs()
         return r
+    elif 'delete logs' in msg:
+        r = basicfuncs.deletelogs()
+        return r
+    elif 'start logging' in msg:
+        res = basicfuncs.startlogs()
+        return res
 
     chat = talk2(msg)
     return chat
@@ -90,19 +95,25 @@ class ChatApplication:
         send_button = Button(bottom_label, text="Send", font=FONT_BOLD, width=20, bg=BG_GRAY,
                              command=lambda: self._on_enter_pressed(None))
         send_button.place(relx=0.77, rely=0.008, relheight=0.06, relwidth=0.22)
+        initmsg = basicfuncs.wishMe()
+        initmsg = f"{bot_name}: {initmsg}\n\n"
+        self.text_widget.configure(state=NORMAL)
+        self.text_widget.insert(END, initmsg)
+        self.text_widget.configure(state=DISABLED)
+        self.text_widget.see(END)
+
+
 
     def _on_enter_pressed(self, event):
         msg = self.msg_entry.get()
         if shutdown == 1:
             self._insert_message(msg, "You")
-            time.sleep(2)
             print('your personal assistant Jarvis is shutting down,Good bye')
-            speak('your personal assistant Jarvis is shutting down,Good bye')
             time.sleep(2)
             print("Successfully Logged out and shut down")
             self.window.destroy()
             exit(0)
-        self._insert_message(msg, "You")
+        self._insert_message(msg, basicfuncs.useruid.capitalize())
 
     def _insert_message(self, msg, sender):
         if not msg:
@@ -113,12 +124,18 @@ class ChatApplication:
         self.text_widget.configure(state=NORMAL)
         self.text_widget.insert(END, msg1)
         self.text_widget.configure(state=DISABLED)
-        msg2 = f"{bot_name}: {get_response(msg)}\n\n"
+
+        m = get_response(msg)
+        msg2 = f"{bot_name}: {m}\n\n"
         self.text_widget.configure(state=NORMAL)
         self.text_widget.insert(END, msg2)
         self.text_widget.configure(state=DISABLED)
-
+        basicfuncs.dologs(msg1, msg2)
         self.text_widget.see(END)
+
+        if basicfuncs.dev >= 1:
+            print(msg1)
+            print("Bot: " + m)
 
 
 if __name__ == "__main__":

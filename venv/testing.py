@@ -1,7 +1,4 @@
-from ecapture import ecapture as ec
-import datetime
+import os.path
 
-x = datetime.datetime.now()
-y = "img-" + x.strftime("%f") + ".jpg"
-
-ec.capture(0, False, y)
+f = os.path.isfile("testing.py")
+print(f)

@@ -17,6 +17,7 @@ testapi = 0
 useruid = 0
 dev = 0
 authdata = {}
+logfile = ""
 
 
 def init():
@@ -36,6 +37,10 @@ def init():
         "owner": {
             "name": "pass132",
             "email": "owner@ps.com"
+        },
+        "hilfing": {
+            "name": "indra",
+            "email": "indradip.paul@outlook.com"
         }
     }
 
@@ -45,16 +50,13 @@ def speak(text):
 
 
 def wishMe():
-    hour=datetime.datetime.now().hour
+    hour = datetime.datetime.now().hour
     if hour>=0 and hour<12:
-        speak("Hello,Good Morning")
-        print("Hello,Good Morning")
+        return "Hello,Good Morning"
     elif hour>=12 and hour<18:
-        speak("Hello,Good Afternoon")
-        print("Hello,Good Afternoon")
+        return "Hello,Good Afternoon"
     else:
-        speak("Hello,Good Evening")
-        print("Hello,Good Evening")
+        return "Hello,Good Evening"
 
 
 def choiceselector(argument):
@@ -197,7 +199,7 @@ def devmode(mode, user):
 
 
 def checklogs():
-    if dev == 1:
+    if dev >= 1:
         r = "Here are the Logs  :\n" + requests.get(testapi + "/log").text
         return r
     else:
@@ -211,3 +213,35 @@ def addlogs(mode, user):
     r = requests.post(testapi + "/log", data=auth).text
     print("User Access has been logged")
     return r
+
+def deletelogs():
+    if dev == 2:
+        r = requests.delete(testapi + "/log").text
+        return r
+    else:
+        return "Adminmode is not enabled!"
+
+def adminmode(mode, user):
+    global dev
+    print("Authenticating " + mode + " from user " + user)
+    time.sleep(1)
+    r = addlogs(mode, user)
+    print(r)
+    dev = 2
+    login(user, authdata[user]["name"])
+    return r
+
+def startlogs():
+    global logging
+    if dev >= 1:
+        logging = 1
+        return "Logger Started"
+    else:
+        "Devmode is not enabled!"
+
+def dologs(m1, m2):
+    if logging == 1:
+        logfile = open("ChatLogs.txt", "a+")
+        logfile.writelines(m1)
+        logfile.writelines(m2)
+        logfile.close()
