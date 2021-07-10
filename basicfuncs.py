@@ -23,7 +23,7 @@ logfile = ""
 
 
 def init():
-    global  useruid, engine, voices, apiurl, testapi, authdata
+    global  useruid, engine, voices, apiurl, testapi, authdata, logname
     load_dotenv()
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
@@ -31,6 +31,7 @@ def init():
     testapi = os.getenv("TESTAPI")
     apiurl = os.getenv("MAINAPI")
     useruid = ""
+    logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
     authdata = {
         "test": {
             "name": "testing",
@@ -234,10 +235,9 @@ def adminmode(mode, user):
     return r
 
 def startlogs():
-    global logging, logname
+    global logging
     if dev >= 1:
         logging = 1
-        logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
         r = "Logger Started in " + logname 
         return r
     else:
@@ -249,3 +249,12 @@ def dologs(m1, m2):
         logfile.writelines(m1)
         logfile.writelines(m2)
         logfile.close()
+
+def stoplogs():
+    global logging
+    if logging >= 1:
+        logging = 0
+        r = "Logger Stopped"
+        return r
+    else:
+        "Logging is not enabled!"

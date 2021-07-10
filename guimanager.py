@@ -35,6 +35,9 @@ def get_response(msg1):
     elif 'start logging' in msg:
         res = basicfuncs.startlogs()
         return res
+    elif 'stop logging' in msg:
+        res = basicfuncs.stoplogs()
+        return res
 
     chat = talk2(msg)
     return chat
