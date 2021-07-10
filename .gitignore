@@ -89,7 +89,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.env
+venv/
 .venv
 env/
 ENV/
@@ -115,4 +115,5 @@ dmypy.json
 .pyre/
 
 #Others
-package/src/chatbotapi/venv
+dist/
+build/

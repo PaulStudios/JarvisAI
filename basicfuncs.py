@@ -15,11 +15,15 @@ voices = 0
 apiurl = 0
 testapi = 0
 useruid = 0
+logging = 0
+logname = ""
 dev = 0
+authdata = {}
+logfile = ""
 
 
 def init():
-    global  useruid, engine, voices, apiurl, testapi
+    global  useruid, engine, voices, apiurl, testapi, authdata
     load_dotenv()
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
@@ -27,6 +31,20 @@ def init():
     testapi = os.getenv("TESTAPI")
     apiurl = os.getenv("MAINAPI")
     useruid = ""
+    authdata = {
+        "test": {
+            "name": "testing",
+            "email": "testing"
+        },
+        "owner": {
+            "name": "pass132",
+            "email": "owner@ps.com"
+        },
+        "hilfing": {
+            "name": "indra",
+            "email": "indradip.paul@outlook.com"
+        }
+    }
 
 def speak(text):
     engine.say(text)
@@ -34,16 +52,13 @@ def speak(text):
 
 
 def wishMe():
-    hour=datetime.datetime.now().hour
+    hour = datetime.datetime.now().hour
     if hour>=0 and hour<12:
-        speak("Hello,Good Morning")
-        print("Hello,Good Morning")
+        return "Hello,Good Morning"
     elif hour>=12 and hour<18:
-        speak("Hello,Good Afternoon")
-        print("Hello,Good Afternoon")
+        return "Hello,Good Afternoon"
     else:
-        speak("Hello,Good Evening")
-        print("Hello,Good Evening")
+        return "Hello,Good Evening"
 
 
 def choiceselector(argument):
@@ -57,7 +72,7 @@ def choiceselector(argument):
 
 
 def talk(msg1):
-    if useruid == "":
+    if useruid == "" or useruid == 0:
         print("Pls Login!")
         return "not logged in"
     chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
@@ -67,7 +82,7 @@ def talk(msg1):
     return chat
 
 def talk2(msg1):
-    if useruid == "":
+    if useruid == "" or useruid == 0:
         print("Pls Login!")
         return "not logged in"
     chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
@@ -165,7 +180,6 @@ def register(rname, rpass, rmail):
 
 def getownerkey(mode, user, key):
     print("Connecting to PaulStudiosAPI Key Database.")
-    time.sleep(2)
     spcauth = {
         "key" : key,
         "mode" : mode,
@@ -182,14 +196,13 @@ def devmode(mode, user):
     r = addlogs(mode, user)
     print(r)
     dev = 1
-    if user == "test":
-        login("test", "testing")
+    login(user, authdata[user]["name"])
     return r
 
 
 def checklogs():
-    if dev == 1:
-        r = requests.get(testapi + "/log").text
+    if dev >= 1:
+        r = "Here are the Logs  :\n" + requests.get(testapi + "/log").text
         return r
     else:
         return "Devmode is not enabled!"
@@ -202,3 +215,37 @@ def addlogs(mode, user):
     r = requests.post(testapi + "/log", data=auth).text
     print("User Access has been logged")
     return r
+
+def deletelogs():
+    if dev == 2:
+        r = requests.delete(testapi + "/log").text
+        return r
+    else:
+        return "Adminmode is not enabled!"
+
+def adminmode(mode, user):
+    global dev
+    print("Authenticating " + mode + " from user " + user)
+    time.sleep(1)
+    r = addlogs(mode, user)
+    print(r)
+    dev = 2
+    login(user, authdata[user]["name"])
+    return r
+
+def startlogs():
+    global logging, logname
+    if dev >= 1:
+        logging = 1
+        logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
+        r = "Logger Started in " + logname 
+        return r
+    else:
+        "Devmode is not enabled!"
+
+def dologs(m1, m2):
+    if logging == 1:
+        logfile = open(logname, "a+")
+        logfile.writelines(m1)
+        logfile.writelines(m2)
+        logfile.close()
