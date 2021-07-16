@@ -95,8 +95,10 @@ def takepic(delay = 0):
     y = "img-" + x.strftime("%f") + ".jpg"
     if delay == 0:
         ec.capture(0, False, y)
+        return y
     elif delay >= 0:
         ec.delay_imcapture(0, False, y, delay)
+        return y
 
 
 def checkmail(email):

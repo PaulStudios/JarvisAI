@@ -14,8 +14,8 @@ def get_response(msg1):
         shutdown = 1
         return chat
     elif "take my photo" in msg or "take my pic" in msg or "take my picture" in msg or "say cheese" in msg:
-        chat = "Taking your photo..."
-        basicfuncs.takepic()
+        pic = basicfuncs.takepic()
+        chat = "Taking your photo... Pic saved as " + pic 
         print("Pls ignore the warn. It is harmless")
         return chat
     if 'wikipedia' in msg:
