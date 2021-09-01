@@ -2,7 +2,7 @@ absl-py==0.13.0
 altgraph==0.17
 astunparse==1.6.3
 beautifulsoup4==4.9.3
-BrainshopChatbotAPI==1.1
+ChatbotAPI==1.2
 cachetools==4.2.2
 certifi==2021.5.30
 cffi==1.14.5
