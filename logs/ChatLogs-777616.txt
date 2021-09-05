@@ -1,0 +1,4 @@
+Test: start logging
+
+JarvisAI: Logger Started in logs/ChatLogs-777616.txt
+

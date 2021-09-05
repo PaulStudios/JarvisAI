@@ -1,7 +1,7 @@
 import json
 from ecapture import ecapture as ec
-from BrainshopChatbotAPI.chatbasics import sendmsg
-from BrainshopChatbotAPI.chatbasics import chatbotsetup
+from ChatbotAPI.chatbasics import sendmsg
+from ChatbotAPI.chatbasics import chatbotsetup
 import pyttsx3
 import os
 import time
@@ -32,6 +32,11 @@ def init():
     apiurl = os.getenv("MAINAPI")
     useruid = ""
     logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
+    if os.path.exists('logs'):
+        pass
+    else:
+        os.mkdir('logs')
+    open(logname,'x')
     authdata = {
         "test": {
             "name": "testing",
@@ -182,7 +187,7 @@ def register(rname, rpass, rmail):
 
 
 def getownerkey(mode, user, key):
-    print("Connecting to PaulStudiosAPI Key Database.")
+    print("Connecting to PaulStudiosAPI Developer Database.")
     spcauth = {
         "key" : key,
         "mode" : mode,
@@ -216,7 +221,7 @@ def addlogs(mode, user):
         "user": user
     }
     r = requests.post(testapi + "/log", data=auth).text
-    print("User Access has been logged")
+    print("System Access has been logged")
     return r
 
 def deletelogs():
@@ -260,3 +265,4 @@ def stoplogs():
         return r
     else:
         "Logging is not enabled!"
+

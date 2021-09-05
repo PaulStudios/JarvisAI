@@ -79,7 +79,7 @@ def devcheck():
 
 def start():
     basicfuncs.init()
-    speak("Loading Jarvis one point O")
+    speak("Loading Jarvis one point 9")
 
     connection = basicfuncs.checkconnect()
     time.sleep(1)
