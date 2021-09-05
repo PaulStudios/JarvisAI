@@ -117,3 +117,4 @@ dmypy.json
 #Others
 dist/
 build/
+.idea/
