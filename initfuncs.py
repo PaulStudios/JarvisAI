@@ -53,7 +53,7 @@ def devcheck():
     global dev
     if len(sys.argv) == 4:
         if sys.argv[1] == "devmode":
-            print("Initializing Devmode")
+            print("Initializing Developer Mode")
             argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
             if argcode == "dkhgsfiyg6s897fyges83i4ryo3efyiufw87rfwo87t":
                 res = basicfuncs.devmode("devmode", "test")
@@ -66,7 +66,7 @@ def devcheck():
                     dev = 1
                     return 1
         elif sys.argv[1] == "adminmode":
-            print("Initializing Adminmode")
+            print("Initializing Administrator Mode")
             argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
             if argcode == "gukj47fc36hz4dg37ster684gdr4gz4s86g74s38g":
                 res = basicfuncs.adminmode("adminmode", "hilfing")
