@@ -4,7 +4,6 @@ import basicfuncs
 from basicfuncs import speak, talk2
 import main
 import time
-import wikipedia
 shutdown = 0
 def get_response(msg1):
     msg = msg1.lower()
