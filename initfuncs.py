@@ -1,7 +1,8 @@
 import time
 print('Loading your AI personal assistant - Jarvis')
 import sys
-from basicfuncs import speak
+from errors import ArgumentError
+from basicfuncs import speak, error
 import basicfuncs
 dev = 0
 
@@ -35,72 +36,33 @@ def register():
 def login():
     username = input("Pls enter your username: ")
     password = input("Pls enter your password: ")
-    uid = basicfuncs.login(username, password)
-    if uid == "wrong pass":
-        print("Shutting down...")
-        time.sleep(1)
-        exit(0)
-    elif uid == "not found user":
-        print("Shutting down...")
-        time.sleep(1)
-        exit(0)
-    else:
-        print("You are now logged in as " + uid + ".")
-        basicfuncs.addlogs("usermode", uid)
+    check = basicfuncs.login(username, password)
 
 def devcheck():
-    basicfuncs.init()
     global dev
     if len(sys.argv) == 4:
         if sys.argv[1] == "devmode":
             print("Initializing Developer Mode")
-            argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
-            if argcode == "dkhgsfiyg6s897fyges83i4ryo3efyiufw87rfwo87t":
-                res = basicfuncs.devmode("devmode", "test")
-                if res == "Authentication Successful":
-                    dev = 1
-                    return 1
-            elif argcode == "kfgs98f9wt3wiyt3ofg87fyawa7urfy":
-                res = basicfuncs.devmode("devmode", "owner")
-                if res == "Authentication Successful":
-                    dev = 1
-                    return 1
-        elif sys.argv[1] == "adminmode":
-            print("Initializing Administrator Mode")
-            argcode = basicfuncs.getownerkey(sys.argv[1], sys.argv[3], sys.argv[2])
-            if argcode == "gukj47fc36hz4dg37ster684gdr4gz4s86g74s38g":
-                res = basicfuncs.adminmode("adminmode", "hilfing")
-                if res == "Authentication Successful":
-                    dev = 1
-                    return 1
-    else:
-        return 0
+            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
 
 
 def start():
     basicfuncs.init()
-    speak("Loading Jarvis one point 9")
-
-    connection = basicfuncs.checkconnect()
-    time.sleep(1)
-    if connection == "failed":
-        exit(0)
-
+    speak("Loading Jarvis 2 point 0")
     print("You must login to use JarvisAI")
     print("    1. Register")
     print("    2. Login")
-    registered = input("Pls enter your answer (1/2): ")
+    registered = input("Please input your choice (1/2): ")
     if registered.isdecimal():
         rchoice = basicfuncs.choiceselector(int(registered))
         if rchoice == "one":
             register()
+            return
         elif rchoice == "two":
             login()
-        else:
-            return "choice"
+            return
     else:
-        print("Invalid Choice")
-        exit(0)
+        raise(ArgumentError("Invalid Choice"))
 
 
 

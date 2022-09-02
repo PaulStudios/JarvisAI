@@ -1,36 +1,12 @@
 from tkinter import *
-
+import initfuncs
 import basicfuncs
-from basicfuncs import speak, talk2
-import main
+from basicfuncs import talk
 import time
 shutdown = 0
 def get_response(msg1):
     msg = msg1.lower()
-    global shutdown
-    if "good bye" in msg or "goodbye" in msg or "ok bye" in msg:
-        chat = talk2(msg)
-        shutdown = 1
-        return chat
-    elif "take my photo" in msg or "take my pic" in msg or "take my picture" in msg or "say cheese" in msg:
-        pic = basicfuncs.takepic()
-        chat = "Taking your photo... Pic saved as " + pic 
-        print("Pls ignore the warn. It is harmless")
-        return chat
-    elif 'check access logs' in msg:
-        r = basicfuncs.checklogs()
-        return r
-    elif 'delete logs' in msg:
-        r = basicfuncs.deletelogs()
-        return r
-    elif 'start logging' in msg:
-        res = basicfuncs.startlogs()
-        return res
-    elif 'stop logging' in msg:
-        res = basicfuncs.stoplogs()
-        return res
-
-    chat = talk2(msg)
+    chat = talk(msg)
     return chat
 
 BG_GRAY = "#ABB2B9"
@@ -100,14 +76,7 @@ class ChatApplication:
 
     def _on_enter_pressed(self, event):
         msg = self.msg_entry.get()
-        if shutdown == 1:
-            self._insert_message(msg, "You")
-            print('your personal assistant Jarvis is shutting down,Good bye')
-            time.sleep(2)
-            print("Successfully Logged out and shut down")
-            self.window.destroy()
-            exit(0)
-        self._insert_message(msg, basicfuncs.useruid.capitalize())
+        self._insert_message(msg, basicfuncs.user.capitalize())
 
     def _insert_message(self, msg, sender):
         if not msg:
@@ -124,19 +93,17 @@ class ChatApplication:
         self.text_widget.configure(state=NORMAL)
         self.text_widget.insert(END, msg2)
         self.text_widget.configure(state=DISABLED)
-        basicfuncs.dologs(msg1, msg2)
+        #basicfuncs.dologs(msg1, msg2)
         self.text_widget.see(END)
 
-        if basicfuncs.dev >= 1:
-            print(msg1)
-            print("Bot: " + m)
+        #if basicfuncs.dev >= 1:
+        print(f"{sender}: {msg}")
+        print(msg2)
 
 
 if __name__ == "__main__":
-    r = main.devcheck()
-    if r == 0:
-        r = main.start()
-    if r == "choice":
-        exit(0)
+
+    initfuncs.start()
+
     app = ChatApplication()
     app.run()

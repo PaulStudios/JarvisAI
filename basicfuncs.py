@@ -1,7 +1,7 @@
 import json
+
+import ChatbotAPI
 from ecapture import ecapture as ec
-from ChatbotAPI.chatbasics import sendmsg
-from ChatbotAPI.chatbasics import chatbotsetup
 import pyttsx3
 import os
 import time
@@ -9,48 +9,46 @@ import datetime
 import requests
 import re
 from dotenv import load_dotenv
+from errors import AuthError, BaseError, ArgumentError
+
 
 engine = 0
 voices = 0
 apiurl = 0
-testapi = 0
-useruid = 0
+connection = 0
+mainapi = 0
+chatbot = ""
 logging = 0
+user = ""
 logname = ""
 dev = 0
-authdata = {}
 logfile = ""
+
+def error(code, severity = 0, type = ""):
+    if severity > 0:
+        if type == "auth":
+            raise(AuthError(code))
+        if type == "args":
+            raise(ArgumentError(code))
+        else:
+            raise(BaseError(code))
+    else:
+        print("Something went wrong. Error Code :- " + code + ".")
+        print("Please seek support from developer with the error code.")
 
 
 def init():
-    global  useruid, engine, voices, apiurl, testapi, authdata, logname
+    global  engine, voices, apiurl, mainapi, authdata, logname, chatbot
     load_dotenv()
     engine = pyttsx3.init('sapi5')
     voices = engine.getProperty('voices')
     engine.setProperty('voice', 'voices[1].id')
-    testapi = os.getenv("TESTAPI")
-    apiurl = os.getenv("MAINAPI")
-    useruid = ""
-    logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
-    if os.path.exists('logs'):
-        pass
-    else:
-        os.mkdir('logs')
-    open(logname,'x')
-    authdata = {
-        "test": {
-            "name": "testing",
-            "email": "testing"
-        },
-        "owner": {
-            "name": "pass132",
-            "email": "owner@ps.com"
-        },
-        "hilfing": {
-            "name": "indra",
-            "email": "indradip.paul@outlook.com"
-        }
-    }
+    mainapi = os.getenv("MAINAPI")
+    apiurl = os.getenv("JARVISAPI")
+    chatbot = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv("BRAINKEY"), "", True, True)
+    chatbot.spellcheck(True)
+    #initlogs()
+    checkconnect()
 
 def speak(text):
     engine.say(text)
@@ -76,25 +74,17 @@ def choiceselector(argument):
     }
     return switcher.get(argument, "Invalid Choice")
 
-
-def talk(msg1):
-    if useruid == "" or useruid == 0:
-        print("Pls Login!")
-        return "not logged in"
-    chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
-    chat = sendmsg(msg1)
-    print(chat)
-    speak(chat)
-    return chat
-
-def talk2(msg1):
-    if useruid == "" or useruid == 0:
-        print("Pls Login!")
-        return "not logged in"
-    chatbotsetup("156099", "4TG9iu82pFOu9XjD", useruid)
-    chat = sendmsg(msg1)
-    return chat
-
+def initlogs():
+    global logname
+    logname = "logs/ChatLogs-" + datetime.datetime.now().strftime("%f") + ".txt"
+    if os.path.exists('logs'):
+        pass
+    else:
+        os.mkdir('logs')
+    try:
+        open(logname, 'x')
+    except FileExistsError:
+        raise (BaseError("Log File already exists. Fix : Delete logs folder."))
 def takepic(delay = 0):
     x = datetime.datetime.now()
     y = "img-" + x.strftime("%f") + ".jpg"
@@ -118,151 +108,65 @@ def checkmail(email):
 
 
 def checkconnect():
-    global apiurl
-    print("Connecting to PaulStudiosAPI...")
+    global apiurl, connection
+    print("Connecting to server...")
     time.sleep(2)
+    try:
+        checkapi = requests.get(mainapi)
+        if checkapi.status_code == 200:
+            print("Successfully connected to PaulStudios server")
+        else:
+            error("ER11 - [Cannot connect to server]", 1)
+    except requests.exceptions.ConnectionError:
+        error("ER11 - [Cannot connect to server]", 1)
     try:
         checkapi = requests.get(apiurl)
         if checkapi.status_code == 200:
-            print("Successfully connected to server")
+            print("Paulstudios : JarvisAPI is online")
+            connection = 1
             return "success"
         else:
-            print("Cannot connect to server")
-            return "failed"
+            error("ER11 - [Cannot connect to server]", 1)
     except requests.exceptions.ConnectionError:
-        print("Cannot connect to server")
-        return "failed"
+        error("ER11 - [Cannot connect to server]", 1)
 
 
 def login(username, password):
-    global useruid
-    users = json.loads(requests.get(apiurl + "/customers").text)
-    print("Trying to log in through PaulStudiosAPI")
-    time.sleep(1)
-    usersdata = [i['name'] for i in users]
-    if username in usersdata:
-        for name in usersdata:
-            if name == username:
-                nameofuser = name
+    global user
+    print("Trying to log in...")
+    item = {
+        'name': username,
+        'pass': password
+    }
+    response = requests.get(apiurl + "/login", item).text
+    if response == "OK":
+        print("Logged in successfully")
+        chatbot.changename(username)
+        user = username
+        return "success"
     else:
-        print("Username not found")
-        return "not found user"
-
-    print("Found username. Fetching User data")
-    time.sleep(1)
-    userindex = usersdata.index(nameofuser) + 1
-    userdata = json.loads(requests.get(apiurl + "/customers/" + str(userindex)).text)
-    userpass = userdata['pass']
-    if userpass == password:
-        print("Password Matched. Logging in")
-        time.sleep(1)
-        print("Successfully logged in")
-        useruid = username
-        return username
-    else:
-        print("Wrong password")
-        return "wrong pass"
+        error(response, 1, "auth")
+        exit(0)
 
 
 def register(rname, rpass, rmail):
-    users = json.loads(requests.get(apiurl + "/customers").text)
-    print("Trying to register through PaulStudiosAPI")
-    time.sleep(2)
-    usernames = [i['name'] for i in users]
-    useremails = [i['email'] for i in users]
-    if rname in usernames:
-        print("Username already exists.")
-        return "same name"
-    if rmail in useremails:
-        print("Email already exists.")
-        return "same mail"
-    rdata = {
+    global user
+    print("Trying to register...")
+    item = {
         'email': rmail,
         'name': rname,
-        'pass': rpass,
-        'active': 1
+        'pass': rpass
     }
-    response = requests.post(apiurl + "/customers", data=rdata)
-    return json.loads(response.text)
-
-
-def getownerkey(mode, user, key):
-    print("Connecting to PaulStudiosAPI Developer Database.")
-    spcauth = {
-        "key" : key,
-        "mode" : mode,
-        "user" : user
-    }
-    r = requests.get(testapi + "/keys", spcauth).text
-    return r
-
-
-def devmode(mode, user):
-    global dev
-    print("Authenticating " + mode + " from user " + user)
-    time.sleep(1)
-    r = addlogs(mode, user)
-    print(r)
-    dev = 1
-    login(user, authdata[user]["name"])
-    return r
-
-
-def checklogs():
-    if dev >= 1:
-        r = "Here are the Logs  :\n" + requests.get(testapi + "/log").text
-        return r
+    response = requests.get(apiurl + "/register", item).text
+    if response == "OK":
+        print("Registered successfully")
+        chatbot.changename(rname)
+        user = rname
+        return "success"
     else:
-        return "Devmode is not enabled!"
+        error(response, 1, "auth")
+        exit(0)
 
-def addlogs(mode, user):
-    auth = {
-        "mode": mode,
-        "user": user
-    }
-    r = requests.post(testapi + "/log", data=auth).text
-    print("System Access has been logged")
-    return r
-
-def deletelogs():
-    if dev == 2:
-        r = requests.delete(testapi + "/log").text
-        return r
-    else:
-        return "Adminmode is not enabled!"
-
-def adminmode(mode, user):
-    global dev
-    print("Authenticating " + mode + " from user " + user)
-    time.sleep(1)
-    r = addlogs(mode, user)
-    print(r)
-    dev = 2
-    login(user, authdata[user]["name"])
-    return r
-
-def startlogs():
-    global logging
-    if dev >= 1:
-        logging = 1
-        r = "Logger Started in " + logname 
-        return r
-    else:
-        "Devmode is not enabled!"
-
-def dologs(m1, m2):
-    if logging == 1:
-        logfile = open(logname, "a+")
-        logfile.writelines(m1)
-        logfile.writelines(m2)
-        logfile.close()
-
-def stoplogs():
-    global logging
-    if logging >= 1:
-        logging = 0
-        r = "Logger Stopped"
-        return r
-    else:
-        "Logging is not enabled!"
-
+def talk(msg):
+    resp = chatbot.sendmsg(msg)
+    return resp
