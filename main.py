@@ -1,12 +1,9 @@
 from tkinter import *
-import initfuncs
 import basicfuncs
-from basicfuncs import talk
-import time
+from basicfuncs import talk, start
 shutdown = 0
 def get_response(msg1):
-    msg = msg1.lower()
-    chat = talk(msg)
+    chat = talk(msg1)
     return chat
 
 BG_GRAY = "#ABB2B9"
@@ -75,7 +72,12 @@ class ChatApplication:
 
 
     def _on_enter_pressed(self, event):
-        msg = self.msg_entry.get()
+        if basicfuncs.mode == 2:
+            msg = self.msg_entry.get()
+        elif basicfuncs.mode == 1:
+            raise basicfuncs.error("ER14 - [Feature Coming Soon]", 1)
+        else:
+            raise basicfuncs.error("ER16 - [Invalide mode option set]", 1)
         self._insert_message(msg, basicfuncs.user.capitalize())
 
     def _insert_message(self, msg, sender):
@@ -103,7 +105,7 @@ class ChatApplication:
 
 if __name__ == "__main__":
 
-    initfuncs.start()
+    start()
 
     app = ChatApplication()
     app.run()
