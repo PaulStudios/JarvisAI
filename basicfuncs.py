@@ -1,6 +1,4 @@
-import json
-import subprocess
-import sys
+
 import webbrowser
 import ChatbotAPI
 from ecapture import ecapture as ec
@@ -295,7 +293,7 @@ def start():
         raise ArgumentError("Invalid Choice")
 
 
-# To DO: Add devmode and integrate legacy options.
+# To DO: Add devmode.
 # How to comment code-blocks:- Alt+3 & Alt+4
 ##def devcheck():
 ##    global dev
@@ -304,6 +302,22 @@ def start():
 ##            print("Initializing Developer Mode")
 ##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
 ##
+##import speech_recognition as sr
+##def takeCommand():
+##    r=sr.Recognizer()
+##    with sr.Microphone() as source:
+##        print("Listening...")
+##        r.adjust_for_ambient_noise(source=source)
+##        audio=r.listen(source, timeout=5)
+##
+##        try:
+##            statement=r.recognize_google(audio)
+##            print(f"user said:{statement}\n")
+##
+##        except Exception as e:
+##            speak("Pardon me, please say that again")
+##            return "None"
+##        return statement
 
 print('Loading your AI personal assistant - Jarvis...')
 time.sleep(1)

@@ -3,7 +3,6 @@ import jsonpath_rw_ext
 
 
 
-
 def fileparser(name1):
     with open('dates.json') as json_file:
         data = json.load(json_file)
