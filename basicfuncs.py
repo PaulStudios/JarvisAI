@@ -1,4 +1,4 @@
-
+import sys
 import webbrowser
 import ChatbotAPI
 from ecapture import ecapture as ec
@@ -46,11 +46,19 @@ def init():
     voices = engine.getProperty('voices')
     engine.setProperty('voice', 'voices[1].id')
     mainapi = os.getenv("MAINAPI")
-    apiurl = os.getenv("JARVISAPI")
+    apiurl = os.getenv("TESTAPI")
     chatbot = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv("BRAINKEY"), history=True, debug=True)
     chatbot.spellcheck(True)
     webbrowser.get('windows-default')
     # initlogs()
+    if len(sys.argv) > 1 and sys.argv[1] == "development":
+        print("Development mode enabled")
+        mainapi = apiurl
+        pass
+    else:
+        print("Production mode enabled")
+        apiurl = mainapi
+    apiurl = apiurl + "/jarvis"
     checkconnect()
 
 
