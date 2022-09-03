@@ -304,21 +304,6 @@ def start():
 ##            print("Initializing Developer Mode")
 ##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
 ##
-##def start2():
-##    print("Jarvis can run in 2 modes :")
-##    print("   1. Typing mode(Commands have to typed in keyboard)")
-##    print("   2. Microphone mode(Commands need to said to microphone)")
-##    inputofuser = input("Enter your choice (1/2): ")
-##    check = inputofuser.isdecimal()
-##    if check:
-##        choice = choiceselector(int(inputofuser))
-##        if choice == "one":
-##            exec(open("TypeAI.py").read())
-##        elif choice == "two":
-##            exec(open("MicAI.py").read())
-##    else:
-##        print("Invalid Choice. Shutting Down")
-##        exit(0)
 
 print('Loading your AI personal assistant - Jarvis...')
 time.sleep(1)
