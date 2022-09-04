@@ -2,6 +2,7 @@ import sys
 import webbrowser
 import logging
 import ChatbotAPI
+import speech_recognition as sr
 from ecapture import ecapture as ec
 import pyttsx3
 import os
@@ -333,23 +334,23 @@ def start():
 ##        if sys.argv[1] == "devmode":
 ##            print("Initializing Developer Mode")
 ##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
-##
-##import speech_recognition as sr
-##def takeCommand():
-##    r=sr.Recognizer()
-##    with sr.Microphone() as source:
-##        print("Listening...")
-##        r.adjust_for_ambient_noise(source=source)
-##        audio=r.listen(source, timeout=5)
-##
-##        try:
-##            statement=r.recognize_google(audio)
-##            print(f"user said:{statement}\n")
-##
-##        except Exception as e:
-##            speak("Pardon me, please say that again")
-##            return "None"
-##        return statement
+
+
+def takeCommand():
+    r=sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.adjust_for_ambient_noise(source=source)
+        audio=r.listen(source, timeout=5)
+
+        try:
+            statement=r.recognize_google(audio)
+            print(f"user said:{statement}\n")
+
+        except Exception as e:
+            speak("Pardon me, please say that again")
+            return "None"
+        return statement
 
 
 init()
