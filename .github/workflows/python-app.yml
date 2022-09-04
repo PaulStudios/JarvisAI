@@ -17,6 +17,11 @@ jobs:
 
     runs-on: 	windows-latest
     environment: Main
+    env: 
+      MAINAPI: ${{secrets.MAINAPI}}
+      TESTAPI: ${{secrets.TESTAPI}}
+      BRAINID: ${{secrets.BRAINID}}
+      BRAINKEY: ${{secrets.BRAINKEY}}
 
     steps:
     - uses: actions/checkout@v3
