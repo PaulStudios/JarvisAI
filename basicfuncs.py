@@ -25,7 +25,6 @@ user = ""
 logname = ""
 dev = 0
 
-
 def error(code, severity=0, type=""):
     if severity > 0:
         logger.warning("Error has been detected. Investigating...")
