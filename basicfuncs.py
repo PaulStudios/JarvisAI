@@ -57,6 +57,7 @@ def init():
     voices = engine.getProperty('voices')
     engine.setProperty('voice', 'voices[1].id')
     logger.info("Setting up API")
+    print(os.environ)
     mainapi = str(os.environ["MAINAPI"])
     apiurl = str(os.environ["TESTAPI"])
     logger.info("Setting up Chatbot")
