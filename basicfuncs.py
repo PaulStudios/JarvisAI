@@ -3,7 +3,7 @@ import webbrowser
 import logging
 import ChatbotAPI
 import speech_recognition as sr
-from ecapture import ecapture as ec
+import ecapture as ec
 import pyttsx3
 import os
 import time
