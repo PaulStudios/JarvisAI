@@ -16,7 +16,7 @@ jobs:
   build:
 
     runs-on: 	windows-latest
-    environment: main
+    environment: Main
 
     steps:
     - uses: actions/checkout@v3
