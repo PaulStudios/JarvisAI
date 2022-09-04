@@ -11,7 +11,6 @@ import datetime
 import requests
 import re
 from dotenv import load_dotenv
-
 from errors import AuthError, BaseError, ArgumentError
 
 
