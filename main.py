@@ -1,9 +1,56 @@
+import datetime
+import time
+import os
 from tkinter import *
+import logging
+import errors
+
+logger = logging
+logname = ""
+
+def initlogs():
+    global logname, logger
+    logname = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime("%f") + ".log"
+    if os.path.exists('logs'):
+        pass
+    else:
+        os.mkdir('logs')
+    try:
+        open(logname, 'x')
+    except FileExistsError:
+        raise errors.FileExistsError("Log File already exists. Fix : Delete logs folder.", 1)
+    logger = logging.getLogger("JarvisAI")
+    logger.setLevel(logging.DEBUG)
+
+    # Create handlers
+    c_handler = logging.StreamHandler()
+    f_handler = logging.FileHandler(logname)
+    c_handler.setLevel(logging.WARNING)
+    f_handler.setLevel(logging.INFO)
+
+    # Create formatters and add it to handlers
+    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+    f_format = logging.Formatter('%(asctime)s - %(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+    c_handler.setFormatter(c_format)
+    f_handler.setFormatter(f_format)
+
+    # Add handlers to the logging
+    logger.addHandler(c_handler)
+    logger.addHandler(f_handler)
+    #logging.basicConfig(filename=logname, level=logging.DEBUG, format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+print('Loading your AI personal assistant - Jarvis...')
+initlogs()
+logger.info("Starting JarvisAI")
+time.sleep(1)
+logger.info("Loading logging module.")
+print(f"Logger module has been initiated in {logname}\n")
 import basicfuncs
-from basicfuncs import talk, start
+
 shutdown = 0
+
 def get_response(msg1):
-    chat = talk(msg1)
+    chat = basicfuncs.talk(msg1)
     return chat
 
 BG_GRAY = "#ABB2B9"
@@ -17,6 +64,7 @@ FONT_BOLD = "Helvetica 13 bold"
 class ChatApplication:
 
     def __init__(self):
+        logger.info("JarvisAI Graphical Interface starting...")
         self.window = Tk()
         self._setup_main_window()
 
@@ -68,10 +116,12 @@ class ChatApplication:
         self.text_widget.insert(END, initmsg)
         self.text_widget.configure(state=DISABLED)
         self.text_widget.see(END)
+        logger.info("JarvisAI Graphical Interface started")
 
 
 
     def _on_enter_pressed(self, event):
+        logger.info("Initiating bot response module")
         if basicfuncs.mode == 2:
             msg = self.msg_entry.get()
         elif basicfuncs.mode == 1:
@@ -100,12 +150,14 @@ class ChatApplication:
 
         #if basicfuncs.dev >= 1:
         print(f"{sender}: {msg}")
-        print(msg2)
+        print(f"{bot_name}: {m}")
+        logger.info(f"{sender}: {msg}")
+        logger.info(f"{bot_name}: {m}")
+        logger.info("User Input & Bot reply successfully processed")
 
 
 if __name__ == "__main__":
 
-    start()
-
+    basicfuncs.start()
     app = ChatApplication()
     app.run()

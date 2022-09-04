@@ -6,3 +6,6 @@ class AuthError(Exception):
 
 class BaseError(Exception):
     pass
+
+class FileExistsError(Exception):
+    pass
