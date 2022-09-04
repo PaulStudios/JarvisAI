@@ -18,10 +18,10 @@ jobs:
     runs-on: 	windows-latest
     environment: Main
     env: 
-      MAINAPI: ${{secrets.MAINAPI}}
-      TESTAPI: ${{secrets.TESTAPI}}
-      BRAINID: ${{secrets.BRAINID}}
-      BRAINKEY: ${{secrets.BRAINKEY}}
+      MAINAPI: ${{secrets.MAINAPI }}
+      TESTAPI: ${{secrets.TESTAPI }}
+      BRAINID: ${{secrets.BRAINID }}
+      BRAINKEY: ${{secrets.BRAINKEY }}
 
     steps:
     - uses: actions/checkout@v3
@@ -44,3 +44,8 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+      env: 
+        MAINAPI: ${{secrets.MAINAPI }}
+        TESTAPI: ${{secrets.TESTAPI }}
+        BRAINID: ${{secrets.BRAINID }}
+        BRAINKEY: ${{secrets.BRAINKEY }}
