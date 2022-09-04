@@ -10,4 +10,4 @@ class TestClass:
 
     def test_bot(self):
         assert basicfuncs.chatbot.authorname == "HilFing"
-        assert basicfuncs.talk("Hi") == "Hi there!"
+        #assert basicfuncs.talk("Hi") == "Hi there!"

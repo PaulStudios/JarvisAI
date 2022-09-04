@@ -44,7 +44,6 @@ def error(code, severity=0, type=""):
         print("Something went wrong. Error Code :- " + code + ".")
         print("Please seek support from developer with the error code.")
 
-
 def init():
     global engine, voices, apiurl, mainapi, authdata, logname, chatbot, logger
     logger = logging.getLogger("JarvisAI.processor")
