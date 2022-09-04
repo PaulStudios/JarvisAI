@@ -6,8 +6,7 @@ import speech_recognition as sr
 import ecapture as ec
 import pyttsx3
 import os
-import time
-import datetime
+import time, datetime
 import requests
 import re
 from dotenv import load_dotenv
