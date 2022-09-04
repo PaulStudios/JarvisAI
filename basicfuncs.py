@@ -59,7 +59,7 @@ def init():
     apiurl = os.getenv("TESTAPI")
     logger.info("Setting up Chatbot")
     chatbot = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv("BRAINKEY"), history=True, debug=True)
-    chatbot.spellcheck(True)
+    #chatbot.spellcheck(True)
     webbrowser.get('windows-default')
     logger.info("Setting up development/production module")
     if len(sys.argv) > 1 and sys.argv[1] == "development":

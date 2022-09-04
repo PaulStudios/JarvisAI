@@ -149,8 +149,8 @@ class ChatApplication:
         self.text_widget.see(END)
 
         #if basicfuncs.dev >= 1:
-        print(f"{sender}: {msg}")
-        print(f"{bot_name}: {m}")
+        #print(f"{sender}: {msg}")
+        #print(f"{bot_name}: {m}")
         logger.info(f"{sender}: {msg}")
         logger.info(f"{bot_name}: {m}")
         logger.info("User Input & Bot reply successfully processed")
