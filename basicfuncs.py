@@ -13,6 +13,7 @@ import re
 from dotenv import load_dotenv
 from errors import AuthError, BaseError, ArgumentError
 
+
 engine = 0
 voices = 0
 mode = 0
@@ -24,6 +25,7 @@ logger = logging
 user = ""
 logname = ""
 dev = 0
+
 
 def error(code, severity=0, type=""):
     if severity > 0:
@@ -43,6 +45,7 @@ def error(code, severity=0, type=""):
         logger.error("Severity is low. Continuing...")
         print("Something went wrong. Error Code :- " + code + ".")
         print("Please seek support from developer with the error code.")
+
 
 def init():
     global engine, voices, apiurl, mainapi, authdata, logname, chatbot, logger
