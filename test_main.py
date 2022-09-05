@@ -1,4 +1,4 @@
-import basicfuncs
+##import basicfuncs
 
 class TestClass:
     def test_system(self):
