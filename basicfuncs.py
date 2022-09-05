@@ -2,7 +2,8 @@ import sys
 import webbrowser
 import logging
 import ChatbotAPI
-from ecapture import ecapture as ec
+import speech_recognition as sr
+import ecapture as ec
 import pyttsx3
 import os
 import time
@@ -11,6 +12,7 @@ import requests
 import re
 from dotenv import load_dotenv
 from errors import AuthError, BaseError, ArgumentError
+
 
 engine = 0
 voices = 0
@@ -55,8 +57,9 @@ def init():
     voices = engine.getProperty('voices')
     engine.setProperty('voice', 'voices[1].id')
     logger.info("Setting up API")
-    mainapi = os.getenv("MAINAPI")
-    apiurl = os.getenv("TESTAPI")
+    print(os.environ)
+    mainapi = str(os.environ["MAINAPI"])
+    apiurl = str(os.environ["TESTAPI"])
     logger.info("Setting up Chatbot")
     chatbot = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv("BRAINKEY"), history=True, debug=True)
     #chatbot.spellcheck(True)
@@ -333,23 +336,23 @@ def start():
 ##        if sys.argv[1] == "devmode":
 ##            print("Initializing Developer Mode")
 ##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
-##
-##import speech_recognition as sr
-##def takeCommand():
-##    r=sr.Recognizer()
-##    with sr.Microphone() as source:
-##        print("Listening...")
-##        r.adjust_for_ambient_noise(source=source)
-##        audio=r.listen(source, timeout=5)
-##
-##        try:
-##            statement=r.recognize_google(audio)
-##            print(f"user said:{statement}\n")
-##
-##        except Exception as e:
-##            speak("Pardon me, please say that again")
-##            return "None"
-##        return statement
+
+
+def takeCommand():
+    r=sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.adjust_for_ambient_noise(source=source)
+        audio=r.listen(source, timeout=5)
+
+        try:
+            statement=r.recognize_google(audio)
+            print(f"user said:{statement}\n")
+
+        except Exception as e:
+            speak("Pardon me, please say that again")
+            return "None"
+        return statement
 
 
 init()
