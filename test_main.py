@@ -2,7 +2,7 @@ import basicfuncs
 
 class TestClass:
     def test_system(self):
-        assert 5 = 5
+        assert 5 == 5
 ##    def test_server_connection(self):
 ##        assert basicfuncs.connection == 1
 ##
