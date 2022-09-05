@@ -235,7 +235,7 @@ def talk(msg):
 
 def get_weather(city):
     raise error("ER14 - [Feature Coming Soon]", 1)
-    api_key = "8ef61edcf1c576d65d836254e11ea420"
+    api_key = os.environ['WEATHER_API']
     base_url = "https://api.openweathermap.org/data/2.5/weather?"
     speak("whats the city name")
     city_name = city
