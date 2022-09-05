@@ -1,74 +1,97 @@
+# pylint: disable=W0603
+# pylint: disable=W0702
+# pylint: disable=C0413
+# pylint: disable=W0613
+# pylint: disable=R0903
+# pylint: disable=maybe-no-member
+
+"""
+Main file containing graphics ui and LOGGER module
+"""
+
 import datetime
 import time
 import os
-from tkinter import *
+from tkinter import DISABLED, END, NORMAL, Button, Entry, Label, Scrollbar, Text, Tk
 import logging
 import errors
 
-logger = logging
-logname = ""
+LOGGER = logging
+LOGNAME = ""
+
 
 def initlogs():
-    global logname, logger
-    logname = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime("%f") + ".log"
+    """Initialize logging module"""
+    global LOGNAME, LOGGER
+    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime("%f") + ".log"
     if os.path.exists('logs'):
         pass
     else:
         os.mkdir('logs')
     try:
-        open(logname, 'x')
+        with open(LOGNAME, 'w', encoding='utf8') as file_test:
+            file_test.write(" ")
     except FileExistsError:
-        raise errors.FileExistsError("Log File already exists. Fix : Delete logs folder.", 1)
-    logger = logging.getLogger("JarvisAI")
-    logger.setLevel(logging.DEBUG)
+        errors.FileAlreadyExistsError("Log File already exists. Fix : Delete logs folder.", 1)
+    LOGGER = logging.getLogger("JarvisAI")
+    LOGGER.setLevel(logging.DEBUG)
 
     # Create handlers
     c_handler = logging.StreamHandler()
-    f_handler = logging.FileHandler(logname)
+    f_handler = logging.FileHandler(LOGNAME)
     c_handler.setLevel(logging.WARNING)
     f_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
     c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
-    f_format = logging.Formatter('%(asctime)s - %(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+    f_format = logging.Formatter(
+        '%(asctime)s - %(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
     c_handler.setFormatter(c_format)
     f_handler.setFormatter(f_format)
 
     # Add handlers to the logging
-    logger.addHandler(c_handler)
-    logger.addHandler(f_handler)
-    #logging.basicConfig(filename=logname, level=logging.DEBUG, format='%(asctime)s : %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    LOGGER.addHandler(c_handler)
+    LOGGER.addHandler(f_handler)
+    # logging.basicConfig(
+    # filename=LOGNAME, level=logging.DEBUG, format='%(asctime)s :
+    # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
 
 print('Loading your AI personal assistant - Jarvis...')
 initlogs()
-logger.info("Starting JarvisAI")
+LOGGER.info("Starting JarvisAI")
 time.sleep(1)
-logger.info("Loading logging module.")
-print(f"Logger module has been initiated in {logname}\n")
+LOGGER.info("Loading logging module.")
+print(f"Logger module has been initiated in {LOGNAME}\n")
 import basicfuncs
 
-shutdown = 0
+SHUTDOWN = 0
+
 
 def get_response(msg1):
+    """Get response from chatbot module"""
     chat = basicfuncs.talk(msg1)
     return chat
+
 
 BG_GRAY = "#ABB2B9"
 BG_COLOR = "#17202A"
 TEXT_COLOR = "#EAECEE"
-bot_name = "JarvisAI"
+BOT_NAME = "JarvisAI"
 FONT = "Helvetica 14"
 FONT_BOLD = "Helvetica 13 bold"
 
 
 class ChatApplication:
+    """Graphics UI class for Chatbot"""
 
     def __init__(self):
-        logger.info("JarvisAI Graphical Interface starting...")
+        LOGGER.info("JarvisAI Graphical Interface starting...")
         self.window = Tk()
         self._setup_main_window()
 
     def run(self):
+        """Run the chatbot"""
         self.window.mainloop()
 
     def _setup_main_window(self):
@@ -110,25 +133,23 @@ class ChatApplication:
         send_button = Button(bottom_label, text="Send", font=FONT_BOLD, width=20, bg=BG_GRAY,
                              command=lambda: self._on_enter_pressed(None))
         send_button.place(relx=0.77, rely=0.008, relheight=0.06, relwidth=0.22)
-        initmsg = basicfuncs.wishMe()
-        initmsg = f"{bot_name}: {initmsg}\n\n"
+        initmsg = basicfuncs.wish_me()
+        initmsg = f"{BOT_NAME}: {initmsg}\n\n"
         self.text_widget.configure(state=NORMAL)
         self.text_widget.insert(END, initmsg)
         self.text_widget.configure(state=DISABLED)
         self.text_widget.see(END)
-        logger.info("JarvisAI Graphical Interface started")
-
-
+        LOGGER.info("JarvisAI Graphical Interface started")
 
     def _on_enter_pressed(self, event):
-        logger.info("Initiating bot response module")
-        if basicfuncs.mode == 2:
+        LOGGER.info("Initiating bot response module")
+        if basicfuncs.MODE == 2:
             msg = self.msg_entry.get()
-        elif basicfuncs.mode == 1:
-            raise basicfuncs.error("ER14 - [Feature Coming Soon]", 1)
+        elif basicfuncs.MODE == 1:
+            basicfuncs.error("ER14 - [Feature Coming Soon]", 1)
         else:
-            raise basicfuncs.error("ER16 - [Invalide mode option set]", 1)
-        self._insert_message(msg, basicfuncs.user.capitalize())
+            basicfuncs.error("ER16 - [Invalide mode option set]", 1)
+        self._insert_message(msg, basicfuncs.USER.capitalize())
 
     def _insert_message(self, msg, sender):
         if not msg:
@@ -140,24 +161,25 @@ class ChatApplication:
         self.text_widget.insert(END, msg1)
         self.text_widget.configure(state=DISABLED)
 
-        m = get_response(msg)
-        msg2 = f"{bot_name}: {m}\n\n"
+        bot_response_msg = get_response(msg)
+        msg2 = f"{BOT_NAME}: {bot_response_msg}\n\n"
         self.text_widget.configure(state=NORMAL)
         self.text_widget.insert(END, msg2)
         self.text_widget.configure(state=DISABLED)
-        #basicfuncs.dologs(msg1, msg2)
+        # basicfuncs.dologs(msg1, msg2)
         self.text_widget.see(END)
 
-        #if basicfuncs.dev >= 1:
-        #print(f"{sender}: {msg}")
-        #print(f"{bot_name}: {m}")
-        logger.info(f"{sender}: {msg}")
-        logger.info(f"{bot_name}: {m}")
-        logger.info("User Input & Bot reply successfully processed")
+        # if basicfuncs.dev >= 1:
+        # print(f"{sender}: {msg}")
+        # print(f"{BOT_NAME}: {bot_response_msg}")
+        LOGGER.info("%s : %s", sender, msg)
+        LOGGER.info("%s : %s", BOT_NAME, bot_response_msg)
+        # LOGGER.info(f"{sender}: {msg}")
+        # LOGGER.info(f"{BOT_NAME}: {bot_response_msg}")
+        LOGGER.info("User Input & Bot reply successfully processed")
 
 
 if __name__ == "__main__":
-
     basicfuncs.start()
     app = ChatApplication()
     app.run()

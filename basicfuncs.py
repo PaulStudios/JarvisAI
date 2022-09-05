@@ -1,99 +1,106 @@
+# pylint: disable=W0603
+# pylint: disable=W0702
+
+"""
+All the function of JarvisAI
+"""
+
+import time
+import datetime
 import sys
-import webbrowser
+import os
 import logging
+import re
+import webbrowser
 import ChatbotAPI
 import speech_recognition as sr
 import ecapture as ec
 import pyttsx3
-import os
-import time
-import datetime
 import requests
-import re
 from dotenv import load_dotenv
 from errors import AuthError, BaseError, ArgumentError
 
 
-engine = 0
-voices = 0
-mode = 0
-apiurl = 0
-connection = 0
-mainapi = 0
-chatbot = ChatbotAPI.ChatBot()
-logger = logging
-user = ""
-logname = ""
-dev = 0
+ENGINE = 0
+VOICES = 0
+MODE = 0
+APIURL = 0
+CONNECTION = 0
+MAINAPI = 0
+CHATBOT = ChatbotAPI.ChatBot()
+LOGGER = logging
+USER = ""
+LOGNAME = ""
+DEV = 0
 
 
-def error(code, severity=0, type=""):
+def error(code, severity=0, errortype=""):
+    """Error function to better handle and log errors"""
     if severity > 0:
-        logger.warning("Error has been detected. Investigating...")
-        if type == "auth":
-            logger.error("Authentication error has been detected. Error code : " + code)
+        LOGGER.warning("Error has been detected. Investigating...")
+        if errortype == "auth":
+            LOGGER.error("Authentication error has been detected. Error code : %s" , code)
             raise AuthError(code)
-        if type == "args":
-            logger.error("Argument error has been detected. Error code : " + code)
+        if errortype == "args":
+            LOGGER.error("Argument error has been detected. Error code : %s" , code)
             raise ArgumentError(code)
-        else:
-            logger.error("Program error has been detected. Error code : " + code)
-            raise BaseError(code)
-        exit(1)
-    else:
-        logger.error(f"Error has been detected. Investigating... Error Code : {code}")
-        logger.error("Severity is low. Continuing...")
-        print("Something went wrong. Error Code :- " + code + ".")
-        print("Please seek support from developer with the error code.")
+        LOGGER.error("Program error has been detected. Error code : %s" , code)
+        raise BaseError(code)
+    LOGGER.error("Error has been detected. Investigating... Error Code %s" , code)
+    LOGGER.error("Severity is low. Continuing...")
+    print("Something went wrong. Error Code :- " + code + ".")
+    print("Please seek support from developer with the error code.")
 
 
 def init():
-    global engine, voices, apiurl, mainapi, authdata, logname, chatbot, logger
-    logger = logging.getLogger("JarvisAI.processor")
-    logger.info("Loading environment variables")
+    '''Initialising function for all variables and basic checks before starting program'''
+    global ENGINE, VOICES, APIURL, MAINAPI, CHATBOT, LOGGER
+    LOGGER = logging.getLogger("JarvisAI.processor")
+    LOGGER.info("Loading environment variables")
     load_dotenv()
-    logger.info("Setting up voice")
-    engine = pyttsx3.init('sapi5')
-    voices = engine.getProperty('voices')
-    engine.setProperty('voice', 'voices[1].id')
-    logger.info("Setting up API")
-    print(os.environ)
-    mainapi = str(os.environ["MAINAPI"])
-    apiurl = str(os.environ["TESTAPI"])
-    logger.info("Setting up Chatbot")
-    chatbot = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv("BRAINKEY"), history=True, debug=True)
-    #chatbot.spellcheck(True)
+    LOGGER.info("Setting up voice")
+    ENGINE = pyttsx3.init('sapi5')
+    VOICES = ENGINE.getProperty('voices')
+    ENGINE.setProperty('voice', 'voices[1].id')
+    LOGGER.info("Setting up API")
+    MAINAPI = str(os.environ["MAINAPI"])
+    APIURL = str(os.environ["TESTAPI"])
+    LOGGER.info("Setting up Chatbot")
+    CHATBOT = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv(
+        "BRAINKEY"), history=True, debug=True)
+    # chatbot.spellcheck(True)
     webbrowser.get('windows-default')
-    logger.info("Setting up development/production module")
+    LOGGER.info("Setting up development/production module")
     if len(sys.argv) > 1 and sys.argv[1] == "development":
         print("Development mode enabled")
-        mainapi = apiurl
-        pass
+        MAINAPI = APIURL
     else:
         print("Production mode enabled")
-        apiurl = mainapi
-    apiurl = apiurl + "/jarvis"
-    logger.info("Checking connection to server")
+        APIURL = MAINAPI
+    APIURL = APIURL + "/jarvis"
+    LOGGER.info("Checking connection to server")
     checkconnect()
-    logger.info("JarvisAI has been initialized successfully. All systems online")
+    LOGGER.info("JarvisAI has been initialized successfully. All systems online")
 
 
 def speak(text):
-    engine.say(text)
-    engine.runAndWait()
+    """Text-to-Speech function"""
+    ENGINE.say(text)
+    ENGINE.runAndWait()
 
 
-def wishMe():
+def wish_me():
+    """Wish the user"""
     hour = datetime.datetime.now().hour
-    if hour >= 0 and hour < 12:
+    if 12 > hour >= 0:
         return "Hello,Good Morning"
-    elif hour >= 12 and hour < 18:
+    if 18 > hour >= 12:
         return "Hello,Good Afternoon"
-    else:
-        return "Hello,Good Evening"
+    return "Hello,Good Evening"
 
 
-def choiceselector(argument):
+def choice_selector(argument):
+    """Replacement for switch-case function"""
     switcher = {
         1: "one",
         2: "two",
@@ -103,96 +110,103 @@ def choiceselector(argument):
     return switcher.get(argument, "Invalid Choice")
 
 
-def takepic(delay=0):
-    x = datetime.datetime.now()
-    y = "img-" + x.strftime("%f") + ".jpg"
+def take_picture(delay=0):
+    """Take a photo"""
+    current_date_and_time = datetime.datetime.now()
+    filename = "img-" + current_date_and_time.strftime("%f") + ".jpg"
     if delay == 0:
-        ec.capture(0, False, y)
-        return y
-    elif delay >= 0:
-        ec.delay_imcapture(0, False, y, delay)
-        return y
+        ec.capture(0, False, filename)
+    if delay >= 0:
+        ec.delay_imcapture(0, False, filename, delay)
+    return filename
 
 
 def checkmail(email):
+    """Validate mail"""
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if (re.match(regex, email)):
-        logger.info("Submitted email is valid")
-    else:
-        logger.warning("Submitted email is invalid")
-        error("Email has been detected as Invalid", 1, "auth")
+    if re.match(regex, email):
+        LOGGER.info("Submitted email is valid")
+        return "valid"
+    LOGGER.warning("Submitted email is invalid")
+    error("Email has been detected as Invalid", 1, "auth")
+    return "invalid"
 
 
 def checkconnect():
-    global apiurl, connection
+    """Check server connection"""
+    global CONNECTION
     print("Connecting to server...")
     time.sleep(2)
     try:
-        checkapi = requests.get(mainapi)
+        checkapi = requests.get(MAINAPI, timeout=10)
         if checkapi.status_code == 200:
             print("Successfully connected to PaulStudios server")
         else:
-            error(f"ER11 - [Cannot connect to {mainapi}, " + str(checkapi.status_code) + "]", 1)
+            error(
+                f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
     except requests.exceptions.ConnectionError:
-        error(f"ER11 - [Cannot connect to {mainapi}, " + str(checkapi.status_code) + "]", 1)
+        error(
+            f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
     try:
-        checkapi = requests.get(apiurl)
+        checkapi = requests.get(APIURL, timeout=10)
         if checkapi.status_code == 200:
             print("Paulstudios : JarvisAPI is online")
-            connection = 1
+            CONNECTION = 1
             return "success"
-        else:
-            error(f"ER11 - [Cannot connect to {apiurl}, " + str(checkapi.status_code) + "]", 1)
+        error(
+            f"ER11 - [Cannot connect to {APIURL}, " + str(checkapi.status_code) + "]", 1)
     except requests.exceptions.ConnectionError:
-        error(f"ER11 - [Cannot connect to {apiurl}, " + str(checkapi.status_code) + "]", 1)
+        error(
+            f"ER11 - [Cannot connect to {APIURL}, " + str(checkapi.status_code) + "]", 1)
+    return "failure"
 
 
 def login_back(username, password):
-    global user
+    """Login server processor"""
+    global USER
     print("Trying to log in...")
-    logger.info("Trying to login...")
+    LOGGER.info("Trying to login...")
     item = {
         'name': username,
         'pass': password
     }
-    logger.info("Sending login request to server")
-    response = requests.get(apiurl + "/login", item).text
+    LOGGER.info("Sending login request to server")
+    response = requests.get(APIURL + "/login", item, timeout=10).text
     if response == "OK":
         print("Logged in successfully")
-        chatbot.changename(username)
-        user = username
-        logger.info("Logged in successfully")
+        CHATBOT.changename(username)
+        USER = username
+        LOGGER.info("Logged in successfully")
         return "success"
-    else:
-        logger.info("Login failed")
-        error(response, 1, "auth")
-        exit(0)
+    LOGGER.info("Login failed")
+    error(response, 1, "auth")
+    sys.exit(0)
 
 
 def register_back(rname, rpass, rmail):
-    global user
+    """Register server processor"""
     print("Trying to register...")
-    logger.info("Trying to register...")
+    LOGGER.info("Trying to register...")
     item = {
         'email': rmail,
         'name': rname,
         'pass': rpass
     }
-    logger.info("Sending register request to server")
-    response = requests.get(apiurl + "/register", item).text
+    LOGGER.info("Sending register request to server")
+    response = requests.get(APIURL + "/register", item, timeout=10).text
     if response == "OK":
         print("Registered successfully")
         # chatbot.changename(rname)
         # user = rname
-        logger.info("Registered successfully")
+        LOGGER.info("Registered successfully")
         return "success"
-    else:
-        logger.info("Registration failed")
-        error(response, 1, "auth")
-        exit(0)
+    LOGGER.info("Registration failed")
+    error(response, 1, "auth")
+    sys.exit(0)
 
 
 def talk(msg):
+    """Get response from bot"""
     if 'open youtube' in msg:
         webbrowser.open_new_tab("https://www.youtube.com")
         resp = "Youtube is open now"
@@ -212,8 +226,8 @@ def talk(msg):
         get_weather(msg)
 
     elif 'time' in msg:
-        strTime = datetime.datetime.now().strftime("%H:%M:%S")
-        resp = f"The current time is {strTime}"
+        date_and_time_now = datetime.datetime.now().strftime("%H:%M:%S")
+        resp = f"The current time is {date_and_time_now}"
 
     elif "open stackoverflow" in msg:
         webbrowser.open_new_tab("https://stackoverflow.com/login")
@@ -221,7 +235,7 @@ def talk(msg):
 
     elif "camera" in msg or "take a photo" in msg:
         resp = "Feature is in production"
-        #takepic()
+        # takepic()
 
     elif 'search' in msg:
         msg = msg.replace("search", "")
@@ -229,127 +243,132 @@ def talk(msg):
         resp = "Browser opened"
         time.sleep(5)
     else:
-        resp = chatbot.sendmsg(msg)
+        resp = CHATBOT.sendmsg(msg)
     logging.info("Bot response module process completed")
     return resp
 
+
 def get_weather(city):
-    raise error("ER14 - [Feature Coming Soon]", 1)
+    """Get weather of a city"""
+    error("ER14 - [Feature Coming Soon]", 1)
     api_key = os.environ['WEATHER_API']
     base_url = "https://api.openweathermap.org/data/2.5/weather?"
     speak("whats the city name")
     city_name = city
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url)
-    x = response.json()
-    if x["cod"] != "404":
-        y = x["main"]
-        current_temperature = y["temp"]
-        current_humidiy = y["humidity"]
-        z = x["weather"]
-        weather_description = z[0]["description"]
-        resp = " Temperature in kelvin unit is " + str(current_temperature) + "\n humidity in percentage is " + str(current_humidiy) + "\n description  " + str(weather_description)
+    response = requests.get(complete_url, timeout=10)
+    server_response = response.json()
+    if server_response["cod"] != "404":
+        internal_server_response = server_response["main"]
+        current_temperature = internal_server_response["temp"]
+        current_humidiy = internal_server_response["humidity"]
+        weather = server_response["weather"]
+        weather_description = weather[0]["description"]
+        resp = " Temperature in kelvin unit is " + str(
+            current_temperature) + "\n humidity in percentage is " + str(
+            current_humidiy) + "\n description  " + str(weather_description)
     else:
         resp = " City Not Found "
+    return resp
 
 
 def register_front():
-    logger.info("Initiating registration module")
+    """Register User"""
+    LOGGER.info("Initiating registration module")
     username = input("Pls enter your new username: ")
     password = input("Pls enter your new password: ")
     emailofuser = input("Pls enter your new email: ")
-    logger.info("Registering user")
+    LOGGER.info("Registering user")
     mailcheck = checkmail(emailofuser)
     if mailcheck == "valid":
-        do = register_back(username, password, emailofuser)
+        register_back(username, password, emailofuser)
         print("You have been successfully registered. Logging you in")
         time.sleep(1.5)
         login_back(username, password)
-    elif mailcheck == "invalid":
-        print("Shutting down...")
-        time.sleep(1)
-        exit(0)
 
 
 def login_front():
-    logger.info("Initiating login module")
+    """Login user"""
+    LOGGER.info("Initiating login module")
     username = input("Pls enter your username: ")
     password = input("Pls enter your password: ")
-    logger.info("Logging in user")
-    check = login_back(username, password)
+    LOGGER.info("Logging in user")
+    login_back(username, password)
 
 
 def start():
-    global mode
+    """Start the program"""
+    global MODE
     speak("Loading Jarvis 2 point 0")
-    logger.info("Starting Jarvis 2.0")
+    LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
     print("Please choose command module:")
-    print("    1. Microphone (You will have to say the words) [Feature coming soon]")
+    print(
+        "    1. Microphone (You will have to say the words) [Feature coming soon]")
     print("    2. Keyboard (You will have to type the words)")
-    mode = input("Please input your choice (1/2): ")
-    if mode.isdecimal():
-        rchoice = choiceselector(int(mode))
+    MODE = input("Please input your choice (1/2): ")
+    if MODE.isdecimal():
+        rchoice = choice_selector(int(MODE))
         if rchoice == "one":
-            logger.warning("Feature is in production. Coming Soon")
-            logger.warning("Defaulting to keyboard mode")
-            mode = 2
+            LOGGER.warning("Feature is in production. Coming Soon")
+            LOGGER.warning("Defaulting to keyboard mode")
+            MODE = 2
         elif rchoice == "two":
-            mode = 2
+            MODE = 2
         else:
             error("ER12 - [Invalid Choice]")
-            logger.warning("Defaulting to keyboard mode")
+            LOGGER.warning("Defaulting to keyboard mode")
             time.sleep(0.5)
             print("Invalid choice. Defaulting to keyboard mode")
-            mode = 2
+            MODE = 2
     else:
         error("ER12 - [Invalid Choice]")
-        logger.warning("Defaulting to keyboard mode")
+        LOGGER.warning("Defaulting to keyboard mode")
         time.sleep(0.5)
         print("Invalid choice. Defaulting to keyboard mode")
-        mode = 2
-    logger.info("Command module selected as " + str(mode))
+        MODE = 2
+    LOGGER.info("Command module selected as %s", str(MODE))
     print("\nYou must login to use JarvisAI")
     print("    1. Register")
     print("    2. Login")
     registered = input("Please input your choice (1/2): ")
     if registered.isdecimal():
-        rchoice2 = choiceselector(int(registered))
+        rchoice2 = choice_selector(int(registered))
         if rchoice2 == "one":
             register_front()
             return
-        elif rchoice2 == "two":
+        if rchoice2 == "two":
             login_front()
             return
-        else:
-            error("ER12 - [Invalid Choice]", 1, "args")
+        error("ER12 - [Invalid Choice]", 1, "args")
     else:
         error("ER12 - [Invalid Choice]", 1, "args")
-    logger.info("User has been logged in to JarvisAI")
+    LOGGER.info("User has been logged in to JarvisAI")
 
 
 # To DO: Add devmode.
 # How to comment code-blocks:- Alt+3 & Alt+4
-##def devcheck():
+# def devcheck():
 ##    global dev
-##    if len(sys.argv) == 4:
-##        if sys.argv[1] == "devmode":
+# if len(sys.argv) == 4:
+# if sys.argv[1] == "devmode":
 ##            print("Initializing Developer Mode")
 ##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
 
 
-def takeCommand():
-    r=sr.Recognizer()
+def mic_input():
+    """Speech-to-Text function"""
+    input_from_mic = sr.Recognizer()
     with sr.Microphone() as source:
         print("Listening...")
-        r.adjust_for_ambient_noise(source=source)
-        audio=r.listen(source, timeout=5)
+        input_from_mic.adjust_for_ambient_noise(source=source)
+        audio = input_from_mic.listen(source, timeout=5)
 
         try:
-            statement=r.recognize_google(audio)
+            statement = input_from_mic.recognize_google(audio)
             print(f"user said:{statement}\n")
 
-        except Exception as e:
+        except:
             speak("Pardon me, please say that again")
             return "None"
         return statement

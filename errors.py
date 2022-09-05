@@ -1,11 +1,15 @@
+"""
+Error handling for the program.
+"""
+
 class ArgumentError(Exception):
-    pass
+    """Exception raised for errors in the input."""
 
 class AuthError(Exception):
-    pass
+    """Authentication Error"""
 
 class BaseError(Exception):
-    pass
+    """Base error class"""
 
-class FileExistsError(Exception):
-    pass
+class FileAlreadyExistsError(Exception):
+    """File already exists error"""
