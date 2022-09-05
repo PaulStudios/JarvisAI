@@ -81,3 +81,4 @@ yarg==0.1.9
 zipp==3.8.1
 zope.event==4.5.0
 zope.interface==5.4.0
+./PyAudio-0.2.11-cp310-cp310-win_amd64.whl
