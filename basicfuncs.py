@@ -1,5 +1,6 @@
 # pylint: disable=W0603
 # pylint: disable=W0702
+# pylint: disable=E0401
 
 """
 All the function of JarvisAI
