@@ -117,6 +117,10 @@ dmypy.json
 #Others
 logs/
 .env
+MicAI.py
+TypeAI.py
+test_main.txt
+test_notfunctional.py
 
 # User-specific stuff
 .idea/**/workspace.xml

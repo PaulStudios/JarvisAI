@@ -25,7 +25,7 @@ from errors import AuthError, BaseError, ArgumentError
 ENGINE = 0
 VOICES = 0
 MODE = 0
-APIURL = 0
+TESTAPI = 0
 CONNECTION = 0
 MAINAPI = 0
 CHATBOT = ChatbotAPI.ChatBot()
@@ -33,6 +33,7 @@ LOGGER = logging
 USER = ""
 LOGNAME = ""
 DEV = 0
+EXECMODE = 0
 
 
 def error(code, severity=0, errortype=""):
@@ -55,17 +56,18 @@ def error(code, severity=0, errortype=""):
 
 def init():
     '''Initialising function for all variables and basic checks before starting program'''
-    global ENGINE, VOICES, APIURL, MAINAPI, CHATBOT, LOGGER
+    global ENGINE, VOICES, TESTAPI, MAINAPI, CHATBOT, LOGGER, EXECMODE
     LOGGER = logging.getLogger("JarvisAI.processor")
     LOGGER.info("Loading environment variables")
     load_dotenv()
+    EXECMODE = "user"
     LOGGER.info("Setting up voice")
     ENGINE = pyttsx3.init('sapi5')
     VOICES = ENGINE.getProperty('voices')
     ENGINE.setProperty('voice', 'voices[1].id')
     LOGGER.info("Setting up API")
     MAINAPI = str(os.environ["MAINAPI"])
-    APIURL = str(os.environ["TESTAPI"])
+    TESTAPI = str(os.environ["TESTAPI"])
     LOGGER.info("Setting up Chatbot")
     CHATBOT = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv(
         "BRAINKEY"), history=True, debug=True)
@@ -74,11 +76,11 @@ def init():
     LOGGER.info("Setting up development/production module")
     if len(sys.argv) > 1 and sys.argv[1] == "development":
         print("Development mode enabled")
-        MAINAPI = APIURL
+        MAINAPI = TESTAPI
     else:
         print("Production mode enabled")
-        APIURL = MAINAPI
-    APIURL = APIURL + "/jarvis"
+        TESTAPI = MAINAPI
+    TESTAPI = TESTAPI + "/jarvis"
     LOGGER.info("Checking connection to server")
     checkconnect()
     LOGGER.info("JarvisAI has been initialized successfully. All systems online")
@@ -149,16 +151,16 @@ def checkconnect():
         error(
             f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
     try:
-        checkapi = requests.get(APIURL, timeout=10)
+        checkapi = requests.get(TESTAPI, timeout=10)
         if checkapi.status_code == 200:
             print("Paulstudios : JarvisAPI is online")
             CONNECTION = 1
             return "success"
         error(
-            f"ER11 - [Cannot connect to {APIURL}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11 - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
     except requests.exceptions.ConnectionError:
         error(
-            f"ER11 - [Cannot connect to {APIURL}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11 - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
     return "failure"
 
 
@@ -172,7 +174,7 @@ def login_back(username, password):
         'pass': password
     }
     LOGGER.info("Sending login request to server")
-    response = requests.get(APIURL + "/login", item, timeout=10).text
+    response = requests.get(TESTAPI + "/login", item, timeout=10).text
     if response == "OK":
         print("Logged in successfully")
         CHATBOT.changename(username)
@@ -194,7 +196,7 @@ def register_back(rname, rpass, rmail):
         'pass': rpass
     }
     LOGGER.info("Sending register request to server")
-    response = requests.get(APIURL + "/register", item, timeout=10).text
+    response = requests.get(TESTAPI + "/register", item, timeout=10).text
     if response == "OK":
         print("Registered successfully")
         # chatbot.changename(rname)
@@ -299,7 +301,7 @@ def login_front():
 
 def start():
     """Start the program"""
-    global MODE
+    global MODE, EXECMODE
     speak("Loading Jarvis 2 point 0")
     LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
@@ -345,6 +347,9 @@ def start():
     else:
         error("ER12 - [Invalid Choice]", 1, "args")
     LOGGER.info("User has been logged in to JarvisAI")
+    if USER == "test":
+        EXECMODE = "test"
+
 
 
 # To DO: Add devmode.
