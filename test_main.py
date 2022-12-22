@@ -1,4 +1,5 @@
 # pylint: disable=R0903
+# pylint: disable=W0104
 
 """
 Pytest test file for main.py
