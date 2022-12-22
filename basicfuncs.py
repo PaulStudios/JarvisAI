@@ -299,7 +299,7 @@ def login_front():
 
 def start():
     """Start the program"""
-    global MODE, EXECMODE
+    global MODE
     speak("Loading Jarvis 2 point 0")
     LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
