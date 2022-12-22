@@ -33,7 +33,6 @@ LOGGER = logging
 USER = ""
 LOGNAME = ""
 DEV = 0
-EXECMODE = 0
 
 
 def error(code, severity=0, errortype=""):
@@ -56,11 +55,10 @@ def error(code, severity=0, errortype=""):
 
 def init():
     '''Initialising function for all variables and basic checks before starting program'''
-    global ENGINE, VOICES, TESTAPI, MAINAPI, CHATBOT, LOGGER, EXECMODE
+    global ENGINE, VOICES, TESTAPI, MAINAPI, CHATBOT, LOGGER
     LOGGER = logging.getLogger("JarvisAI.processor")
     LOGGER.info("Loading environment variables")
     load_dotenv()
-    EXECMODE = "user"
     LOGGER.info("Setting up voice")
     ENGINE = pyttsx3.init('sapi5')
     VOICES = ENGINE.getProperty('voices')
@@ -347,8 +345,6 @@ def start():
     else:
         error("ER12 - [Invalid Choice]", 1, "args")
     LOGGER.info("User has been logged in to JarvisAI")
-    if USER == "test":
-        EXECMODE = "test"
 
 
 
