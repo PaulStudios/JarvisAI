@@ -52,7 +52,7 @@ pluggy==1.0.0
 ply==3.11
 py==1.11.0
 pycparser==2.21
-Pygments==2.13.0
+Pygments==2.15.0
 pyinstaller==5.3
 pyinstaller-hooks-contrib==2022.10
 pyjokes==0.6.0
