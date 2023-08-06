@@ -3,7 +3,7 @@ ecapture==2.0.2
 jsonpath_rw_ext==1.2.2
 python-dotenv==0.21.0
 pyttsx3==2.90
-requests==2.28.1
+requests==2.31.0
 SpeechRecognition==3.8.1
 altgraph==0.17.2
 attrs==22.1.0
@@ -64,7 +64,7 @@ pywin32-ctypes==0.2.0
 pywin32
 readme-renderer==37.0
 regex==2022.8.17
-requests==2.28.1
+requests==2.31.0
 requests-toolbelt==0.9.1
 rfc3986==2.0.0
 rich==12.5.1
