@@ -14,7 +14,6 @@ import time
 import os
 from tkinter import DISABLED, END, NORMAL, Button, Entry, Label, Scrollbar, Text, Tk
 import logging
-import errors
 
 LOGGER = logging
 LOGNAME = ""
