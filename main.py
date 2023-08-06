@@ -28,11 +28,8 @@ def initlogs():
         pass
     else:
         os.mkdir('logs')
-    try:
-        with open(LOGNAME, 'w', encoding='utf8') as file_test:
-            file_test.write(" ")
-    except FileExistsError:
-        errors.FileAlreadyExistsError("Log File already exists. Fix : Delete logs folder.", 1)
+    with open(LOGNAME, 'w', encoding='utf8') as file_test:
+        file_test.write(" ")
     LOGGER = logging.getLogger("JarvisAI")
     LOGGER.setLevel(logging.DEBUG)
 
