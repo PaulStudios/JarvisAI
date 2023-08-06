@@ -25,7 +25,7 @@ docopt==0.6.2
 docutils==0.19
 ecapture==2.0.2
 Eel==0.14.0
-future==0.18.2
+future==0.18.3
 gevent==21.12.0
 gevent-websocket==0.10.1
 greenlet==1.1.3
