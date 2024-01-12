@@ -6,28 +6,28 @@
 All the function of JarvisAI
 """
 
-import time
 import datetime
-import sys
-import os
 import logging
+import os
 import re
+import sys
+import time
 import webbrowser
+
 import ChatbotAPI
-import speech_recognition as sr
 import ecapture as ec
 import pyttsx3
 import requests
 from dotenv import load_dotenv
-from errors import AuthError, BaseError, ArgumentError
 
+from errors import AuthError, BaseError, ArgumentError
 
 ENGINE = 0
 VOICES = 0
 MODE = 0
-TESTAPI = 0
+TESTAPI = ""
 CONNECTION = 0
-MAINAPI = 0
+MAINAPI = ""
 CHATBOT = ChatbotAPI.ChatBot()
 LOGGER = logging
 USER = ""
@@ -40,21 +40,21 @@ def error(code, severity=0, errortype=""):
     if severity > 0:
         LOGGER.warning("Error has been detected. Investigating...")
         if errortype == "auth":
-            LOGGER.error("Authentication error has been detected. Error code : %s" , code)
+            LOGGER.error("Authentication error has been detected. Error code : %s", code)
             raise AuthError(code)
         if errortype == "args":
-            LOGGER.error("Argument error has been detected. Error code : %s" , code)
+            LOGGER.error("Argument error has been detected. Error code : %s", code)
             raise ArgumentError(code)
-        LOGGER.error("Program error has been detected. Error code : %s" , code)
+        LOGGER.error("Program error has been detected. Error code : %s", code)
         raise BaseError(code)
-    LOGGER.error("Error has been detected. Investigating... Error Code %s" , code)
+    LOGGER.error("Error has been detected. Investigating... Error Code %s", code)
     LOGGER.error("Severity is low. Continuing...")
     print("Something went wrong. Error Code :- " + code + ".")
     print("Please seek support from developer with the error code.")
 
 
 def init():
-    '''Initialising function for all variables and basic checks before starting program'''
+    """Initialising function for all variables and basic checks before starting program"""
     global ENGINE, VOICES, TESTAPI, MAINAPI, CHATBOT, LOGGER
     LOGGER = logging.getLogger("JarvisAI.processor")
     LOGGER.info("Loading environment variables")
@@ -347,33 +347,31 @@ def start():
     LOGGER.info("User has been logged in to JarvisAI")
 
 
-
 # To DO: Add devmode.
 # How to comment code-blocks:- Alt+3 & Alt+4
 # def devcheck():
-##    global dev
+#    global dev
 # if len(sys.argv) == 4:
 # if sys.argv[1] == "devmode":
-##            print("Initializing Developer Mode")
-##            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
+#            print("Initializing Developer Mode")
+#            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
 
-
-def mic_input():
-    """Speech-to-Text function"""
-    input_from_mic = sr.Recognizer()
-    with sr.Microphone() as source:
-        print("Listening...")
-        input_from_mic.adjust_for_ambient_noise(source=source)
-        audio = input_from_mic.listen(source, timeout=5)
-
-        try:
-            statement = input_from_mic.recognize_google(audio)
-            print(f"user said:{statement}\n")
-
-        except:
-            speak("Pardon me, please say that again")
-            return "None"
-        return statement
+#def mic_input():
+#    """Speech-to-Text function"""
+#    input_from_mic = sr.Recognizer()
+#    with sr.Microphone() as source:
+#        print("Listening...")
+#        input_from_mic.adjust_for_ambient_noise(source=source)
+#        audio = input_from_mic.listen(source, timeout=5)
+#
+#        try:
+#            statement = input_from_mic.recognize_google(audio)
+#            print(f"user said:{statement}\n")
+#
+#        except:
+#            speak("Pardon me, please say that again")
+#            return "None"
+#        return statement
 
 
 init()

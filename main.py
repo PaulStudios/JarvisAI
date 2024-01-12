@@ -140,7 +140,7 @@ class ChatApplication:
     def _on_enter_pressed(self, event):
         LOGGER.info("Initiating bot response module")
         if basicfuncs.MODE == 2:
-            msg = self.msg_entry.get()
+            msg: str = self.msg_entry.get()
         elif basicfuncs.MODE == 1:
             basicfuncs.error("ER14 - [Feature Coming Soon]", 1)
         else:
