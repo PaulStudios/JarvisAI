@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 
 from errors import AuthError, BaseError, ArgumentError
 
-ENGINE = 0
+ENGINE = ""
 VOICES = 0
 MODE = 0
 TESTAPI = ""
@@ -148,6 +148,7 @@ def checkconnect():
     except requests.exceptions.ConnectionError:
         error(
             f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
+    print("Authenticating with JarvisAPI...")
     try:
         checkapi = requests.get(TESTAPI, timeout=10)
         if checkapi.status_code == 200:
@@ -254,7 +255,7 @@ def get_weather(city):
     error("ER14 - [Feature Coming Soon]", 1)
     api_key = os.environ['WEATHER_API']
     base_url = "https://api.openweathermap.org/data/2.5/weather?"
-    speak("whats the city name")
+    print("whats the city name")
     city_name = city
     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
     response = requests.get(complete_url, timeout=10)
@@ -300,7 +301,7 @@ def login_front():
 def start():
     """Start the program"""
     global MODE
-    speak("Loading Jarvis 2 point 0")
+    print("Loading Jarvis 2 point 0")
     LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
     print("Please choose command module:")
