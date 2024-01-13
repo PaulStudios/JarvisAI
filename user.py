@@ -1,4 +1,6 @@
 # pylint: disable=W0718
+# pylint: disable=W0707
+# pylint: disable=E0401
 
 """
 Login and Register handling
@@ -26,11 +28,11 @@ def checkdb():
         error("ER11B - Failed to connect to Database", 1, "conn")
 
 
-def checkmail(email):
+def checkmail(email1=""):
     """Validate mail"""
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if re.match(regex, email):
-        return email
+    if re.match(regex, email1):
+        return email1
     email2 = input("Your email is invalid. Please re-enter your email: ")
     if re.match(regex, email2):
         return email2

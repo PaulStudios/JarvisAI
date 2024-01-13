@@ -24,4 +24,3 @@ def db_config(filename='config.ini', section='db_info'):
         raise Exception(f'Section {section} not found in the {filename} file')
 
     return db
-

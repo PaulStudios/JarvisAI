@@ -13,8 +13,6 @@ class DataBaseError(Exception):
     """Error during connecting to database"""
 
 
-conn = None
-cur = None
 params = db_config()
 
 try:
