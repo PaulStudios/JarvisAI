@@ -1,5 +1,8 @@
 # pylint: disable=W0718
 # pylint: disable=C0103
+# pylint: disable=W0707
+# pylint: disable=E0401
+# pylint: disable=W0602
 
 """
 Connection handler for PostgresSQL Database

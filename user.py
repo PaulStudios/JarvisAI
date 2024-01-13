@@ -1,6 +1,5 @@
 # pylint: disable=W0718
-# pylint: disable=W0707
-# pylint: disable=E0401
+# pylint: disable=R1710
 
 """
 Login and Register handling

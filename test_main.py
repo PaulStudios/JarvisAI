@@ -11,7 +11,10 @@ class TestClass:
     """Test class for main.py"""
 
     def test_temp(self):
+        """Temporary"""
         assert 1+1 == 2
+
+
 #    def test_server_connection(self):
 #        """Testing if API server is online"""
 #        assert basicfuncs.CONNECTION == 1
