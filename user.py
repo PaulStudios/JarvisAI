@@ -1,14 +1,16 @@
-import re
-
-import handler
-from errors import error
-from handler import database
-import logging
-
+# pylint: disable=W0718
 
 """
 Login and Register handling
 """
+
+import re
+import logging
+
+import handler
+from errors import error
+from handler import database
+
 
 LOGGER = logging
 
@@ -22,7 +24,6 @@ def checkdb():
         print("Using Database : JarvisAI.")
     except (Exception, handler.database.DataBaseError):
         error("ER11B - Failed to connect to Database", 1, "conn")
-    return
 
 
 def checkmail(email):
@@ -30,12 +31,10 @@ def checkmail(email):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if re.match(regex, email):
         return email
-    else:
-        email2 = input("Your email is invalid. Please re-enter your email: ")
-        if re.match(regex, email2):
-            return email2
-        else:
-            error("ER5 - Invalid email entered during registration.", 1, "auth")
+    email2 = input("Your email is invalid. Please re-enter your email: ")
+    if re.match(regex, email2):
+        return email2
+    error("ER5 - Invalid email entered during registration.", 1, "auth")
 
 
 def register():
@@ -67,4 +66,3 @@ def register():
     except Exception as e:
         error("ER9 - Database insertion failed, " + str(e), 1)
     print("You have been successfully registered. Logging you in")
-

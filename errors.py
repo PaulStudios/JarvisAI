@@ -1,10 +1,11 @@
+"""
+Error handling for the program.
+"""
+
 import logging
 
 LOGGER = logging
 
-"""
-Error handling for the program.
-"""
 
 class ArgumentError(Exception):
     """Exception raised for errors in the input."""
@@ -14,8 +15,10 @@ class AuthError(Exception):
     """Authentication Error"""
 
 
-class ConnectionError(Exception):
+class ConnectError(Exception):
     """Server Connection error"""
+
+
 class BaseError(Exception):
     """Base error class"""
 
@@ -36,7 +39,7 @@ def error(code, severity=0, errortype=""):
             raise ArgumentError(code)
         if errortype == "conn":
             LOGGER.error("Connection error has been detected. Error code : %s", code)
-            raise ConnectionError(code)
+            raise ConnectError(code)
         LOGGER.error("Program error has been detected. Error code : %s", code)
         raise BaseError(code)
     LOGGER.error("Error has been detected. Investigating... Error Code %s", code)

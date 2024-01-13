@@ -1,9 +1,12 @@
-import psycopg2
-from .config import db_config
+# pylint: disable=W0718
+# pylint: disable=C0103
 
 """
-Connection handler for PostgreSQL Database
+Connection handler for PostgresSQL Database
 """
+
+import psycopg2
+from .config import db_config
 
 
 class DataBaseError(Exception):
@@ -12,17 +15,24 @@ class DataBaseError(Exception):
 
 conn = None
 cur = None
+params = db_config()
+
+try:
+    conn = psycopg2.connect(**params)
+    cur = conn.cursor()
+except (Exception, psycopg2.DatabaseError) as error:
+    print(error)
+    raise DataBaseError
 
 
 def connect():
-    global conn, cur
-    params = db_config()
+    """Connect to database"""
+    global conn, cur, params
     try:
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
-
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
+    except (Exception, psycopg2.DatabaseError) as err:
+        print(err)
         raise DataBaseError
 
 
@@ -32,15 +42,15 @@ def check():
     try:
         if conn.closed == 0:
             return
-        else:
-            connect()
-            return
-    except (Exception, psycopg2.DatabaseError, psycopg2.InterfaceError, psycopg2.OperationalError) as err:
+        connect()
+        return
+    except Exception as err:
         print(err)
-        raise DataBaseError
+        raise DataBaseError from err
 
 
-def insert(table, fields, data, rows = 1):
+def insert(table, fields, data, rows=1):
+    """Insertion of data to a table"""
     global cur
     query = "INSERT INTO " + table + " "
     columns = ""
@@ -59,4 +69,3 @@ def insert(table, fields, data, rows = 1):
     check()
     cur.execute(query)
     conn.commit()
-
