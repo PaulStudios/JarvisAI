@@ -10,7 +10,7 @@ import basicfuncs
 class TestClass:
     """Test class for main.py"""
     def test_server_connection(self):
-        """Testing if API if server is online"""
+        """Testing if API server is online"""
         assert basicfuncs.CONNECTION == 1
 
     def test_login(self):
