@@ -17,7 +17,7 @@ ecapture==2.0.2
 filelock==3.13.1
 idna==3.3
 importlib-metadata==4.12.0
-iniconfig==1.1.1
+iniconfig==2.0.0
 jaraco.classes==3.2.2
 joblib==1.2.0
 jsonpath-rw==1.4.0
