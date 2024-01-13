@@ -9,15 +9,18 @@ import basicfuncs
 
 class TestClass:
     """Test class for main.py"""
+
+    @classmethod
     def test_server_connection(self):
         """Testing if API server is online"""
         assert basicfuncs.CONNECTION == 1
 
+    @classmethod
     def test_login(self):
         """Testing login module"""
         assert basicfuncs.login_back("test", "tester") == "success"
         assert "test" == basicfuncs.USER
-
+    @classmethod
     def test_bot(self):
         """testing bot response module"""
         assert basicfuncs.CHATBOT.authorname == "HilFing"

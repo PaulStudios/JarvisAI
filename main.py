@@ -14,6 +14,8 @@ import time
 import os
 from tkinter import DISABLED, END, NORMAL, Button, Entry, Label, Scrollbar, Text, Tk
 import logging
+import basicfuncs
+
 
 LOGGER = logging
 LOGNAME = ""
@@ -59,15 +61,7 @@ LOGGER.info("Starting JarvisAI")
 time.sleep(1)
 LOGGER.info("Loading logging module.")
 print(f"Logger module has been initiated in {LOGNAME}\n")
-import basicfuncs
-
-SHUTDOWN = 0
-
-
-def get_response(msg1):
-    """Get response from chatbot module"""
-    chat = basicfuncs.talk(msg1)
-    return chat
+basicfuncs.init()
 
 
 BG_GRAY = "#ABB2B9"
@@ -173,6 +167,12 @@ class ChatApplication:
         # LOGGER.info(f"{sender}: {msg}")
         # LOGGER.info(f"{BOT_NAME}: {bot_response_msg}")
         LOGGER.info("User Input & Bot reply successfully processed")
+
+
+def get_response(msg1):
+    """Get response from chatbot module"""
+    chat = basicfuncs.talk(msg1)
+    return chat
 
 
 if __name__ == "__main__":
