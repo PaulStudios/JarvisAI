@@ -7,6 +7,7 @@
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/codacy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/codacy.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/devskim.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/devskim.yml" afterDir="false" />
@@ -58,7 +59,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "20-shift-to-database-from-local-json",
+    "git-widget-placeholder": "Merging 20-shift-to-database-from-local-json",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "F:/Coding/JarvisAI/handler",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"

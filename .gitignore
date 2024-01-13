@@ -203,3 +203,4 @@ Procfile
 #Secure data
 .env
 config.ini
+.idea/.name
