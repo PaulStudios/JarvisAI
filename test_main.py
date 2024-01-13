@@ -5,7 +5,7 @@
 Pytest test file for main.py
 """
 
-import basicfuncs
+#import basicfuncs
 
 class TestClass:
     """Test class for main.py"""
