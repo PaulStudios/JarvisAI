@@ -18,8 +18,8 @@ import pyttsx3
 import requests
 from dotenv import load_dotenv
 
-from handler import config
 import user
+from handler import config
 from errors import error
 
 ENGINE = ""
