@@ -9,6 +9,9 @@ Connection handler for PostgresSQL Database
 """
 
 import psycopg2
+from psycopg2 import sql
+from psycopg2.sql import Composed
+
 from .config import db_config
 
 
@@ -71,16 +74,33 @@ def insert(table, fields, data, rows=1):
     cur.execute(query)
     conn.commit()
 
-def get_user(table, data, columns):
-    """Fetches some data from table with/without conditions"""
+
+def get_user(table: str, data: list):
+    """Fetches some data from table using username and password"""
     global cur
     check()
-    query = "SELECT * FROM " + table
-    if columns > 1:
-        query = query + " WHERE"
-        for i in range(columns):
-            query = query + " " + data[i][0] + "='" + data[i][1] + "' AND"
-        for i in range(3):
-            query = query[:-1]
+    field_data = [data[0][1], data[1][1]]
+    fields = [data[0][0], data[1][0]]
+    query = form_get_query(table, fields, field_data)
     cur.execute(query)
     return cur.fetchone()
+
+
+def form_get_query(table_name: str, fields: list, data: list) -> Composed:
+    stmt = sql.SQL("""
+        SELECT 
+            * 
+        FROM
+            {table}
+        WHERE
+            {cred_1}={data_1}
+        AND
+            {cred_2}={data_2} 
+    """).format(
+        table=sql.Identifier(table_name),
+        cred_1=sql.Identifier(fields[0]),
+        cred_2=sql.Identifier(fields[1]),
+        data_1=sql.Literal(data[0]),
+        data_2=sql.Literal(data[1])
+    )
+    return stmt
