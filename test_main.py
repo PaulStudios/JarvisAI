@@ -2,13 +2,13 @@
 # pylint: disable=W0104
 
 """
-Pytest test file for main.py
+Pytest test file
 """
 
 #import basicfuncs
 
 class TestClass:
-    """Test class for main.py"""
+    """Test class for gui.py"""
 
     def test_temp(self):
         """Temporary"""
