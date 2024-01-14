@@ -1,3 +1,6 @@
+# pylint: disable=E0401
+# pylint: disable=C0103
+
 """
 Chatbot functions
 """
@@ -5,7 +8,7 @@ import datetime
 import logging
 import time
 import webbrowser
-from rich import pretty, print
+from rich import pretty
 from rich.console import Console
 
 import ChatbotAPI
@@ -57,13 +60,14 @@ class Bot:
         self.reply: str = "No response has been generated yet..."
         self.creds: dict = config.chat_config()
         self.LOGGER: logging.Logger = logging.getLogger("JarvisAI.chatbot")
-        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(self.creds['brainid'], 
+        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(self.creds['brainid'],
                                                               self.creds['brainkey'],
                                                               history=True,
                                                               debug=True)
         webbrowser.get('windows-default')
 
     def userset(self, name: str):
+        """Set username"""
         self.Chatbot.changename(name=name)
 
     def process(self, msg):

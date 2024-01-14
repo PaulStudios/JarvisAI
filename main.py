@@ -1,3 +1,8 @@
+# pylint: disable=E0401
+# pylint: disable=W0602
+# pylint: disable=C0103
+# pylint: disable=W0622
+
 """
 Main file
 """
@@ -84,24 +89,28 @@ def display_menu(menu):
 
 
 def Login():
+    """Login Function"""
     user.login()
     chatbot.userset(user.name)
     system('cls')  # clears stdout
 
 
 def Register():
+    """Register Function"""
     user.register()
     chatbot.userset(user.name)
     system('cls')  # clears stdout
 
 
 def Exit():
+    """Exit"""
     system('cls')  # clears stdout
     print("Goodbye")
     sys.exit()
 
 
 def start():
+    """Start"""
     # Create a menu dictionary where the key is an integer number and the
     # value is a function name.
     print("Loading Jarvis 3.0")
