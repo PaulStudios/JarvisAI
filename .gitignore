@@ -202,5 +202,5 @@ Procfile
 
 #Secure data
 .env
-config.ini
+handler/config.ini
 .idea/.name

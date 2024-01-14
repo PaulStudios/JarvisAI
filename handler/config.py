@@ -38,3 +38,16 @@ def chat_config(filename='config.ini', section='chatbot'):
     else:
         raise Exception(f'Section {section} not found in the {filename} file')
     return creds
+
+
+def sec_config(filename='config.ini', section='security'):
+    parser = ConfigParser()
+    parser.read(filename)
+    creds = {}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            creds[param[0]] = param[1]
+    else:
+        raise Exception(f'Section {section} not found in the {filename} file')
+    return creds
