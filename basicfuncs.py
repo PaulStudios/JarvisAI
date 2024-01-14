@@ -60,7 +60,7 @@ def init():
         TESTAPI = MAINAPI
     TESTAPI = TESTAPI + "/jarvis"
     LOGGER.info("Checking connection to server")
-    user.checkdb()
+    ser.checkdb()
     LOGGER.info("JarvisAI has been initialized successfully. All systems online")
 
 
@@ -74,9 +74,9 @@ def wish_me():
     """Wish the user"""
     hour = datetime.datetime.now().hour
     if 12 > hour >= 0:
-        return "Hello,Good Morning"
+        return "Hello, Good Morning"
     if 18 > hour >= 12:
-        return "Hello,Good Afternoon"
+        return "Hello, Good Afternoon"
     return "Hello,Good Evening"
 
 
@@ -207,30 +207,6 @@ def talk(msg):
     return resp
 
 
-def get_weather(city):
-    """Get weather of a city"""
-    error("ER14 - [Feature Coming Soon]", 1)
-    api_key = os.environ['WEATHER_API']
-    base_url = "https://api.openweathermap.org/data/2.5/weather?"
-    print("whats the city name")
-    city_name = city
-    complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-    response = requests.get(complete_url, timeout=10)
-    server_response = response.json()
-    if server_response["cod"] != "404":
-        internal_server_response = server_response["main"]
-        current_temperature = internal_server_response["temp"]
-        current_humidiy = internal_server_response["humidity"]
-        weather = server_response["weather"]
-        weather_description = weather[0]["description"]
-        resp = " Temperature in kelvin unit is " + str(
-            current_temperature) + "\n humidity in percentage is " + str(
-            current_humidiy) + "\n description  " + str(weather_description)
-    else:
-        resp = " City Not Found "
-    return resp
-
-
 def login_front():
     """Login user"""
     LOGGER.info("Initiating login module")
@@ -279,10 +255,10 @@ def start():
     if registered.isdecimal():
         rchoice2 = choice_selector(int(registered))
         if rchoice2 == "one":
-            USER = user.register()[1]
+            USER = ser.register()[1]
             return
         if rchoice2 == "two":
-            USER = user.login()[1]
+            USER = ser.login()[1]
             return
         error("ER12 - [Invalid Choice]", 1, "args")
     else:

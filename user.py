@@ -16,7 +16,7 @@ from handler import encrypt, decrypt
 
 
 LOGGER = logging
-user = ()
+ser = ()
 table_name = config.program_config()['table']
 
 
@@ -42,57 +42,76 @@ def checkmail(email1=""):
     error("ER5 - Invalid email entered during registration.", 1, "auth")
 
 
-def register():
-    """Registers new user"""
-    LOGGER.info("Initiating registration module")
-    LOGGER.info("Registering new user")
-    # Taking inputs
-    name_in = input("Please enter your full name (Only First name and Last name): ")
-    name = name_in.split()
-    country = input("In which country do you live? ")
-    email = input("Please enter your email address: ")
-    email = checkmail(email)
-    username = input("Please enter a username: ")
-    password = input("Please enter a strong password for your account: ")
-    pwd = input("Please confirm your password: ")
-    if pwd == password:
-        print("Processing inputs...")
-    else:
-        print("Your passwords do not match.")
-        pwd = input("Please re-confirm your password: ")
+class User:
+    """User Class"""
+
+    def __init__(self):
+        database.check()
+        self.userdata: tuple = ()
+        self.username: str = ""
+        self.name: str = ""
+        self._mail: str = ""
+        self.country: str = ""
+        self.auth: bool = False
+
+    def register(self):
+        """Registers new user"""
+        LOGGER.info("Initiating registration module")
+        LOGGER.info("Registering new user")
+        # Taking inputs
+        name_in = input("Please enter your full name (Only First name and Last name): ")
+        name = name_in.split()
+        country = input("In which country do you live? ")
+        email = input("Please enter your email address: ")
+        email = checkmail(email)
+        username = input("Please enter a username: ")
+        password = input("Please enter a strong password for your account: ")
+        pwd = input("Please confirm your password: ")
         if pwd == password:
             print("Processing inputs...")
         else:
-            error("ER5 - Incorrect Password during registration.", 1, "auth")
-    mail = encrypt(email, password)
-    pwd = encrypt(password)
-    userdata = [name[0], name[1], mail, username, pwd, country]
-    fields = ["first_name", "last_name", "email", "username", "password", "country"]
-    try:
-        database.insert(table=table_name, fields=fields, data=userdata)
-    except Exception as e:
-        error("ER9 - Database insertion failed, " + str(e), 1)
-    print("You have been successfully registered. Logging you in")
-    u = login(username, password)
-    return u
+            print("Your passwords do not match.")
+            pwd = input("Please re-confirm your password: ")
+            if pwd == password:
+                print("Processing inputs...")
+            else:
+                error("ER5 - Incorrect Password during registration.", 1, "auth")
+        mail = encrypt(email, password)
+        pwd = encrypt(password)
+        userdata = [name[0], name[1], mail, username, pwd, country]
+        fields = ["first_name", "last_name", "email", "username", "password", "country"]
+        try:
+            database.insert(table=table_name, fields=fields, data=userdata)
+        except Exception as e:
+            error("ER9 - Database insertion failed, " + str(e), 1)
+        print("You have been successfully registered. Logging you in")
+        u = self.login(username, password)
+        return u
 
+    def login(self, username: str = None, password: str = None) -> tuple:
+        """Logs in user"""
+        global ser
+        check = 0
+        if username is None or password is None:
+            check = 1
+        if check == 1:
+            username = input("Please enter your username: ")
+            password = input("Please enter your password: ")
+        data = ["username", username]
+        i = ()
+        try:
+            i = database.get_user(table=table_name, data=data)
+        except Exception as e:
+            error("ER10 - Database fetch failed, " + str(e), 1)
+        if password == decrypt(i[5].tobytes()):
+            self.userdata = i
+            self.__putdata(self.userdata)
+            self.auth = True
+            return ser
+        error("ER2 - Incorrect username/password", 1, "auth")
 
-def login(username: str = None, password: str = None) -> tuple:
-    """Logs in user"""
-    global user
-    check = 0
-    if username is None or password is None:
-        check = 1
-    if check == 1:
-        username = input("Please enter your username: ")
-        password = input("Please enter your password: ")
-    data = ["username", username]
-    i = ()
-    try:
-        i = database.get_user(table=table_name, data=data)
-    except Exception as e:
-        error("ER10 - Database fetch failed, " + str(e), 1)
-    if password == decrypt(i[5].tobytes()):
-        user = i
-        return user
-    error("ER2 - Incorrect username/password", 1, "auth")
+    def __putdata(self, data: tuple):
+        self.username = data[4]
+        self.name = data[1] + " " + data[2]
+        self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
+        self.country = data[6]
