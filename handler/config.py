@@ -24,3 +24,17 @@ def db_config(filename='config.ini', section='db_info'):
         raise Exception(f'Section {section} not found in the {filename} file')
 
     return db
+
+
+def chat_config(filename='config.ini', section='chatbot'):
+    """Parsing Chatbot credentials from config file"""
+    parser = ConfigParser()
+    parser.read(filename)
+    creds = {}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            creds[param[0]] = param[1]
+    else:
+        raise Exception(f'Section {section} not found in the {filename} file')
+    return creds

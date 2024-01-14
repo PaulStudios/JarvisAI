@@ -67,3 +67,4 @@ def register():
     except Exception as e:
         error("ER9 - Database insertion failed, " + str(e), 1)
     print("You have been successfully registered. Logging you in")
+
