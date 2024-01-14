@@ -53,35 +53,44 @@ def check():
         raise DataBaseError from err
 
 
-def insert(table, fields, data, rows=1):
+def insert(table, fields: list, data: list) -> None:
     """Insertion of data to a table"""
     global cur
     check()
-    query = "INSERT INTO " + table + " "
-    columns = ""
-    vals = ""
-    for i in range(rows):
-        columns = columns + fields[i] + ","
-    columns = columns[:-1]
-    query = query + "(" + columns + ")" + " VALUES "
-    for i in range(rows):
-        vals = vals + "'"
-        vals = vals + data[i] + "'"
-        vals = vals + ","
-    vals = vals[:-1]
-    query = query + "(" + vals + ")"
+    query = form_insert_query(table, fields, data)
     # Sending Query
+    check()
     cur.execute(query)
     conn.commit()
+
+
+def form_insert_query(table_name: str, fields: list, data: list) -> Composed:
+    """Generate sql query for get_user()"""
+    stmt = sql.SQL("""
+        INSERT INTO 
+            {table}
+        (
+            {fields}
+        ) VALUES (
+            {user_data}
+        )
+    """).format(
+        table=sql.Identifier(table_name),
+        fields=sql.SQL(',').join(
+            sql.Identifier(n) for n in fields
+        ),
+        user_data=sql.SQL(',').join(
+            sql.Literal(n) for n in data
+        )
+    )
+    return stmt
 
 
 def get_user(table: str, data: list):
     """Fetches some data from table using username and password"""
     global cur
+    query = form_get_query(table, data[0], data[1])
     check()
-    field_data = [data[0][1], data[1][1]]
-    fields = [data[0][0], data[1][0]]
-    query = form_get_query(table, fields, field_data)
     cur.execute(query)
     return cur.fetchone()
 
@@ -95,13 +104,9 @@ def form_get_query(table_name: str, fields: list, data: list) -> Composed:
             {table}
         WHERE
             {cred_1}={data_1}
-        AND
-            {cred_2}={data_2} 
     """).format(
         table=sql.Identifier(table_name),
-        cred_1=sql.Identifier(fields[0]),
-        cred_2=sql.Identifier(fields[1]),
-        data_1=sql.Literal(data[0]),
-        data_2=sql.Literal(data[1])
+        cred_1=sql.Identifier(fields),
+        data_1=sql.Literal(data)
     )
     return stmt

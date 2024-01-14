@@ -11,11 +11,13 @@ import logging
 
 import handler
 from errors import error
-from handler import database
+from handler import database, config
+from handler import encrypt, decrypt
 
 
 LOGGER = logging
 user = ()
+table_name = config.program_config()['table']
 
 
 def checkdb():
@@ -48,52 +50,49 @@ def register():
     name_in = input("Please enter your full name (Only First name and Last name): ")
     name = name_in.split()
     country = input("In which country do you live? ")
-    mail = input("Please enter your email address: ")
-    mail = checkmail(mail)
+    email = input("Please enter your email address: ")
+    email = checkmail(email)
     username = input("Please enter a username: ")
     password = input("Please enter a strong password for your account: ")
-    p = input("Please confirm your password: ")
-    if p == password:
+    pwd = input("Please confirm your password: ")
+    if pwd == password:
         print("Processing inputs...")
     else:
         print("Your passwords do not match.")
-        p = input("Please re-confirm your password: ")
-        if p == password:
+        pwd = input("Please re-confirm your password: ")
+        if pwd == password:
             print("Processing inputs...")
         else:
             error("ER5 - Incorrect Password during registration.", 1, "auth")
-    userdata = [name[0], name[1], mail, username, password, country]
+    mail = encrypt(email, password)
+    pwd = encrypt(password)
+    userdata = [name[0], name[1], mail, username, pwd, country]
     fields = ["first_name", "last_name", "email", "username", "password", "country"]
     try:
-        database.insert(table="users", rows=6, fields=fields, data=userdata)
+        database.insert(table=table_name, fields=fields, data=userdata)
     except Exception as e:
         error("ER9 - Database insertion failed, " + str(e), 1)
     print("You have been successfully registered. Logging you in")
-    login(username, password)
+    u = login(username, password)
+    return u
 
 
 def login(username: str = None, password: str = None) -> tuple:
     """Logs in user"""
     global user
+    check = 0
     if username is None or password is None:
+        check = 1
+    if check == 1:
         username = input("Please enter your username: ")
         password = input("Please enter your password: ")
-    data = [["username", username], ["password", password]]
+    data = ["username", username]
     i = ()
     try:
-        i = database.get_user(table="users", data=data)
+        i = database.get_user(table=table_name, data=data)
     except Exception as e:
         error("ER10 - Database fetch failed, " + str(e), 1)
-    if i is None:
-        print("Incorrect data entered. Please re-enter your credentials.")
-        username = input("Please enter your username: ")
-        password = input("Please enter your password: ")
-        data = [["username", username], ["password", password]]
-        try:
-            i = database.get_user(table="users", data=data)
-        except Exception as e:
-            error("ER10 - Database fetch failed, " + str(e), 1)
-        if i is None:
-            error("ER2 - Incorrect username/password", 1, "auth")
-    user = i
-    return user
+    if password == decrypt(i[5].tobytes()):
+        user = i
+        return user
+    error("ER2 - Incorrect username/password", 1, "auth")

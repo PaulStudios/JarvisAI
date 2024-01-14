@@ -18,7 +18,7 @@ KDF_ITERATIONS = 120000
 priv = sec_config()
 
 
-def encrypt(plaintext: str, password: str = priv['pass']) -> (bytes, bytes):
+def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     """Encrypt the message"""
     salt = int(priv['salt']).to_bytes(5)
     kdf = PBKDF2HMAC(
