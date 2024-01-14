@@ -60,6 +60,7 @@ class Bot:
 
     def userset(self, name: str):
         self.Chatbot.changename(name=name)
+
     def process(self, msg):
         """Get response from bot"""
         if 'open youtube' in msg:

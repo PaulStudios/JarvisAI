@@ -20,13 +20,8 @@ class DataBaseError(Exception):
 
 
 params = db_config()
-
-try:
-    conn = psycopg2.connect(**params)
-    cur = conn.cursor()
-except (Exception, psycopg2.DatabaseError) as error:
-    print(error)
-    raise DataBaseError
+conn = ""
+cur = ""
 
 
 def connect():
@@ -42,12 +37,8 @@ def connect():
 
 def check():
     """Check DB Connection"""
-    global conn
     try:
-        if conn.closed == 0:
-            return
         connect()
-        return
     except Exception as err:
         print(err)
         raise DataBaseError from err

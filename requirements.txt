@@ -5,3 +5,4 @@ python-dotenv==0.21.0
 pyttsx3==2.90
 requests==2.31.0
 cryptography~=41.0.7
+rich~=12.5.1

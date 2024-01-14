@@ -15,7 +15,6 @@ from handler import database, config
 from handler import encrypt, decrypt
 
 
-LOGGER = logging
 ser = ()
 table_name = config.program_config()['table']
 
@@ -46,6 +45,8 @@ class User:
     """User Class"""
 
     def __init__(self):
+        self.LOGGER: logging.Logger = logging.getLogger("JarvisAI.user")
+        self.LOGGER.info("Connecting to database...")
         database.check()
         self.userdata: tuple = ()
         self.username: str = ""
@@ -53,11 +54,11 @@ class User:
         self._mail: str = ""
         self.country: str = ""
         self.auth: bool = False
+        self.LOGGER.info("Successfully connected to database: JarvisAI - User_Profiles")
 
-    def register(self):
+    def register(self) -> None:
         """Registers new user"""
-        LOGGER.info("Initiating registration module")
-        LOGGER.info("Registering new user")
+        self.LOGGER.info("Initiating registration module")
         # Taking inputs
         name_in = input("Please enter your full name (Only First name and Last name): ")
         name = name_in.split()
@@ -80,17 +81,18 @@ class User:
         pwd = encrypt(password)
         userdata = [name[0], name[1], mail, username, pwd, country]
         fields = ["first_name", "last_name", "email", "username", "password", "country"]
+        self.LOGGER.info("Registering new user")
         try:
             database.insert(table=table_name, fields=fields, data=userdata)
         except Exception as e:
             error("ER9 - Database insertion failed, " + str(e), 1)
+        self.LOGGER.info("Registered new user: " + username)
         print("You have been successfully registered. Logging you in")
-        u = self.login(username, password)
-        return u
+        self.login(username, password)
 
-    def login(self, username: str = None, password: str = None) -> tuple:
+    def login(self, username: str = None, password: str = None) -> None:
         """Logs in user"""
-        global ser
+        self.LOGGER.info("Initiating login module")
         check = 0
         if username is None or password is None:
             check = 1
@@ -99,18 +101,23 @@ class User:
             password = input("Please enter your password: ")
         data = ["username", username]
         i = ()
+        self.LOGGER.info("Logging in user")
         try:
             i = database.get_user(table=table_name, data=data)
         except Exception as e:
             error("ER10 - Database fetch failed, " + str(e), 1)
+        if i is None:
+            error("ER2 - Incorrect username", 1, "auth")
         if password == decrypt(i[5].tobytes()):
             self.userdata = i
             self.__putdata(self.userdata)
             self.auth = True
-            return ser
-        error("ER2 - Incorrect username/password", 1, "auth")
+            self.LOGGER.info("Successfully logged in '" + self.username + "'")
+        else:
+            error("ER2 - Incorrect password", 1, "auth")
 
     def __putdata(self, data: tuple):
+        self.LOGGER.info("Setting up user profile...")
         self.username = data[4]
         self.name = data[1] + " " + data[2]
         self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))

@@ -2,19 +2,17 @@
 Main file
 """
 import datetime
+from time import sleep
 import logging
 import os
 import sys
 from os import system
+from rich import pretty, print
+from rich.console import Console
 
-import basicfuncs
 from user import User
 from chatbot import Bot
 
-LOGGER: logging.Logger = logging.getLogger("JarvisAI")
-LOGNAME: str = ""
-user: User = User()
-chatbot: Bot = Bot()
 
 def initlogs():
     """Initialize logging module"""
@@ -25,7 +23,7 @@ def initlogs():
     else:
         os.mkdir('logs')
     with open(LOGNAME, 'w', encoding='utf8') as file_test:
-        file_test.write(" ")
+        file_test.write("JarvisAI v3.0\n")
     LOGGER.setLevel(logging.DEBUG)
 
     # Create handlers
@@ -49,16 +47,24 @@ def initlogs():
     # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-def init():
-    global user, chatbot
-    print('Loading your AI personal assistant - Jarvis...')
+LOGGER: logging.Logger = logging.getLogger("JarvisAI.core")
+LOGNAME: str = ""
+pretty.install()
+console = Console()
+console.print('Loading your AI personal assistant - Jarvis...', style="yellow")
+with console.status("[bold green]Setting up JarvisAI...") as status:
+    console.log("Loading logging module...")
     initlogs()
-    LOGGER.info("Loading logging module.")
-    print(f"Logger module has been initiated in {LOGNAME}\n")
-    LOGGER.info("Starting JarvisAI")
-    basicfuncs.init()
+    LOGGER.info("Loading logging module...")
+    LOGGER.info("Setting up JarvisAI...")
     user: User = User()
+    console.log("Initiated User Module")
     chatbot: Bot = Bot()
+    sleep(1.5)
+    console.log("Initiated Chatbot Module")
+    sleep(2)
+    console.log("Setup Complete")
+console.print(f"Logger module has been initiated in {LOGNAME}\n", style="yellow")
 
 
 def display_menu(menu):
@@ -73,17 +79,17 @@ def display_menu(menu):
 
 def Login():
     user.login()
-    Bot.userset(user.username)
+    chatbot.userset(user.name)
     system('cls')  # clears stdout
 
 
 def Register():
     user.register()
-    Bot.userset(user.username)
+    chatbot.userset(user.name)
     system('cls')  # clears stdout
 
 
-def done():
+def Exit():
     system('cls')  # clears stdout
     print("Goodbye")
     sys.exit()
@@ -92,7 +98,9 @@ def done():
 def start():
     # Create a menu dictionary where the key is an integer number and the
     # value is a function name.
-    functions_names = [Login, Register, done]
+    print("Loading Jarvis 3.0")
+    LOGGER.info("Starting Jarvis 3.0")
+    functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
     selection = int(input("Please enter your selection number: "))  # Get function key
@@ -101,5 +109,4 @@ def start():
 
 
 if __name__ == "__main__":
-    init()
     start()
