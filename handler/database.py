@@ -87,6 +87,7 @@ def get_user(table: str, data: list):
 
 
 def form_get_query(table_name: str, fields: list, data: list) -> Composed:
+    """Generate sql query for get_user()"""
     stmt = sql.SQL("""
         SELECT 
             * 

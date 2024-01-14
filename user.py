@@ -72,16 +72,16 @@ def register():
     login(username, password)
 
 
-def login(username="", password=""):
+def login(username: str = None, password: str = None) -> tuple:
     """Logs in user"""
     global user
-    if username == "" or password == "":
+    if username is None or password is None:
         username = input("Please enter your username: ")
         password = input("Please enter your password: ")
     data = [["username", username], ["password", password]]
     i = ()
     try:
-        i = database.get_user(table="users", data=data, columns=2)
+        i = database.get_user(table="users", data=data)
     except Exception as e:
         error("ER10 - Database fetch failed, " + str(e), 1)
     if i is None:
@@ -90,7 +90,7 @@ def login(username="", password=""):
         password = input("Please enter your password: ")
         data = [["username", username], ["password", password]]
         try:
-            i = database.get_user(table="users", data=data, columns=2)
+            i = database.get_user(table="users", data=data)
         except Exception as e:
             error("ER10 - Database fetch failed, " + str(e), 1)
         if i is None:
