@@ -72,12 +72,15 @@ def insert(table, fields, data, rows=1):
     conn.commit()
 
 def get_user(table, data, columns):
+    """Fetches some data from table with/without conditions"""
     global cur
     check()
-    query = "SELECT * FROM " + table + " WHERE"
-    for i in range(columns):
-        query = query + " " + data[i][0] + "='" + data[i][1] + "' AND"
-    for i in range(3):
-        query = query[:-1]
+    query = "SELECT * FROM " + table
+    if columns > 1:
+        query = query + " WHERE"
+        for i in range(columns):
+            query = query + " " + data[i][0] + "='" + data[i][1] + "' AND"
+        for i in range(3):
+            query = query[:-1]
     cur.execute(query)
     return cur.fetchone()
