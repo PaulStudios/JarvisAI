@@ -19,7 +19,6 @@ import user
 import chatbot
 
 
-
 def initlogs():
     """Initialize logging module"""
     global LOGNAME, LOGGER
