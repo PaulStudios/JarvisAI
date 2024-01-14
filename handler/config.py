@@ -7,7 +7,7 @@ Config Parser for database info
 from configparser import ConfigParser
 
 
-def db_config(filename='config.ini', section='db_info'):
+def db_config(filename='config.ini', section='database'):
     """Parsing the database info from config file"""
     # create a parser
     parser = ConfigParser()

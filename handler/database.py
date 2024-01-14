@@ -53,6 +53,7 @@ def check():
 def insert(table, fields, data, rows=1):
     """Insertion of data to a table"""
     global cur
+    check()
     query = "INSERT INTO " + table + " "
     columns = ""
     vals = ""
@@ -67,6 +68,16 @@ def insert(table, fields, data, rows=1):
     vals = vals[:-1]
     query = query + "(" + vals + ")"
     # Sending Query
-    check()
     cur.execute(query)
     conn.commit()
+
+def get_user(table, data, columns):
+    global cur
+    check()
+    query = "SELECT * FROM " + table + " WHERE"
+    for i in range(columns):
+        query = query + " " + data[i][0] + "='" + data[i][1] + "' AND"
+    for i in range(3):
+        query = query[:-1]
+    cur.execute(query)
+    return cur.fetchone()

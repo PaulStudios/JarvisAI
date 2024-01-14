@@ -14,6 +14,7 @@ from handler import database
 
 
 LOGGER = logging
+user = ()
 
 
 def checkdb():
@@ -67,3 +68,31 @@ def register():
     except Exception as e:
         error("ER9 - Database insertion failed, " + str(e), 1)
     print("You have been successfully registered. Logging you in")
+    login(username, password)
+
+
+def login(username="", password=""):
+    """Logs in user"""
+    global user
+    if username == "" or password == "":
+        username = input("Please enter your username: ")
+        password = input("Please enter your password: ")
+    data = [["username", username], ["password", password]]
+    i = ()
+    try:
+        i = database.get_user(table="users", data=data, columns=2)
+    except Exception as e:
+        error("ER10 - Database fetch failed, " + str(e), 1)
+    if i is None:
+        print("Incorrect data entered. Please re-enter your credentials.")
+        username = input("Please enter your username: ")
+        password = input("Please enter your password: ")
+        data = [["username", username], ["password", password]]
+        try:
+            i = database.get_user(table="users", data=data, columns=2)
+        except Exception as e:
+            error("ER10 - Database fetch failed, " + str(e), 1)
+        if i is None:
+            error("ER2 - Incorrect username/password", 1, "auth")
+    user = i
+    return user
