@@ -19,7 +19,6 @@ import pyttsx3
 import requests
 from dotenv import load_dotenv
 
-import user
 from errors import error
 
 ENGINE = ""
@@ -63,7 +62,6 @@ def init():
     TESTAPI = TESTAPI + "/jarvis"
     LOGGER.info("Checking connection to server")
     checkconnect()
-    user.checkdb()
     LOGGER.info("JarvisAI has been initialized successfully. All systems online")
 
 
@@ -282,7 +280,6 @@ def start():
     if registered.isdecimal():
         rchoice2 = choice_selector(int(registered))
         if rchoice2 == "one":
-            user.register()
             return
         if rchoice2 == "two":
             login_front()
