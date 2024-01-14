@@ -10,6 +10,8 @@ from os import system
 from rich import pretty, print
 from rich.console import Console
 
+import user
+import chatbot
 from user import User
 from chatbot import Bot
 
@@ -47,17 +49,21 @@ def initlogs():
     # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-LOGGER: logging.Logger = logging.getLogger("JarvisAI.core")
+LOGGER: logging.Logger = logging.getLogger("JarvisAI")
 LOGNAME: str = ""
 pretty.install()
 console = Console()
 console.print('Loading your AI personal assistant - Jarvis...', style="yellow")
 with console.status("[bold green]Setting up JarvisAI...") as status:
-    console.log("Loading logging module...")
+    console.log("Starting core systems...")
     initlogs()
     LOGGER.info("Loading logging module...")
+    sleep(0.9)
     LOGGER.info("Setting up JarvisAI...")
+    console.log("Connecting to PaulStudios Database")
     user: User = User()
+    console.log("Connected")
+    sleep(0.9)
     console.log("Initiated User Module")
     chatbot: Bot = Bot()
     sleep(1.5)

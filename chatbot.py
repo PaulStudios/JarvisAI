@@ -5,11 +5,16 @@ import datetime
 import logging
 import time
 import webbrowser
+from rich import pretty, print
+from rich.console import Console
 
 import ChatbotAPI
 import ecapture as ec
 
 from handler import config
+
+pretty.install()
+console = Console()
 
 
 def wish_me():
