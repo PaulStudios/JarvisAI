@@ -7,7 +7,7 @@ Config Parser for database info
 from configparser import ConfigParser
 
 
-def db_config(filename='config.ini', section='db_info'):
+def db_config(filename='config.ini', section='database'):
     """Parsing the database info from config file"""
     # create a parser
     parser = ConfigParser()
@@ -40,4 +40,29 @@ def chat_config(filename='config.ini', section='chatbot'):
     return creds
 
 
-print(chat_config())
+def sec_config(filename='config.ini', section='security'):
+    """Parsing Encryption credentials from config file"""
+    parser = ConfigParser()
+    parser.read(filename)
+    creds = {}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            creds[param[0]] = param[1]
+    else:
+        raise Exception(f'Section {section} not found in the {filename} file')
+    return creds
+
+
+def program_config(filename='config.ini', section='Jarvis'):
+    """Parsing program details from config file"""
+    parser = ConfigParser()
+    parser.read(filename)
+    data = {}
+    if parser.has_section(section):
+        params = parser.items(section)
+        for param in params:
+            data[param[0]] = param[1]
+    else:
+        raise Exception(f'Section {section} not found in the {filename} file')
+    return data
