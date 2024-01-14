@@ -12,13 +12,13 @@ import os
 import sys
 import time
 import webbrowser
-
 import ChatbotAPI
 import ecapture as ec
 import pyttsx3
 import requests
 from dotenv import load_dotenv
 
+from handler import config
 from errors import error
 
 ENGINE = ""
@@ -48,8 +48,8 @@ def init():
     MAINAPI = str(os.environ["MAINAPI"])
     TESTAPI = str(os.environ["TESTAPI"])
     LOGGER.info("Setting up Chatbot")
-    CHATBOT = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv(
-        "BRAINKEY"), history=True, debug=True)
+    cred = config.chat_config()
+    CHATBOT = ChatbotAPI.ChatBot(cred['brainid'], cred['brainkey'], history=True, debug=True)
     # chatbot.spellcheck(True)
     webbrowser.get('windows-default')
     LOGGER.info("Setting up development/production module")
