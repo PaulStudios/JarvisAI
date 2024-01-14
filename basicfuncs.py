@@ -46,8 +46,6 @@ def init():
     VOICES = ENGINE.getProperty('voices')
     ENGINE.setProperty('voice', 'voices[1].id')
     LOGGER.info("Setting up API")
-    MAINAPI = str(os.environ["MAINAPI"])
-    TESTAPI = str(os.environ["TESTAPI"])
     LOGGER.info("Setting up Chatbot")
     cred = config.chat_config()
     CHATBOT = ChatbotAPI.ChatBot(cred['brainid'], cred['brainkey'], history=True, debug=True)
@@ -62,7 +60,6 @@ def init():
         TESTAPI = MAINAPI
     TESTAPI = TESTAPI + "/jarvis"
     LOGGER.info("Checking connection to server")
-    checkconnect()
     user.checkdb()
     LOGGER.info("JarvisAI has been initialized successfully. All systems online")
 
@@ -245,7 +242,7 @@ def login_front():
 
 def start():
     """Start the program"""
-    global MODE
+    global MODE, USER
     print("Loading Jarvis 2.0")
     LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
@@ -282,10 +279,10 @@ def start():
     if registered.isdecimal():
         rchoice2 = choice_selector(int(registered))
         if rchoice2 == "one":
-            user.register()
+            USER = user.register()[1]
             return
         if rchoice2 == "two":
-            login_front()
+            USER = user.login()[1]
             return
         error("ER12 - [Invalid Choice]", 1, "args")
     else:
@@ -293,16 +290,7 @@ def start():
     LOGGER.info("User has been logged in to JarvisAI")
 
 
-# To DO: Add devmode.
-# How to comment code-blocks:- Alt+3 & Alt+4
-# def devcheck():
-#    global dev
-# if len(sys.argv) == 4:
-# if sys.argv[1] == "devmode":
-#            print("Initializing Developer Mode")
-#            argcode = [sys.argv[1], sys.argv[3], sys.argv[2]]
-
-#def mic_input():
+# def mic_input():
 #    """Speech-to-Text function"""
 #    input_from_mic = sr.Recognizer()
 #    with sr.Microphone() as source:
