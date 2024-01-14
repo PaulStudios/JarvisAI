@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/handler/password.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
@@ -28,6 +27,7 @@
       <change beforePath="$PROJECT_DIR$/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/errors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/password.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/password.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qodana.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
@@ -86,6 +86,7 @@
       <recent name="F:\Coding\JarvisAI\handler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Coding\JarvisAI" />
       <recent name="F:\Coding\JarvisAI\handler" />
     </key>
   </component>

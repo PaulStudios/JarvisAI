@@ -1,3 +1,5 @@
+# pylint: disable=E0401
+
 """
 Password Encryption Handler
 """
@@ -29,7 +31,8 @@ def encrypt(plaintext: str, password: str = priv['pass']) -> (bytes, bytes):
     return ciphertext
 
 
-def decrypt(ciphertext: bytes, password: str = priv['pass'], salt: bytes = int(priv['salt']).to_bytes(5)) -> str:
+def decrypt(ciphertext: bytes, password: str = priv['pass'],
+            salt: bytes = int(priv['salt']).to_bytes(5)) -> str:
     """Decrypt Message"""
     # Derive the symmetric key using the password and provided salt.
     kdf = PBKDF2HMAC(

@@ -41,6 +41,7 @@ def chat_config(filename='config.ini', section='chatbot'):
 
 
 def sec_config(filename='config.ini', section='security'):
+    """Parsing Encryption credentials from config file"""
     parser = ConfigParser()
     parser.read(filename)
     creds = {}
