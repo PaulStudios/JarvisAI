@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/codacy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/codacy.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/devskim.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/devskim.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/greetings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/greetings.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/pylint.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pylint.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/python-app.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/python-app.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Jarvis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Jarvis.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/basicfuncs.py" beforeDir="false" afterPath="$PROJECT_DIR$/basicfuncs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/qodana.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2arSdCRbYPFqxxgFTq8gPiQBl39" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "22-remove-dotenv",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "F:/Coding/JarvisAI/handler",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  }
+}]]></component>
+  <component name="QodanaReportsService">
+    <option name="descriptions">
+      <ReportDescription localRun="true" path="C:\Users\indra\AppData\Local\Temp\qodana_output1\qodana.sarif.json" reportGuid="61823ad6-df98-42c6-9531-5112068050bd" reportId="JarvisAI/qodana/2024-01-12" />
+      <ReportDescription localRun="true" path="C:\Users\indra\AppData\Local\Temp\qodana_output11\qodana.sarif.json" reportGuid="a392a01a-3afa-4be0-bd29-8a80e6cd90cc" reportId="JarvisAI/qodana/2024-01-12" />
+      <ReportDescription localRun="true" path="C:\Users\indra\AppData\Local\Temp\qodana_output2\qodana.sarif.json" reportGuid="1a172944-8588-413e-850e-67963ef73367" reportId="JarvisAI/qodana/2024-01-12" />
+      <ReportDescription localRun="true" path="C:\Users\indra\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="d6a325fc-49b9-45f2-873e-d0ca27f877ee" reportId="JarvisAI/qodana/2024-01-12" />
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\Coding\JarvisAI\handler" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\Coding\JarvisAI" />
+      <recent name="F:\Coding\JarvisAI\handler" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="" />
+      <created>1705075291014</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1705075291014</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

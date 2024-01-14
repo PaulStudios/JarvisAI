@@ -9,18 +9,17 @@ All the function of JarvisAI
 import datetime
 import logging
 import os
-import re
 import sys
 import time
 import webbrowser
-
 import ChatbotAPI
 import ecapture as ec
 import pyttsx3
 import requests
 from dotenv import load_dotenv
 
-from errors import AuthError, BaseError, ArgumentError
+from handler import config
+from errors import error
 
 ENGINE = ""
 VOICES = 0
@@ -33,24 +32,6 @@ LOGGER = logging
 USER = ""
 LOGNAME = ""
 DEV = 0
-
-
-def error(code, severity=0, errortype=""):
-    """Error function to better handle and log errors"""
-    if severity > 0:
-        LOGGER.warning("Error has been detected. Investigating...")
-        if errortype == "auth":
-            LOGGER.error("Authentication error has been detected. Error code : %s", code)
-            raise AuthError(code)
-        if errortype == "args":
-            LOGGER.error("Argument error has been detected. Error code : %s", code)
-            raise ArgumentError(code)
-        LOGGER.error("Program error has been detected. Error code : %s", code)
-        raise BaseError(code)
-    LOGGER.error("Error has been detected. Investigating... Error Code %s", code)
-    LOGGER.error("Severity is low. Continuing...")
-    print("Something went wrong. Error Code :- " + code + ".")
-    print("Please seek support from developer with the error code.")
 
 
 def init():
@@ -67,8 +48,8 @@ def init():
     MAINAPI = str(os.environ["MAINAPI"])
     TESTAPI = str(os.environ["TESTAPI"])
     LOGGER.info("Setting up Chatbot")
-    CHATBOT = ChatbotAPI.ChatBot(os.getenv("BRAINID"), os.getenv(
-        "BRAINKEY"), history=True, debug=True)
+    cred = config.chat_config()
+    CHATBOT = ChatbotAPI.ChatBot(cred['brainid'], cred['brainkey'], history=True, debug=True)
     # chatbot.spellcheck(True)
     webbrowser.get('windows-default')
     LOGGER.info("Setting up development/production module")
@@ -122,32 +103,9 @@ def take_picture(delay=0):
     return filename
 
 
-def checkmail(email):
-    """Validate mail"""
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if re.match(regex, email):
-        LOGGER.info("Submitted email is valid")
-        return "valid"
-    LOGGER.warning("Submitted email is invalid")
-    error("Email has been detected as Invalid", 1, "auth")
-    return "invalid"
-
-
 def checkconnect():
     """Check server connection"""
     global CONNECTION
-    print("Connecting to server...")
-    time.sleep(2)
-    try:
-        checkapi = requests.get(MAINAPI, timeout=10)
-        if checkapi.status_code == 200:
-            print("Successfully connected to PaulStudios server")
-        else:
-            error(
-                f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
-    except requests.exceptions.ConnectionError:
-        error(
-            f"ER11 - [Cannot connect to {MAINAPI}, " + str(checkapi.status_code) + "]", 1)
     print("Authenticating with JarvisAPI...")
     try:
         checkapi = requests.get(TESTAPI, timeout=10)
@@ -156,10 +114,10 @@ def checkconnect():
             CONNECTION = 1
             return "success"
         error(
-            f"ER11 - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11A - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
     except requests.exceptions.ConnectionError:
         error(
-            f"ER11 - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11A - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
     return "failure"
 
 
@@ -274,21 +232,6 @@ def get_weather(city):
     return resp
 
 
-def register_front():
-    """Register User"""
-    LOGGER.info("Initiating registration module")
-    username = input("Pls enter your new username: ")
-    password = input("Pls enter your new password: ")
-    emailofuser = input("Pls enter your new email: ")
-    LOGGER.info("Registering user")
-    mailcheck = checkmail(emailofuser)
-    if mailcheck == "valid":
-        register_back(username, password, emailofuser)
-        print("You have been successfully registered. Logging you in")
-        time.sleep(1.5)
-        login_back(username, password)
-
-
 def login_front():
     """Login user"""
     LOGGER.info("Initiating login module")
@@ -301,7 +244,7 @@ def login_front():
 def start():
     """Start the program"""
     global MODE
-    print("Loading Jarvis 2 point 0")
+    print("Loading Jarvis 2.0")
     LOGGER.info("Starting Jarvis 2.0")
     time.sleep(0.5)
     print("Please choose command module:")
@@ -337,7 +280,6 @@ def start():
     if registered.isdecimal():
         rchoice2 = choice_selector(int(registered))
         if rchoice2 == "one":
-            register_front()
             return
         if rchoice2 == "two":
             login_front()
@@ -373,6 +315,3 @@ def start():
 #            speak("Pardon me, please say that again")
 #            return "None"
 #        return statement
-
-
-init()

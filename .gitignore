@@ -116,7 +116,6 @@ dmypy.json
 
 #Others
 logs/
-.env
 MicAI.py
 TypeAI.py
 test_main.txt
@@ -200,3 +199,8 @@ fabric.properties
 fileparser.py
 .dockerignore
 Procfile
+
+#Secure data
+.env
+config.ini
+.idea/.name

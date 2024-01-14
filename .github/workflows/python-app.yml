@@ -33,7 +33,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
-        python -m pip install PyAudio-0.2.11-cp310-cp310-win_amd64.whl
+        python -m pip install assets/PyAudio-0.2.11-cp310-cp310-win_amd64.whl
         pip install -r requirements.txt --no-deps
     - name: Lint with flake8
       run: |
