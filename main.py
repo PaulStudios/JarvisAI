@@ -1,24 +1,22 @@
-# pylint: disable=W0603
-# pylint: disable=W0702
-# pylint: disable=C0413
-# pylint: disable=W0613
-# pylint: disable=R0903
-# pylint: disable=maybe-no-member
+# pylint: disable=E0401
+# pylint: disable=W0602
+# pylint: disable=C0103
+# pylint: disable=W0622
 
 """
-Main file containing graphics ui and LOGGER module
+Main file
 """
-
 import datetime
-import time
-import os
-from tkinter import DISABLED, END, NORMAL, Button, Entry, Label, Scrollbar, Text, Tk
+from time import sleep
 import logging
-import basicfuncs
+import os
+import sys
+from os import system
+from rich import pretty, print
+from rich.console import Console
 
-
-LOGGER = logging
-LOGNAME = ""
+import user
+import chatbot
 
 
 def initlogs():
@@ -30,8 +28,7 @@ def initlogs():
     else:
         os.mkdir('logs')
     with open(LOGNAME, 'w', encoding='utf8') as file_test:
-        file_test.write(" ")
-    LOGGER = logging.getLogger("JarvisAI")
+        file_test.write("JarvisAI v3.0\n")
     LOGGER.setLevel(logging.DEBUG)
 
     # Create handlers
@@ -55,127 +52,74 @@ def initlogs():
     # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-print('Loading your AI personal assistant - Jarvis...')
-initlogs()
-LOGGER.info("Starting JarvisAI")
-time.sleep(1)
-LOGGER.info("Loading logging module.")
-print(f"Logger module has been initiated in {LOGNAME}\n")
-basicfuncs.init()
+LOGGER: logging.Logger = logging.getLogger("JarvisAI")
+LOGNAME: str = ""
+pretty.install()
+console = Console()
+console.print('Loading your AI personal assistant - Jarvis...', style="yellow")
+with console.status("[bold green]Setting up JarvisAI...") as status:
+    console.log("Starting core systems...")
+    initlogs()
+    LOGGER.info("Loading logging module...")
+    sleep(0.9)
+    LOGGER.info("Setting up JarvisAI...")
+    console.log("Connecting to PaulStudios Database")
+    user_class: user.User = user.User()
+    console.log("Connected")
+    sleep(0.9)
+    console.log("Initiated User Module")
+    bot: chatbot.Bot = chatbot.Bot()
+    sleep(1.5)
+    console.log("Initiated Chatbot Module")
+    sleep(2)
+    console.log("Setup Complete")
+console.print(f"Logger module has been initiated in {LOGNAME}\n", style="yellow")
 
 
-BG_GRAY = "#ABB2B9"
-BG_COLOR = "#17202A"
-TEXT_COLOR = "#EAECEE"
-BOT_NAME = "JarvisAI"
-FONT = "Helvetica 14"
-FONT_BOLD = "Helvetica 13 bold"
+def display_menu(menu):
+    """
+    Display a menu where the key identifies the name of a function.
+    :param menu: dictionary, key identifies a value which is a function name
+    :return:
+    """
+    for k, function in menu.items():
+        print(str(k)+".", function.__name__)
 
 
-class ChatApplication:
-    """Graphics UI class for Chatbot"""
-
-    def __init__(self):
-        LOGGER.info("JarvisAI Graphical Interface starting...")
-        self.window = Tk()
-        self._setup_main_window()
-
-    def run(self):
-        """Run the chatbot"""
-        self.window.mainloop()
-
-    def _setup_main_window(self):
-        self.window.title("JarvisAI")
-        self.window.resizable(width=False, height=False)
-        self.window.configure(width=1080, height=720, bg=BG_COLOR)
-
-        # head label
-        head_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
-                           text="Welcome to JarvisAI", font=FONT_BOLD, pady=10)
-        head_label.place(relwidth=1)
-
-        # tiny divider
-        line = Label(self.window, width=450, bg=BG_GRAY)
-        line.place(relwidth=1, rely=0.07, relheight=0.012)
-
-        # text widget
-        self.text_widget = Text(self.window, width=20, height=2, bg=BG_COLOR, fg=TEXT_COLOR,
-                                font=FONT, padx=5, pady=5)
-        self.text_widget.place(relheight=0.745, relwidth=1, rely=0.08)
-        self.text_widget.configure(cursor="arrow", state=DISABLED)
-
-        # scroll bar
-        scrollbar = Scrollbar(self.text_widget)
-        scrollbar.place(relheight=1, relx=0.987)
-        scrollbar.configure(command=self.text_widget.yview)
-
-        # bottom label
-        bottom_label = Label(self.window, bg=BG_GRAY, height=80)
-        bottom_label.place(relwidth=1, rely=0.825)
-
-        # message entry box
-        self.msg_entry = Entry(bottom_label, bg="#2C3E50", fg=TEXT_COLOR, font=FONT)
-        self.msg_entry.place(relwidth=0.74, relheight=0.06, rely=0.008, relx=0.011)
-        self.msg_entry.focus()
-        self.msg_entry.bind("<Return>", self._on_enter_pressed)
-
-        # send button
-        send_button = Button(bottom_label, text="Send", font=FONT_BOLD, width=20, bg=BG_GRAY,
-                             command=lambda: self._on_enter_pressed(None))
-        send_button.place(relx=0.77, rely=0.008, relheight=0.06, relwidth=0.22)
-        initmsg = basicfuncs.wish_me()
-        initmsg = f"{BOT_NAME}: {initmsg}\n\n"
-        self.text_widget.configure(state=NORMAL)
-        self.text_widget.insert(END, initmsg)
-        self.text_widget.configure(state=DISABLED)
-        self.text_widget.see(END)
-        LOGGER.info("JarvisAI Graphical Interface started")
-
-    def _on_enter_pressed(self, event):
-        LOGGER.info("Initiating bot response module")
-        if basicfuncs.MODE == 2:
-            msg: str = self.msg_entry.get()
-        elif basicfuncs.MODE == 1:
-            basicfuncs.error("ER14 - [Feature Coming Soon]", 1)
-        else:
-            basicfuncs.error("ER16 - [Invalide mode option set]", 1)
-        self._insert_message(msg, basicfuncs.USER.capitalize())
-
-    def _insert_message(self, msg, sender):
-        if not msg:
-            return
-
-        self.msg_entry.delete(0, END)
-        msg1 = f"{sender}: {msg}\n\n"
-        self.text_widget.configure(state=NORMAL)
-        self.text_widget.insert(END, msg1)
-        self.text_widget.configure(state=DISABLED)
-
-        bot_response_msg = get_response(msg)
-        msg2 = f"{BOT_NAME}: {bot_response_msg}\n\n"
-        self.text_widget.configure(state=NORMAL)
-        self.text_widget.insert(END, msg2)
-        self.text_widget.configure(state=DISABLED)
-        # basicfuncs.dologs(msg1, msg2)
-        self.text_widget.see(END)
-
-        # if basicfuncs.dev >= 1:
-        # print(f"{sender}: {msg}")
-        # print(f"{BOT_NAME}: {bot_response_msg}")
-        LOGGER.info("%s : %s", sender, msg)
-        LOGGER.info("%s : %s", BOT_NAME, bot_response_msg)
-        # LOGGER.info(f"{sender}: {msg}")
-        # LOGGER.info(f"{BOT_NAME}: {bot_response_msg}")
-        LOGGER.info("User Input & Bot reply successfully processed")
+def Login():
+    """Login Function"""
+    user_class.login()
+    bot.userset(user_class.name)
+    system('cls')  # clears stdout
 
 
-def get_response(msg1):
-    """Get response from chatbot module"""
-    chat = basicfuncs.talk(msg1)
-    return chat
+def Register():
+    """Register Function"""
+    user_class.register()
+    bot.userset(user_class.name)
+    system('cls')  # clears stdout
+
+
+def Exit():
+    """Exit"""
+    system('cls')  # clears stdout
+    print("Goodbye")
+    sys.exit()
+
+
+def start():
+    """Start"""
+    # Create a menu dictionary where the key is an integer number and the
+    # value is a function name.
+    print("Loading Jarvis 3.0")
+    LOGGER.info("Starting Jarvis 3.0")
+    functions_names = [Login, Register, Exit]
+    menu_items = dict(enumerate(functions_names, start=1))
+    display_menu(menu_items)
+    selection = int(input("Please enter your selection number: "))  # Get function key
+    selected_value = menu_items[selection]  # Gets the function name
+    selected_value()  # add parentheses to call the function
 
 
 if __name__ == "__main__":
-    basicfuncs.start()
-    app = ChatApplication()
-    app.run()
+    start()

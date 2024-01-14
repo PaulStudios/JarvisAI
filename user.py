@@ -1,6 +1,10 @@
 # pylint: disable=W0718
 # pylint: disable=R1710
 # pylint: disable=W0603
+# pylint: disable=E0401
+# pylint: disable=C0103
+# pylint: disable=W1201
+# pylint: disable=W0622
 
 """
 Login and Register handling
@@ -8,6 +12,8 @@ Login and Register handling
 
 import re
 import logging
+from rich import pretty, print
+from rich.console import Console
 
 import handler
 from errors import error
@@ -15,9 +21,10 @@ from handler import database, config
 from handler import encrypt, decrypt
 
 
-LOGGER = logging
-user = ()
+ser = ()
 table_name = config.program_config()['table']
+pretty.install()
+console = Console()
 
 
 def checkdb():
@@ -42,57 +49,86 @@ def checkmail(email1=""):
     error("ER5 - Invalid email entered during registration.", 1, "auth")
 
 
-def register():
-    """Registers new user"""
-    LOGGER.info("Initiating registration module")
-    LOGGER.info("Registering new user")
-    # Taking inputs
-    name_in = input("Please enter your full name (Only First name and Last name): ")
-    name = name_in.split()
-    country = input("In which country do you live? ")
-    email = input("Please enter your email address: ")
-    email = checkmail(email)
-    username = input("Please enter a username: ")
-    password = input("Please enter a strong password for your account: ")
-    pwd = input("Please confirm your password: ")
-    if pwd == password:
-        print("Processing inputs...")
-    else:
-        print("Your passwords do not match.")
-        pwd = input("Please re-confirm your password: ")
+LOGGER = logging.getLogger("JarvisAI.user")
+
+
+class User:
+    """User Class"""
+
+    def __init__(self):
+        LOGGER.info("Connecting to database...")
+        database.check()
+        self.userdata: tuple = ()
+        self.username: str = ""
+        self.name: str = ""
+        self._mail: str = ""
+        self.country: str = ""
+        self.auth: bool = False
+        LOGGER.info("Successfully connected to database: JarvisAI - User_Profiles")
+
+    def register(self) -> None:
+        """Registers new user"""
+        LOGGER.info("Initiating registration module")
+        # Taking inputs
+        name_in = input("Please enter your full name (Only First name and Last name): ")
+        name = name_in.split()
+        country = input("In which country do you live? ")
+        email = input("Please enter your email address: ")
+        email = checkmail(email)
+        username = input("Please enter a username: ")
+        password = input("Please enter a strong password for your account: ")
+        pwd = input("Please confirm your password: ")
         if pwd == password:
             print("Processing inputs...")
         else:
-            error("ER5 - Incorrect Password during registration.", 1, "auth")
-    mail = encrypt(email, password)
-    pwd = encrypt(password)
-    userdata = [name[0], name[1], mail, username, pwd, country]
-    fields = ["first_name", "last_name", "email", "username", "password", "country"]
-    try:
-        database.insert(table=table_name, fields=fields, data=userdata)
-    except Exception as e:
-        error("ER9 - Database insertion failed, " + str(e), 1)
-    print("You have been successfully registered. Logging you in")
-    u = login(username, password)
-    return u
+            print("Your passwords do not match.")
+            pwd = input("Please re-confirm your password: ")
+            if pwd == password:
+                print("Processing inputs...")
+            else:
+                error("ER5 - Incorrect Password during registration.", 1, "auth")
+        mail = encrypt(email, password)
+        pwd = encrypt(password)
+        userdata = [name[0], name[1], mail, username, pwd, country]
+        fields = ["first_name", "last_name", "email", "username", "password", "country"]
+        LOGGER.info("Registering new user")
+        try:
+            database.insert(table=table_name, fields=fields, data=userdata)
+        except Exception as e:
+            error("ER9 - Database insertion failed, " + str(e), 1)
+        LOGGER.info("Registered new user: " + username)
+        print("You have been successfully registered. Logging you in")
+        self.login(username, password)
 
+    def login(self, username: str = None, password: str = None) -> None:
+        """Logs in user"""
+        LOGGER.info("Initiating login module")
+        check = 0
+        if username is None or password is None:
+            check = 1
+        if check == 1:
+            username = input("Please enter your username: ")
+            password = input("Please enter your password: ")
+        data = ["username", username]
+        i = ()
+        LOGGER.info("Logging in user")
+        try:
+            i = database.get_user(table=table_name, data=data)
+        except Exception as e:
+            error("ER10 - Database fetch failed, " + str(e), 1)
+        if i is None:
+            error("ER2 - Incorrect username", 1, "auth")
+        if password == decrypt(i[5].tobytes()):
+            self.userdata = i
+            self.__putdata(self.userdata)
+            self.auth = True
+            LOGGER.info("Successfully logged in '" + self.username + "'")
+        else:
+            error("ER2 - Incorrect password", 1, "auth")
 
-def login(username: str = None, password: str = None) -> tuple:
-    """Logs in user"""
-    global user
-    check = 0
-    if username is None or password is None:
-        check = 1
-    if check == 1:
-        username = input("Please enter your username: ")
-        password = input("Please enter your password: ")
-    data = ["username", username]
-    i = ()
-    try:
-        i = database.get_user(table=table_name, data=data)
-    except Exception as e:
-        error("ER10 - Database fetch failed, " + str(e), 1)
-    if password == decrypt(i[5].tobytes()):
-        user = i
-        return user
-    error("ER2 - Incorrect username/password", 1, "auth")
+    def __putdata(self, data: tuple):
+        LOGGER.info("Setting up user profile...")
+        self.username = data[4]
+        self.name = data[1] + " " + data[2]
+        self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
+        self.country = data[6]

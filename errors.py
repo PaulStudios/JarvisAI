@@ -4,7 +4,7 @@ Error handling for the program.
 
 import logging
 
-LOGGER = logging
+LOGGER = logging.getLogger("JarvisAI.ErrorHandler")
 
 
 class ArgumentError(Exception):
