@@ -17,8 +17,7 @@ from rich.console import Console
 
 import user
 import chatbot
-from user import User
-from chatbot import Bot
+
 
 
 def initlogs():
@@ -66,11 +65,11 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     sleep(0.9)
     LOGGER.info("Setting up JarvisAI...")
     console.log("Connecting to PaulStudios Database")
-    user: User = User()
+    user_class: user.User = user.User()
     console.log("Connected")
     sleep(0.9)
     console.log("Initiated User Module")
-    chatbot: Bot = Bot()
+    bot: chatbot.Bot = chatbot.Bot()
     sleep(1.5)
     console.log("Initiated Chatbot Module")
     sleep(2)
@@ -90,15 +89,15 @@ def display_menu(menu):
 
 def Login():
     """Login Function"""
-    user.login()
-    chatbot.userset(user.name)
+    user_class.login()
+    bot.userset(user_class.name)
     system('cls')  # clears stdout
 
 
 def Register():
     """Register Function"""
-    user.register()
-    chatbot.userset(user.name)
+    user_class.register()
+    bot.userset(user_class.name)
     system('cls')  # clears stdout
 
 
