@@ -3,6 +3,7 @@
 # pylint: disable=C0103
 # pylint: disable=W0622
 
+# skipcq
 """
 Main file
 """
@@ -56,7 +57,7 @@ def initlogs():
     # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
 
 
-system('cls')
+system('cls')  # skipcq: BAN-B607
 LOGGER: logging.Logger = logging.getLogger("JarvisAI")
 LOGNAME: str = ""
 pretty.install()
@@ -86,6 +87,7 @@ console.print(f"Logger module has been initiated in {LOGNAME}\n", style="bright_
 
 
 def display_menu(menu):
+    # skipcq
     """
     Display a menu where the key identifies the name of a function.
     """

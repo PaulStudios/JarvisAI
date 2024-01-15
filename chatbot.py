@@ -1,6 +1,7 @@
 # pylint: disable=E0401
 # pylint: disable=C0103
 
+# skipcq
 """
 Chatbot functions
 """

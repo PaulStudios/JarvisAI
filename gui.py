@@ -1,3 +1,8 @@
+# skipcq
+"""
+GUI Handler
+"""
+
 import logging
 import sys
 

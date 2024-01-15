@@ -6,6 +6,7 @@
 # pylint: disable=W1201
 # pylint: disable=W0622
 
+# skipcq
 """
 Login and Register handling
 """
@@ -34,7 +35,7 @@ def checkdb():
         database.connect()
         database.check()
         print("Using Database : JarvisAI.")
-    except (Exception, handler.database.DataBaseError):
+    except (Exception, handler.database.DataBaseError):   # skipcq: PYL-W0714
         error("ER11B - Failed to connect to Database", 1, "conn")
 
 
@@ -94,7 +95,7 @@ class User:
         LOGGER.info("Registering new user")
         try:
             database.insert(table=table_name, fields=fields, data=userdata)
-        except Exception as e:
+        except Exception as e:   # skipcq: PYL-W0703
             error("ER9 - Database insertion failed, " + str(e), 1)
         LOGGER.info("Registered new user: " + username)
         print("You have been successfully registered. Logging you in")
@@ -114,7 +115,7 @@ class User:
         LOGGER.info("Logging in user")
         try:
             i = database.get_user(table=table_name, data=data)
-        except Exception as e:
+        except Exception as e:   # skipcq: PYL-W0703
             error("ER10 - Database fetch failed, " + str(e), 1)
         if i is None:
             error("ER2 - Incorrect username", 1, "auth")

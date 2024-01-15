@@ -1,5 +1,6 @@
 # pylint: disable=E0401
 
+# skipcq
 """
 Various small commands
 """

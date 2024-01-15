@@ -1,3 +1,4 @@
+# skipcq
 """
 Error handling for the program.
 """
@@ -40,7 +41,7 @@ def error(code, severity=0, errortype=""):
     """Error function to better handle and log errors"""
     LOGGER.warning("Error has been detected. Investigating...")
     console.log(m_name + "Error has been detected. Investigating...", style="bright_red")
-    for i in track(range(30), description="[bright_red]Checking Background Processes for error..."):
+    for i in track(range(30), description="[bright_red]Checking Background Processes for error..."): # skipcq: PYL-W0612
         sleep(0.1)
     if severity > 0:
         if errortype == "auth":
