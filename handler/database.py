@@ -3,7 +3,6 @@
 # pylint: disable=W0707
 # pylint: disable=E0401
 # pylint: disable=W0602
-
 """
 Connection handler for PostgresSQL Database
 """
@@ -74,15 +73,9 @@ def form_insert_query(table_name: str, fields: list, data: list) -> Composed:
         ) VALUES (
             {user_data}
         )
-    """).format(
-        table=sql.Identifier(table_name),
-        fields=sql.SQL(',').join(
-            sql.Identifier(n) for n in fields
-        ),
-        user_data=sql.SQL(',').join(
-            sql.Literal(n) for n in data
-        )
-    )
+    """).format(table=sql.Identifier(table_name),
+                fields=sql.SQL(',').join(sql.Identifier(n) for n in fields),
+                user_data=sql.SQL(',').join(sql.Literal(n) for n in data))
     return stmt
 
 
@@ -104,9 +97,7 @@ def form_get_query(table_name: str, fields: list, data: list) -> Composed:
             {table}
         WHERE
             {cred_1}={data_1}
-    """).format(
-        table=sql.Identifier(table_name),
-        cred_1=sql.Identifier(fields),
-        data_1=sql.Literal(data)
-    )
+    """).format(table=sql.Identifier(table_name),
+                cred_1=sql.Identifier(fields),
+                data_1=sql.Literal(data))
     return stmt

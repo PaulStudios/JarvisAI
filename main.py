@@ -4,7 +4,6 @@
 # pylint: disable=W0613
 # pylint: disable=R0903
 # pylint: disable=maybe-no-member
-
 """
 Main file containing graphics ui and LOGGER module
 """
@@ -16,7 +15,6 @@ from tkinter import DISABLED, END, NORMAL, Button, Entry, Label, Scrollbar, Text
 import logging
 import basicfuncs
 
-
 LOGGER = logging
 LOGNAME = ""
 
@@ -24,7 +22,8 @@ LOGNAME = ""
 def initlogs():
     """Initialize logging module"""
     global LOGNAME, LOGGER
-    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime("%f") + ".log"
+    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime(
+        "%f") + ".log"
     if os.path.exists('logs'):
         pass
     else:
@@ -41,9 +40,11 @@ def initlogs():
     f_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
-    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s',
+                                 "%Y-%m-%d %H:%M:%S")
     f_format = logging.Formatter(
-        '%(asctime)s - %(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+        '%(asctime)s - %(name)s : %(levelname)s - %(message)s',
+        "%Y-%m-%d %H:%M:%S")
     c_handler.setFormatter(c_format)
     f_handler.setFormatter(f_format)
 
@@ -62,7 +63,6 @@ time.sleep(1)
 LOGGER.info("Loading logging module.")
 print(f"Logger module has been initiated in {LOGNAME}\n")
 basicfuncs.init()
-
 
 BG_GRAY = "#ABB2B9"
 BG_COLOR = "#17202A"
@@ -90,8 +90,12 @@ class ChatApplication:
         self.window.configure(width=1080, height=720, bg=BG_COLOR)
 
         # head label
-        head_label = Label(self.window, bg=BG_COLOR, fg=TEXT_COLOR,
-                           text="Welcome to JarvisAI", font=FONT_BOLD, pady=10)
+        head_label = Label(self.window,
+                           bg=BG_COLOR,
+                           fg=TEXT_COLOR,
+                           text="Welcome to JarvisAI",
+                           font=FONT_BOLD,
+                           pady=10)
         head_label.place(relwidth=1)
 
         # tiny divider
@@ -99,8 +103,14 @@ class ChatApplication:
         line.place(relwidth=1, rely=0.07, relheight=0.012)
 
         # text widget
-        self.text_widget = Text(self.window, width=20, height=2, bg=BG_COLOR, fg=TEXT_COLOR,
-                                font=FONT, padx=5, pady=5)
+        self.text_widget = Text(self.window,
+                                width=20,
+                                height=2,
+                                bg=BG_COLOR,
+                                fg=TEXT_COLOR,
+                                font=FONT,
+                                padx=5,
+                                pady=5)
         self.text_widget.place(relheight=0.745, relwidth=1, rely=0.08)
         self.text_widget.configure(cursor="arrow", state=DISABLED)
 
@@ -114,13 +124,23 @@ class ChatApplication:
         bottom_label.place(relwidth=1, rely=0.825)
 
         # message entry box
-        self.msg_entry = Entry(bottom_label, bg="#2C3E50", fg=TEXT_COLOR, font=FONT)
-        self.msg_entry.place(relwidth=0.74, relheight=0.06, rely=0.008, relx=0.011)
+        self.msg_entry = Entry(bottom_label,
+                               bg="#2C3E50",
+                               fg=TEXT_COLOR,
+                               font=FONT)
+        self.msg_entry.place(relwidth=0.74,
+                             relheight=0.06,
+                             rely=0.008,
+                             relx=0.011)
         self.msg_entry.focus()
         self.msg_entry.bind("<Return>", self._on_enter_pressed)
 
         # send button
-        send_button = Button(bottom_label, text="Send", font=FONT_BOLD, width=20, bg=BG_GRAY,
+        send_button = Button(bottom_label,
+                             text="Send",
+                             font=FONT_BOLD,
+                             width=20,
+                             bg=BG_GRAY,
                              command=lambda: self._on_enter_pressed(None))
         send_button.place(relx=0.77, rely=0.008, relheight=0.06, relwidth=0.22)
         initmsg = basicfuncs.wish_me()

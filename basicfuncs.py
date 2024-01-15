@@ -1,7 +1,6 @@
 # pylint: disable=W0603
 # pylint: disable=W0702
 # pylint: disable=E0401
-
 """
 All the function of JarvisAI
 """
@@ -48,7 +47,10 @@ def init():
     LOGGER.info("Setting up API")
     LOGGER.info("Setting up Chatbot")
     cred = config.chat_config()
-    CHATBOT = ChatbotAPI.ChatBot(cred['brainid'], cred['brainkey'], history=True, debug=True)
+    CHATBOT = ChatbotAPI.ChatBot(cred['brainid'],
+                                 cred['brainkey'],
+                                 history=True,
+                                 debug=True)
     # chatbot.spellcheck(True)
     webbrowser.get('windows-default')
     LOGGER.info("Setting up development/production module")
@@ -61,7 +63,8 @@ def init():
     TESTAPI = TESTAPI + "/jarvis"
     LOGGER.info("Checking connection to server")
     user.checkdb()
-    LOGGER.info("JarvisAI has been initialized successfully. All systems online")
+    LOGGER.info(
+        "JarvisAI has been initialized successfully. All systems online")
 
 
 def speak(text):
@@ -113,10 +116,12 @@ def checkconnect():
             CONNECTION = 1
             return "success"
         error(
-            f"ER11A - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11A - [Cannot connect to {TESTAPI}, " +
+            str(checkapi.status_code) + "]", 1)
     except requests.exceptions.ConnectionError:
         error(
-            f"ER11A - [Cannot connect to {TESTAPI}, " + str(checkapi.status_code) + "]", 1)
+            f"ER11A - [Cannot connect to {TESTAPI}, " +
+            str(checkapi.status_code) + "]", 1)
     return "failure"
 
 
@@ -125,10 +130,7 @@ def login_back(username, password):
     global USER
     print("Trying to log in...")
     LOGGER.info("Trying to login...")
-    item = {
-        'name': username,
-        'pass': password
-    }
+    item = {'name': username, 'pass': password}
     LOGGER.info("Sending login request to server")
     response = requests.get(TESTAPI + "/login", item, timeout=10).text
     if response == "OK":
@@ -146,11 +148,7 @@ def register_back(rname, rpass, rmail):
     """Register server processor"""
     print("Trying to register...")
     LOGGER.info("Trying to register...")
-    item = {
-        'email': rmail,
-        'name': rname,
-        'pass': rpass
-    }
+    item = {'email': rmail, 'name': rname, 'pass': rpass}
     LOGGER.info("Sending register request to server")
     response = requests.get(TESTAPI + "/register", item, timeout=10).text
     if response == "OK":
@@ -225,7 +223,8 @@ def get_weather(city):
         weather_description = weather[0]["description"]
         resp = " Temperature in kelvin unit is " + str(
             current_temperature) + "\n humidity in percentage is " + str(
-            current_humidiy) + "\n description  " + str(weather_description)
+                current_humidiy) + "\n description  " + str(
+                    weather_description)
     else:
         resp = " City Not Found "
     return resp
@@ -248,7 +247,8 @@ def start():
     time.sleep(0.5)
     print("Please choose command module:")
     print(
-        "    1. Microphone (You will have to say the words) [Feature coming soon]")
+        "    1. Microphone (You will have to say the words) [Feature coming soon]"
+    )
     print("    2. Keyboard (You will have to type the words)")
     MODE = input("Please input your choice (1/2): ")
     if MODE.isdecimal():

@@ -32,17 +32,22 @@ def error(code, severity=0, errortype=""):
     if severity > 0:
         LOGGER.warning("Error has been detected. Investigating...")
         if errortype == "auth":
-            LOGGER.error("Authentication error has been detected. Error code : %s", code)
+            LOGGER.error(
+                "Authentication error has been detected. Error code : %s",
+                code)
             raise AuthError(code)
         if errortype == "args":
-            LOGGER.error("Argument error has been detected. Error code : %s", code)
+            LOGGER.error("Argument error has been detected. Error code : %s",
+                         code)
             raise ArgumentError(code)
         if errortype == "conn":
-            LOGGER.error("Connection error has been detected. Error code : %s", code)
+            LOGGER.error("Connection error has been detected. Error code : %s",
+                         code)
             raise ConnectError(code)
         LOGGER.error("Program error has been detected. Error code : %s", code)
         raise BaseError(code)
-    LOGGER.error("Error has been detected. Investigating... Error Code %s", code)
+    LOGGER.error("Error has been detected. Investigating... Error Code %s",
+                 code)
     LOGGER.error("Severity is low. Continuing...")
     print("Something went wrong. Error Code :- " + code + ".")
     print("Please seek support from developer with the error code.")
