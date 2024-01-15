@@ -67,7 +67,7 @@ class JarvisGui(App[None]):
         yield Header()
         yield Footer()
 
-    def action_quit(self) -> None:
+    def action_quit(self) -> None:  # skipcq: PYL-W0236
         """Quit"""
         LOGGER.info("Exiting...")
         sys.exit(0)
