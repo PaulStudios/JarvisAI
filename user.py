@@ -1,7 +1,6 @@
 # pylint: disable=W0718
 # pylint: disable=R1710
 # pylint: disable=W0603
-
 """
 Login and Register handling
 """
@@ -13,7 +12,6 @@ import handler
 from errors import error
 from handler import database, config
 from handler import encrypt, decrypt
-
 
 LOGGER = logging
 user = ()
@@ -47,7 +45,8 @@ def register():
     LOGGER.info("Initiating registration module")
     LOGGER.info("Registering new user")
     # Taking inputs
-    name_in = input("Please enter your full name (Only First name and Last name): ")
+    name_in = input(
+        "Please enter your full name (Only First name and Last name): ")
     name = name_in.split()
     country = input("In which country do you live? ")
     email = input("Please enter your email address: ")
@@ -67,7 +66,9 @@ def register():
     mail = encrypt(email, password)
     pwd = encrypt(password)
     userdata = [name[0], name[1], mail, username, pwd, country]
-    fields = ["first_name", "last_name", "email", "username", "password", "country"]
+    fields = [
+        "first_name", "last_name", "email", "username", "password", "country"
+    ]
     try:
         database.insert(table=table_name, fields=fields, data=userdata)
     except Exception as e:

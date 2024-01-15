@@ -1,5 +1,4 @@
 # pylint: disable=E0401
-
 """
 Password Encryption Handler
 """
@@ -21,9 +20,10 @@ priv = sec_config()
 def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     """Encrypt the message"""
     salt = int(priv['salt']).to_bytes(5)
-    kdf = PBKDF2HMAC(
-        algorithm=KDF_ALGORITHM, length=KDF_LENGTH, salt=salt,
-        iterations=KDF_ITERATIONS)
+    kdf = PBKDF2HMAC(algorithm=KDF_ALGORITHM,
+                     length=KDF_LENGTH,
+                     salt=salt,
+                     iterations=KDF_ITERATIONS)
     key = kdf.derive(password.encode("utf-8"))
     # Encrypt the message.
     f = Fernet(base64.urlsafe_b64encode(key))
@@ -31,13 +31,17 @@ def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     return ciphertext
 
 
-def decrypt(ciphertext: bytes, password: str = priv['pass'],
-            salt: bytes = int(priv['salt']).to_bytes(5)) -> str:
+def decrypt(
+    ciphertext: bytes,
+    password: str = priv['pass'],
+    salt: bytes = int(priv['salt']).to_bytes(5)
+) -> str:
     """Decrypt Message"""
     # Derive the symmetric key using the password and provided salt.
-    kdf = PBKDF2HMAC(
-        algorithm=KDF_ALGORITHM, length=KDF_LENGTH, salt=salt,
-        iterations=KDF_ITERATIONS)
+    kdf = PBKDF2HMAC(algorithm=KDF_ALGORITHM,
+                     length=KDF_LENGTH,
+                     salt=salt,
+                     iterations=KDF_ITERATIONS)
     key = kdf.derive(password.encode("utf-8"))
     # Decrypt the message
     f = Fernet(base64.urlsafe_b64encode(key))
