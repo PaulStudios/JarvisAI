@@ -14,9 +14,12 @@ import sys
 from os import system
 from rich import pretty, print
 from rich.console import Console
+from rich.traceback import install
 
 import user
 import chatbot
+from handler.utilities import printn
+from handler.errors import error
 
 
 def initlogs():
@@ -55,8 +58,9 @@ def initlogs():
 LOGGER: logging.Logger = logging.getLogger("JarvisAI")
 LOGNAME: str = ""
 pretty.install()
+install(show_locals=False)
 console = Console()
-console.print('Loading your AI personal assistant - Jarvis...', style="yellow")
+console.print('Loading your AI personal assistant - Jarvis...', style="bright_yellow")
 with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Starting core systems...")
     initlogs()
@@ -73,7 +77,7 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Initiated Chatbot Module")
     sleep(2)
     console.log("Setup Complete")
-console.print(f"Logger module has been initiated in {LOGNAME}\n", style="yellow")
+console.print(f"Logger module has been initiated in {LOGNAME}\n", style="bright_yellow")
 
 
 def display_menu(menu):
@@ -83,7 +87,7 @@ def display_menu(menu):
     :return:
     """
     for k, function in menu.items():
-        print(str(k)+".", function.__name__)
+        console.print(str(k)+".", function.__name__, style="dark_orange3")
 
 
 def Login():
@@ -111,14 +115,18 @@ def start():
     """Start"""
     # Create a menu dictionary where the key is an integer number and the
     # value is a function name.
-    print("Loading Jarvis 3.0")
+    console.print("Loading Jarvis 3.0", style="chartreuse3")
     LOGGER.info("Starting Jarvis 3.0")
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
-    selection = int(input("Please enter your selection number: "))  # Get function key
-    selected_value = menu_items[selection]  # Gets the function name
-    selected_value()  # add parentheses to call the function
+    printn("Please enter your selection number: ", 'slate_blue1')
+    selection = int(input())  # Get function key
+    try:
+        selected_value = menu_items[selection]  # Gets the function name
+        selected_value()  # add parentheses to call the function
+    except (TypeError, KeyError):
+        error("ER1 - Incorrect input", 1, "args")
 
 
 if __name__ == "__main__":

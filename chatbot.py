@@ -30,17 +30,6 @@ def wish_me():
     return "Hello,Good Evening"
 
 
-def choice_selector(argument):
-    """Replacement for switch-case function"""
-    switcher = {
-        1: "one",
-        2: "two",
-        3: "three",
-        4: "four",
-    }
-    return switcher.get(argument, "Invalid Choice")
-
-
 def take_picture():
     """Take a photo"""
     current_date_and_time = datetime.datetime.now()

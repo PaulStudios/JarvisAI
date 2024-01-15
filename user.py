@@ -16,7 +16,7 @@ from rich import pretty, print
 from rich.console import Console
 
 import handler
-from errors import error
+from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
 

@@ -29,20 +29,17 @@ class FileAlreadyExistsError(Exception):
 
 def error(code, severity=0, errortype=""):
     """Error function to better handle and log errors"""
+    LOGGER.warning("Error has been detected. Investigating...")
     if severity > 0:
-        LOGGER.warning("Error has been detected. Investigating...")
         if errortype == "auth":
-            LOGGER.error("Authentication error has been detected. Error code : %s", code)
+            LOGGER.critical("Authentication error detected. Error code : %s", code)
             raise AuthError(code)
         if errortype == "args":
-            LOGGER.error("Argument error has been detected. Error code : %s", code)
-            raise ArgumentError(code)
+            LOGGER.critical("Argument error detected. Error code : %s", code)
         if errortype == "conn":
-            LOGGER.error("Connection error has been detected. Error code : %s", code)
-            raise ConnectError(code)
-        LOGGER.error("Program error has been detected. Error code : %s", code)
-        raise BaseError(code)
-    LOGGER.error("Error has been detected. Investigating... Error Code %s", code)
+            LOGGER.critical("Connection error detected. Error code : %s", code)
+        else:
+            LOGGER.critical("Program error detected. Error code : %s", code)
+        exit(1)
+    LOGGER.error("Error Code %s", code)
     LOGGER.error("Severity is low. Continuing...")
-    print("Something went wrong. Error Code :- " + code + ".")
-    print("Please seek support from developer with the error code.")
