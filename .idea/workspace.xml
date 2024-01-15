@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui.tcss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
@@ -25,12 +25,13 @@
       <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/errors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/encryption.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/encryption.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/qodana.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
@@ -70,16 +71,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "31-gui-remake",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "F:/Coding/JarvisAI/handler",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;31-gui-remake&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;F:/Coding/JarvisAI/handler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\indra\AppData\Local\Temp\qodana_output1\qodana.sarif.json" reportGuid="61823ad6-df98-42c6-9531-5112068050bd" reportId="JarvisAI/qodana/2024-01-12" />

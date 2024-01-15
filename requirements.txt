@@ -3,4 +3,4 @@ ecapture==2.0.2
 psycopg2==2.9.9
 cryptography~=41.0.7
 rich~=12.5.1
-colorama~=0.4.5
+textual~=0.47.1

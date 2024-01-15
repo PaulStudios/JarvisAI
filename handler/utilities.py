@@ -1,15 +1,17 @@
+# pylint: disable=E0401
+
 """
 Various small commands
 """
 
-from rich import pretty, print
+from rich import pretty
 from rich.console import Console
 
 pretty.install()
 console = Console()
 
 
-def printn(text: str, st:str = None):
+def printn(text: str, st: str = None):
     """Wrapper"""
     console.print(text, end='', style=st)
 
