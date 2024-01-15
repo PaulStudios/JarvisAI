@@ -127,6 +127,7 @@ class User:
             error("ER2 - Incorrect password", 1, "auth")
 
     def __putdata(self, data: tuple):
+        """Setup profile"""
         LOGGER.info("Setting up user profile...")
         self.username = data[4]
         self.name = data[1] + " " + data[2]

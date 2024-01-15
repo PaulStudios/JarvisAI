@@ -35,10 +35,6 @@ def take_picture():
     current_date_and_time = datetime.datetime.now()
     filename = "img-" + current_date_and_time.strftime("%f") + ".jpg"
     ec.capture(0, False, filename)
-    # if delay == 0:
-    #     ec.capture(0, False, filename)
-    # if delay >= 0:
-    #     ec.delay_imcapture(0, False, filename, delay)
     return filename
 
 

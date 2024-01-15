@@ -11,6 +11,7 @@ LOGGER = logging.getLogger("JarvisAI.GUI")
 
 class ProfileScreen(Screen):
     """Profile Management"""
+
     def compose(self) -> ComposeResult:
         """Internal compose"""
         yield Static("Profile")
@@ -20,6 +21,7 @@ class ProfileScreen(Screen):
 
 class HelpScreen(Screen):
     """Display commands"""
+
     def compose(self) -> ComposeResult:
         """Internal compose"""
         yield Static("Help")
@@ -29,6 +31,7 @@ class HelpScreen(Screen):
 
 class ChatScreen(Screen):
     """Main chat interface"""
+
     def compose(self) -> ComposeResult:
         """Internal compose"""
         yield Static("One", classes="box", id="profile")
