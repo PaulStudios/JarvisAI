@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.deepsource.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.deepsource.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.deepsource.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />

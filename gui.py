@@ -62,7 +62,7 @@ class JarvisGui(App[None]):
     LOGGER.info("Setting up Interface")
 
     def compose(self) -> ComposeResult:
-        """Internal compose"""
+        """Internal compose """
         yield Header()
         yield Footer()
 
