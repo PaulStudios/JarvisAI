@@ -1,10 +1,11 @@
 # pylint: disable=W0719
-
 """
 Config Parser for database info
 """
 
 from configparser import ConfigParser
+
+from handler.utilities import resource_path
 
 
 def db_config(filename='config.ini', section='database'):
@@ -12,7 +13,7 @@ def db_config(filename='config.ini', section='database'):
     # create a parser
     parser = ConfigParser()
     # read config file
-    parser.read(filename)
+    parser.read(resource_path(filename))
 
     # get section, default to postgresql
     db = {}
@@ -29,7 +30,7 @@ def db_config(filename='config.ini', section='database'):
 def chat_config(filename='config.ini', section='chatbot'):
     """Parsing Chatbot credentials from config file"""
     parser = ConfigParser()
-    parser.read(filename)
+    parser.read(resource_path(filename))
     creds = {}
     if parser.has_section(section):
         params = parser.items(section)
@@ -43,7 +44,7 @@ def chat_config(filename='config.ini', section='chatbot'):
 def sec_config(filename='config.ini', section='security'):
     """Parsing Encryption credentials from config file"""
     parser = ConfigParser()
-    parser.read(filename)
+    parser.read(resource_path(filename))
     creds = {}
     if parser.has_section(section):
         params = parser.items(section)
@@ -57,7 +58,7 @@ def sec_config(filename='config.ini', section='security'):
 def program_config(filename='config.ini', section='Jarvis'):
     """Parsing program details from config file"""
     parser = ConfigParser()
-    parser.read(filename)
+    parser.read(resource_path(filename))
     data = {}
     if parser.has_section(section):
         params = parser.items(section)

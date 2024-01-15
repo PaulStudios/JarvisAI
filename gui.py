@@ -10,6 +10,8 @@ from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Footer, Static, Button
 
+from handler.utilities import resource_path
+
 LOGGER = logging.getLogger("JarvisAI.GUI")
 
 
@@ -51,7 +53,7 @@ class JarvisGui(App[None]):
 
     TITLE = "JarvisAI"
     SUB_TITLE = "Your personal AI Assistant"
-    CSS_PATH = "gui.tcss"
+    CSS_PATH = resource_path("gui.tcss")
     USER = ""
     BINDINGS = [("escape", "quit()", "QUIT")]
     MODES = {
