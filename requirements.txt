@@ -1,7 +1,7 @@
 ChatbotAPI==2.3.3
 ecapture==2.0.2
 psycopg2==2.9.9
-python-dotenv==0.21.0
+python-dotenv==1.0.0
 pyttsx3==2.90
 requests==2.31.0
 cryptography~=41.0.7
