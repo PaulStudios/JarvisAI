@@ -1,5 +1,4 @@
 # pylint: disable=W0719
-
 """
 Config Parser for database info
 """
