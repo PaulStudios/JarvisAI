@@ -4,6 +4,7 @@
 Pytest test file
 """
 
+
 class TestClass:
     """Test class for gui.py"""
 
