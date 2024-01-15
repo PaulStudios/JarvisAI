@@ -1,11 +1,10 @@
 import logging
 import sys
-from time import sleep
 
 from textual.app import App, ComposeResult
 from textual.screen import Screen
 from textual.widgets import Header, Footer, Static, Button
-from textual import log
+
 
 LOGGER = logging.getLogger("JarvisAI.GUI")
 
