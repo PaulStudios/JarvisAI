@@ -21,7 +21,6 @@ from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
 
-
 ser = ()
 table_name = config.program_config()['table']
 pretty.install()
@@ -35,7 +34,7 @@ def checkdb():
         database.connect()
         database.check()
         print("Using Database : JarvisAI.")
-    except (Exception, handler.database.DataBaseError):   # skipcq: PYL-W0714
+    except (Exception, handler.database.DataBaseError):  # skipcq: PYL-W0714
         error("ER11B - Failed to connect to Database", 1, "conn")
 
 
@@ -65,13 +64,15 @@ class User:
         self._mail: str = ""
         self.country: str = ""
         self.auth: bool = False
-        LOGGER.info("Successfully connected to database: JarvisAI - User_Profiles")
+        LOGGER.info(
+            "Successfully connected to database: JarvisAI - User_Profiles")
 
     def register(self) -> None:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        name_in = input("Please enter your full name (Only First name and Last name): ")
+        name_in = input(
+            "Please enter your full name (Only First name and Last name): ")
         name = name_in.split()
         country = input("In which country do you live? ")
         email = input("Please enter your email address: ")
@@ -87,15 +88,19 @@ class User:
             if pwd == password:
                 print("Processing inputs...")
             else:
-                error("ER5 - Incorrect Password during registration.", 1, "auth")
+                error("ER5 - Incorrect Password during registration.", 1,
+                      "auth")
         mail = encrypt(email, password)
         pwd = encrypt(password)
         userdata = [name[0], name[1], mail, username, pwd, country]
-        fields = ["first_name", "last_name", "email", "username", "password", "country"]
+        fields = [
+            "first_name", "last_name", "email", "username", "password",
+            "country"
+        ]
         LOGGER.info("Registering new user")
         try:
             database.insert(table=table_name, fields=fields, data=userdata)
-        except Exception as e:   # skipcq: PYL-W0703
+        except Exception as e:  # skipcq: PYL-W0703
             error("ER9 - Database insertion failed, " + str(e), 1)
         LOGGER.info("Registered new user: " + username)
         print("You have been successfully registered. Logging you in")
@@ -115,7 +120,7 @@ class User:
         LOGGER.info("Logging in user")
         try:
             i = database.get_user(table=table_name, data=data)
-        except Exception as e:   # skipcq: PYL-W0703
+        except Exception as e:  # skipcq: PYL-W0703
             error("ER10 - Database fetch failed, " + str(e), 1)
         if i is None:
             error("ER2 - Incorrect username", 1, "auth")

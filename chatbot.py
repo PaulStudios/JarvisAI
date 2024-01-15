@@ -46,10 +46,11 @@ class Bot:
         self.reply: str = "No response has been generated yet..."
         self.creds: dict = config.chat_config()
         self.LOGGER: logging.Logger = logging.getLogger("JarvisAI.chatbot")
-        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(self.creds['brainid'],
-                                                              self.creds['brainkey'],
-                                                              history=True,
-                                                              debug=True)
+        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(
+            self.creds['brainid'],
+            self.creds['brainkey'],
+            history=True,
+            debug=True)
         webbrowser.get('windows-default')
 
     def userset(self, name: str):

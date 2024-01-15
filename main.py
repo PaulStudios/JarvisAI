@@ -27,7 +27,8 @@ from handler.errors import error
 def initlogs():
     """Initialize logging module"""
     global LOGNAME, LOGGER
-    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime("%f") + ".log"
+    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime(
+        "%f") + ".log"
     if os.path.exists('logs'):
         pass
     else:
@@ -43,14 +44,16 @@ def initlogs():
     f_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
-    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s',
+                                 "%Y-%m-%d %H:%M:%S")
     f_format = logging.Formatter(
-        '%(asctime)s - %(name)s : %(levelname)s - %(message)s', "%Y-%m-%d %H:%M:%S")
+        '%(asctime)s - %(name)s : %(levelname)s - %(message)s',
+        "%Y-%m-%d %H:%M:%S")
     c_handler.setFormatter(c_format)
     f_handler.setFormatter(f_format)
 
     # Add handlers to the logging
-    #LOGGER.addHandler(c_handler)
+    # LOGGER.addHandler(c_handler)
     LOGGER.addHandler(f_handler)
     # logging.basicConfig(
     # filename=LOGNAME, level=logging.DEBUG, format='%(asctime)s :
@@ -63,7 +66,8 @@ LOGNAME: str = ""
 pretty.install()
 install(extra_lines=0, show_locals=False)
 console = Console()
-console.print('Loading your AI personal assistant - Jarvis...', style="bright_yellow")
+console.print('Loading your AI personal assistant - Jarvis...',
+              style="bright_yellow")
 with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Starting core systems...")
     initlogs()
@@ -83,7 +87,8 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("User Interface prepared.")
     sleep(1)
     console.log("Setup Complete")
-console.print(f"Logger module has been initiated in {LOGNAME}\n", style="bright_yellow")
+console.print(f"Logger module has been initiated in {LOGNAME}\n",
+              style="bright_yellow")
 
 
 def display_menu(menu):
@@ -92,7 +97,7 @@ def display_menu(menu):
     Display a menu where the key identifies the name of a function.
     """
     for k, function in menu.items():
-        console.print(str(k)+".", function.__name__, style="dark_orange3")
+        console.print(str(k) + ".", function.__name__, style="dark_orange3")
 
 
 def Login():
