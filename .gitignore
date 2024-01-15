@@ -204,3 +204,5 @@ Procfile
 .env
 config.ini
 .idea/.name
+.idea
+output
