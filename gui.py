@@ -10,21 +10,27 @@ LOGGER = logging.getLogger("JarvisAI.GUI")
 
 
 class ProfileScreen(Screen):
+    """Profile Management"""
     def compose(self) -> ComposeResult:
+        """Internal compose"""
         yield Static("Profile")
         yield Footer()
         yield Header()
 
 
 class HelpScreen(Screen):
+    """Display commands"""
     def compose(self) -> ComposeResult:
+        """Internal compose"""
         yield Static("Help")
         yield Footer()
         yield Header()
 
 
 class ChatScreen(Screen):
+    """Main chat interface"""
     def compose(self) -> ComposeResult:
+        """Internal compose"""
         yield Static("One", classes="box", id="profile")
         yield Static("Chat", classes="box", id="Chat")
         yield Static("Input", classes="box", id="input")
@@ -34,6 +40,7 @@ class ChatScreen(Screen):
 
 
 class JarvisGui(App[None]):
+    """GUI Core"""
 
     TITLE = "JarvisAI"
     SUB_TITLE = "Your personal AI Assistant"
@@ -48,13 +55,16 @@ class JarvisGui(App[None]):
     LOGGER.info("Setting up Interface")
 
     def compose(self) -> ComposeResult:
+        """Internal compose"""
         yield Header()
         yield Footer()
 
     def action_quit(self) -> None:
+        """Quit"""
         LOGGER.info("Exiting...")
         sys.exit(0)
 
     def on_mount(self) -> None:
+        """On running the gui"""
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")

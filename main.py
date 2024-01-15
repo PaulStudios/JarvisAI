@@ -88,8 +88,6 @@ console.print(f"Logger module has been initiated in {LOGNAME}\n", style="bright_
 def display_menu(menu):
     """
     Display a menu where the key identifies the name of a function.
-    :param menu: dictionary, key identifies a value which is a function name
-    :return:
     """
     for k, function in menu.items():
         console.print(str(k)+".", function.__name__, style="dark_orange3")

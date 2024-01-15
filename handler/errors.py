@@ -46,19 +46,15 @@ def error(code, severity=0, errortype=""):
         if errortype == "auth":
             LOGGER.critical("Authentication error detected. Error code : %s", code)
             console.log(m_name + "Authentication error detected. Error code : ", code, style="bright_red")
-            #raise AuthError(code)
         elif errortype == "args":
             LOGGER.critical("Argument error detected. Error code : %s", code)
             console.log(m_name + "Argument error detected. Error code : ", code, style="bright_red")
-            #raise ArgumentError(code)
         elif errortype == "conn":
             LOGGER.critical("Connection error detected. Error code : %s", code)
             console.log(m_name + "Connection error detected. Error code : ", code, style="bright_red")
-            #raise ConnectError(code)
         else:
             LOGGER.critical("Program error detected. Error code : %s", code)
             console.log(m_name + "Program error detected. Error code : ", code, style="bright_red")
-            #raise BaseError(code)
         sys.exit(0)
     LOGGER.error("Error Code %s", code)
     LOGGER.error("Severity is low. Continuing...")
