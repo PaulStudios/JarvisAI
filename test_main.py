@@ -1,18 +1,18 @@
 # pylint: disable=R0903
 # pylint: disable=W0104
-
 """
 Pytest test file
 """
 
-#import basicfuncs
+# import basicfuncs
+
 
 class TestClass:
     """Test class for gui.py"""
 
     def test_temp(self):
         """Temporary"""
-        assert 1+1 == 2
+        assert 1 + 1 == 2
 
 
 #    def test_server_connection(self):
