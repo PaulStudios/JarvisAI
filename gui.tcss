@@ -1,7 +1,6 @@
 Screen {
     align: center middle;
-    layout: grid;
-    grid-size: 5;
+    layout: vertical;
 }
 Header {
   dock: top;
@@ -9,21 +8,21 @@ Header {
   content-align: center middle;
   background: blanchedalmond;
 }
-
 .box {
-    height: 100%;
     border: solid green;
 }
-
-#profile {
-    dock: left;
-    width: 25%;
-    height: 95%;
+#Chat {
+    height: 80%;
 }
-#chat {
-    column-span: 5;
-    row-span: 5;
+#inputarea {
+    height: 20%;
 }
-#input {
-    column-span:4;
+#input-text {
+    border: solid green;
+    height: 100%;
+    width: 2fr;
+}
+#send {
+    width: 1fr;
+    height: 100%;
 }

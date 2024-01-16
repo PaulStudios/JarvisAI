@@ -6,9 +6,11 @@ GUI Handler
 import logging
 import sys
 
+from textual import events
 from textual.app import App, ComposeResult
+from textual.containers import Horizontal, Vertical
 from textual.screen import Screen
-from textual.widgets import Header, Footer, Static, Button
+from textual.widgets import Header, Footer, Static, Button, Placeholder
 
 from handler.utilities import resource_path
 
@@ -40,10 +42,11 @@ class ChatScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
-        yield Static("One", classes="box", id="profile")
-        yield Static("Chat", classes="box", id="Chat")
-        yield Static("Input", classes="box", id="input")
-        yield Button("Send", id="send", name="Send")
+        with Vertical(classes="chatscreen", id="chatscreen"):
+            yield Static("Chat", classes="box", id="Chat")
+            yield Horizontal(Static("Input", id="input-text"),
+                            Button("Send", id="send", name="Send"),
+                            classes="input", id="inputarea")
         yield Footer()
         yield Header()
 
@@ -65,8 +68,7 @@ class JarvisGui(App[None]):
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
-        yield Header()
-        yield Footer()
+        yield Placeholder()
 
     def action_quit(self) -> None:  # skipcq: PYL-W0236
         """Quit"""
@@ -77,3 +79,6 @@ class JarvisGui(App[None]):
         """On running the gui"""
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")
+
+app = JarvisGui()
+app.run()
