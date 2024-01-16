@@ -45,8 +45,9 @@ class ChatScreen(Screen):
         with Vertical(classes="chatscreen", id="chatscreen"):
             yield Static("Chat", classes="box", id="Chat")
             yield Horizontal(Static("Input", id="input-text"),
-                            Button("Send", id="send", name="Send"),
-                            classes="input", id="inputarea")
+                             Button("Send", id="send", name="Send"),
+                             classes="input",
+                             id="inputarea")
         yield Footer()
         yield Header()
 
@@ -79,6 +80,7 @@ class JarvisGui(App[None]):
         """On running the gui"""
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")
+
 
 app = JarvisGui()
 app.run()
