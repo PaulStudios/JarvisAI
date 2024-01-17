@@ -15,19 +15,26 @@ import sys
 from os import system
 from rich import pretty, print
 from rich.console import Console
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 from rich.progress import track
 >>>>>>> GUI
+=======
+from rich.progress import track
+>>>>>>> Stashed changes
 from rich.traceback import install
 
-import gui
 import user
 import chatbot
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 import gui
 >>>>>>> GUI
+=======
+import gui
+>>>>>>> Stashed changes
 from handler.utilities import printn
 from handler.errors import error
 
@@ -61,7 +68,7 @@ def initlogs():
     f_handler.setFormatter(f_format)
 
     # Add handlers to the logging
-    # LOGGER.addHandler(c_handler)
+    LOGGER.addHandler(c_handler)
     LOGGER.addHandler(f_handler)
     # logging.basicConfig(
     # filename=LOGNAME, level=logging.DEBUG, format='%(asctime)s :
@@ -136,11 +143,15 @@ def start():
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     printn("Please enter your selection number: ", 'slate_blue1')
 =======
     printn("Please enter your choice: ", 'slate_blue1')
 >>>>>>> GUI
+=======
+    printn("Please enter your choice: ", 'slate_blue1')
+>>>>>>> Stashed changes
     try:
         selection = int(input())
         selected_value = menu_items[selection]
@@ -152,9 +163,12 @@ def start():
 if __name__ == "__main__":
     start()
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     ui.USER = user_class.userdata
 =======
+=======
+>>>>>>> Stashed changes
     gui.USER = user_class.userdata
     gui.bot.userset(user_class.username)
     console.print("Press [cyan]ENTER[/cyan] to open Chat Interface.")
@@ -162,5 +176,8 @@ if __name__ == "__main__":
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)
+<<<<<<< Updated upstream
 >>>>>>> GUI
+=======
+>>>>>>> Stashed changes
     ui.run()

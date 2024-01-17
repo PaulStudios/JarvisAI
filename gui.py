@@ -5,13 +5,23 @@ GUI Handler
 
 import logging
 import sys
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+import textwrap
+>>>>>>> Stashed changes
 
 from textual.app import App, ComposeResult
+from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
-from textual.widgets import Header, Footer, Static, Button
+from textual.widget import Widget
+from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
+
+from handler.utilities import resource_path
+from chatbot import Bot
 
 LOGGER = logging.getLogger("JarvisAI.GUI")
+<<<<<<< Updated upstream
 =======
 import textwrap
 
@@ -29,6 +39,11 @@ wrapper = textwrap.TextWrapper(width=60)
 bot: Bot = Bot()
 USER = ""
 >>>>>>> GUI
+=======
+wrapper = textwrap.TextWrapper(width=60)
+bot: Bot = Bot()
+USER = ""
+>>>>>>> Stashed changes
 
 
 class ProfileScreen(Screen):
@@ -51,8 +66,11 @@ class HelpScreen(Screen):
         yield Header()
 
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> Stashed changes
 class FocusableContainer(ScrollableContainer, can_focus=True):
     """Focusable container widget."""
 
@@ -76,12 +94,16 @@ def toggle_widgets(*widgets: Widget) -> None:
         w.disabled = not w.disabled
 
 
+<<<<<<< Updated upstream
 >>>>>>> GUI
+=======
+>>>>>>> Stashed changes
 class ChatScreen(Screen):
     """Main chat interface"""
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         yield Static("One", classes="box", id="profile")
         yield Static("Chat", classes="box", id="Chat")
@@ -103,6 +125,21 @@ class ChatScreen(Screen):
                             id="message_input")
                 yield Button(label="Send", variant="success", id="send_button")
         yield Footer()
+=======
+        with Vertical(classes="chatscreen", id="chatscreen"):
+            with FocusableContainer(id="conversation_box"):
+                yield MessageBox(
+                    "Welcome to JarvisAI v3.0!\n"
+                    "Type your question, click enter or 'send' button "
+                    "and wait for the response.",
+                    role="Info",
+                )
+            with Horizontal(id="input_box"):
+                yield Input(placeholder="Enter your message",
+                            id="message_input")
+                yield Button(label="Send", variant="success", id="send_button")
+        yield Footer()
+>>>>>>> Stashed changes
         yield Header(show_clock=True)
 
     def on_mount(self):
@@ -159,7 +196,10 @@ class ChatScreen(Screen):
         conversation_box.scroll_end(animate=True)
         conversation_box.scroll_end(animate=True)
         self.query_one(Input).focus()
+<<<<<<< Updated upstream
 >>>>>>> GUI
+=======
+>>>>>>> Stashed changes
 
 
 class JarvisGui(App[None]):
@@ -167,12 +207,16 @@ class JarvisGui(App[None]):
 
     TITLE = "JarvisAI"
     SUB_TITLE = "Your personal AI Assistant"
+<<<<<<< Updated upstream
 <<<<<<< HEAD
     CSS_PATH = "gui.tcss"
     USER = ""
 =======
     CSS_PATH = resource_path("gui.tcss")
 >>>>>>> GUI
+=======
+    CSS_PATH = resource_path("gui.tcss")
+>>>>>>> Stashed changes
     BINDINGS = [("escape", "quit()", "QUIT")]
     MODES = {
         "profile": ProfileScreen,
@@ -183,12 +227,16 @@ class JarvisGui(App[None]):
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         yield Header()
         yield Footer()
 =======
         yield Placeholder()
 >>>>>>> GUI
+=======
+        yield Placeholder()
+>>>>>>> Stashed changes
 
     def action_quit(self) -> None:  # skipcq: PYL-W0236
         """Quit"""
