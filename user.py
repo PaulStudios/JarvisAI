@@ -72,7 +72,8 @@ class User:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        printn("Please enter your full name (Only First name and Last name): ", "sky_blue1")
+        printn("Please enter your full name (Only First name and Last name): ",
+               "sky_blue1")
         name_in = input()
         name = name_in.split()
         printn("In which country do you live? ", "sky_blue1")
@@ -82,7 +83,8 @@ class User:
         email = checkmail(email)
         printn("Please enter a username: ", "sky_blue1")
         username = input()
-        printn("Please enter a strong password for your account: ", "sky_blue1")
+        printn("Please enter a strong password for your account: ",
+               "sky_blue1")
         password = input()
         printn("Please confirm your password: ", "sky_blue1")
         pwd = input()
@@ -110,7 +112,8 @@ class User:
         except Exception as e:  # skipcq: PYL-W0703
             error("ER9 - Database insertion failed, " + str(e), 1)
         LOGGER.info("Registered new user: " + username)
-        console.print("You have been successfully registered. Logging you in", style="bright_green")
+        console.print("You have been successfully registered. Logging you in",
+                      style="bright_green")
         self.login(username, password)
 
     def login(self, username: str = None, password: str = None) -> None:
