@@ -118,7 +118,7 @@ def Register():
 
 def Exit():
     """Exit"""
-    print("Goodbye")
+    console.print("Goodbye", style="bright_red")
     sys.exit()
 
 

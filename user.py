@@ -20,6 +20,7 @@ import handler
 from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
+from handler.utilities import printn
 
 ser = ()
 table_name = config.program_config()['table']
@@ -71,22 +72,28 @@ class User:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        name_in = input(
-            "Please enter your full name (Only First name and Last name): ")
+        printn("Please enter your full name (Only First name and Last name): ", "sky_blue1")
+        name_in = input()
         name = name_in.split()
-        country = input("In which country do you live? ")
-        email = input("Please enter your email address: ")
+        printn("In which country do you live? ", "sky_blue1")
+        country = input()
+        printn("Please enter your email address: ", "sky_blue1")
+        email = input()
         email = checkmail(email)
-        username = input("Please enter a username: ")
-        password = input("Please enter a strong password for your account: ")
-        pwd = input("Please confirm your password: ")
+        printn("Please enter a username: ", "sky_blue1")
+        username = input()
+        printn("Please enter a strong password for your account: ", "sky_blue1")
+        password = input()
+        printn("Please confirm your password: ", "sky_blue1")
+        pwd = input()
         if pwd == password:
-            print("Processing inputs...")
+            console.print("Processing inputs...", style="pink")
         else:
             print("Your passwords do not match.")
-            pwd = input("Please re-confirm your password: ")
+            printn("Please re-confirm your password: ", "sky_blue1")
+            pwd = input()
             if pwd == password:
-                print("Processing inputs...")
+                console.print("Processing inputs...", style="pink")
             else:
                 error("ER5 - Incorrect Password during registration.", 1,
                       "auth")
@@ -103,7 +110,7 @@ class User:
         except Exception as e:  # skipcq: PYL-W0703
             error("ER9 - Database insertion failed, " + str(e), 1)
         LOGGER.info("Registered new user: " + username)
-        print("You have been successfully registered. Logging you in")
+        console.print("You have been successfully registered. Logging you in", style="bright_green")
         self.login(username, password)
 
     def login(self, username: str = None, password: str = None) -> None:
@@ -113,11 +120,14 @@ class User:
         if username is None or password is None:
             check = 1
         if check == 1:
-            username = input("Please enter your username: ")
-            password = input("Please enter your password: ")
+            printn("Please enter your username: ", "sky_blue1")
+            username = input()
+            printn("Please enter your password: ", "sky_blue1")
+            password = input()
         data = ["username", username]
         i = ()
         LOGGER.info("Logging in user")
+        console.print("Processing inputs...", style="pink")
         try:
             i = database.get_user(table=table_name, data=data)
         except Exception as e:  # skipcq: PYL-W0703
