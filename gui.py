@@ -130,7 +130,10 @@ class ChatScreen(Screen):
         # Take answer from the chat and add it to the conversation
         ans = "JarvisAI: " + bot.process(msg)
         string = wrapper.fill(text=ans)
-        await conversation_box.mount(MessageBox(string, "answer",))
+        await conversation_box.mount(MessageBox(
+            string,
+            "answer",
+        ))
 
         toggle_widgets(message_input, button)
         # For some reason single scroll doesn't work
