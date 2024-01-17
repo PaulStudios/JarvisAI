@@ -59,6 +59,12 @@ class MessageBox(Widget, can_focus=True):
         yield Static(self.msg, classes=f"message {self.role}")
 
 
+def toggle_widgets(*widgets: Widget) -> None:
+    """Toggle a list of widgets."""
+    for w in widgets:
+        w.disabled = not w.disabled
+
+
 class ChatScreen(Screen):
     """Main chat interface"""
 
@@ -80,6 +86,7 @@ class ChatScreen(Screen):
         yield Header(show_clock=True)
 
     def on_mount(self):
+        """On run"""
         self.query_one(Input).focus()
 
     def action_clear(self) -> None:
@@ -105,7 +112,7 @@ class ChatScreen(Screen):
         button = self.query_one("#send_button")
         conversation_box = self.query_one("#conversation_box")
 
-        self.toggle_widgets(message_input, button)
+        toggle_widgets(message_input, button)
 
         # Create question message, add it to the conversation and scroll down
         string = wrapper.fill(text=message_input.value)
@@ -124,16 +131,11 @@ class ChatScreen(Screen):
             "answer",
         ))
 
-        self.toggle_widgets(message_input, button)
+        toggle_widgets(message_input, button)
         # For some reason single scroll doesn't work
         conversation_box.scroll_end(animate=True)
         conversation_box.scroll_end(animate=True)
         self.query_one(Input).focus()
-
-    def toggle_widgets(self, *widgets: Widget) -> None:
-        """Toggle a list of widgets."""
-        for w in widgets:
-            w.disabled = not w.disabled
 
 
 class JarvisGui(App[None]):
