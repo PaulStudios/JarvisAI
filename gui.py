@@ -7,7 +7,6 @@ import logging
 import sys
 import textwrap
 
-from textual import log
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
