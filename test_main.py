@@ -11,4 +11,3 @@ class TestClass:
     def test_temp(self):
         """Temporary"""
         assert 1 + 1 == 2
-
