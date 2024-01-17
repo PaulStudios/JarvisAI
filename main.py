@@ -82,8 +82,9 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Initiated User Module")
     bot: chatbot.Bot = chatbot.Bot()
     if not bot.process("Hi") == "Hi there!":
-        error("ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
-              severity=1)
+        error(
+            "ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
+            severity=1)
     console.log("Initiated Chatbot Module")
     sleep(2)
     ui = gui.JarvisGui()
@@ -145,8 +146,6 @@ if __name__ == "__main__":
     console.print("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612
-    for i in track(
-            range(15),
-            description="[bright_cyan]Loading GUI..."):
+    for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)
     ui.run()

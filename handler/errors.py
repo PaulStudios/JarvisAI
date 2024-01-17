@@ -54,7 +54,8 @@ def error(code, severity=0, errortype=""):
                             code)
             console.log(m_name +
                         "Authentication error detected. Error code : ",
-                        code, style="bright_red")
+                        code,
+                        style="bright_red")
         elif errortype == "args":
             LOGGER.critical("Argument error detected. Error code : %s", code)
             console.log(m_name + "Argument error detected. Error code : ",
