@@ -73,7 +73,8 @@ class ChatScreen(Screen):
                     role="Info",
                 )
             with Horizontal(id="input_box"):
-                yield Input(placeholder="Enter your message", id="message_input")
+                yield Input(placeholder="Enter your message",
+                            id="message_input")
                 yield Button(label="Send", variant="success", id="send_button")
         yield Footer()
         yield Header(show_clock=True)
@@ -118,7 +119,10 @@ class ChatScreen(Screen):
 
         # Take answer from the chat and add it to the conversation
         c = "Test"
-        await conversation_box.mount(MessageBox(c, "answer", ))
+        await conversation_box.mount(MessageBox(
+            c,
+            "answer",
+        ))
 
         self.toggle_widgets(message_input, button)
         # For some reason single scroll doesn't work
