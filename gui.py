@@ -7,6 +7,7 @@ import logging
 import sys
 import textwrap
 
+from textual import log
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
@@ -14,9 +15,12 @@ from textual.widget import Widget
 from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
 
 from handler.utilities import resource_path
+from chatbot import Bot
 
 LOGGER = logging.getLogger("JarvisAI.GUI")
 wrapper = textwrap.TextWrapper(width=60)
+bot: Bot = Bot()
+USER = ""
 
 
 class ProfileScreen(Screen):
@@ -49,14 +53,11 @@ class MessageBox(Widget, can_focus=True):
     def __init__(self, text: str, role: str) -> None:
         self.text = text
         self.role = role
-        self.msg = self.role + ": " + self.text
-        if self.role == "Info":
-            self.msg = self.text
         super().__init__()
 
     def compose(self) -> ComposeResult:
         """Yield message component."""
-        yield Static(self.msg, classes=f"message {self.role}")
+        yield Static(self.text, classes=f"message {self.role}")
 
 
 def toggle_widgets(*widgets: Widget) -> None:
@@ -115,21 +116,21 @@ class ChatScreen(Screen):
         toggle_widgets(message_input, button)
 
         # Create question message, add it to the conversation and scroll down
-        string = wrapper.fill(text=message_input.value)
+        q = USER[1] + ": " + message_input.value
+        string = wrapper.fill(text=q)
         message_box = MessageBox(string, "question")
         await conversation_box.mount(message_box)
         conversation_box.scroll_end(animate=True)
+        msg = message_input.value
 
         # Clean up the input without triggering events
         with message_input.prevent(Input.Changed):
             message_input.value = ""
 
         # Take answer from the chat and add it to the conversation
-        c = "Test"
-        await conversation_box.mount(MessageBox(
-            c,
-            "answer",
-        ))
+        ans = "JarvisAI: " + bot.process(msg)
+        string = wrapper.fill(text=ans)
+        await conversation_box.mount(MessageBox(string, "answer",))
 
         toggle_widgets(message_input, button)
         # For some reason single scroll doesn't work
@@ -144,7 +145,6 @@ class JarvisGui(App[None]):
     TITLE = "JarvisAI"
     SUB_TITLE = "Your personal AI Assistant"
     CSS_PATH = resource_path("gui.tcss")
-    USER = ""
     BINDINGS = [("escape", "quit()", "QUIT")]
     MODES = {
         "profile": ProfileScreen,
@@ -166,7 +166,3 @@ class JarvisGui(App[None]):
         """On running the gui"""
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")
-
-
-app = JarvisGui()
-app.run()

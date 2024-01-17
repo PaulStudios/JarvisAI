@@ -34,11 +34,11 @@ MessageBox {
 }
 
 .question {
-    margin: 1 0 1 55;
+    margin: 1 0 1 80;
 }
 
 .answer {
-    margin: 1 55 1 0;
+    margin: 1 80 1 0;
 }
 
 #input_box {

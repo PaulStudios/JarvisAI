@@ -95,3 +95,5 @@ class Bot:
             resp = self.Chatbot.sendmsg(msg)
         self.reply = resp
         logging.info("Bot response module process completed")
+
+        return resp

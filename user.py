@@ -129,6 +129,7 @@ class User:
             self.__putdata(self.userdata)
             self.auth = True
             LOGGER.info("Successfully logged in '" + self.username + "'")
+            console.print("\nYou have been successfully logged in!", style="bright_green")
         else:
             error("ER2 - Incorrect password", 1, "auth")
 
