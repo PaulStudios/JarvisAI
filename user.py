@@ -81,12 +81,12 @@ class User:
         password = input("Please enter a strong password for your account: ")
         pwd = input("Please confirm your password: ")
         if pwd == password:
-            print("Processing inputs...", style="pink")
+            console.print("Processing inputs...", style="pink")
         else:
             print("Your passwords do not match.")
             pwd = input("Please re-confirm your password: ")
             if pwd == password:
-                print("Processing inputs...", style="pink")
+                console.print("Processing inputs...", style="pink")
             else:
                 error("ER5 - Incorrect Password during registration.", 1,
                       "auth")
