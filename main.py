@@ -15,11 +15,19 @@ import sys
 from os import system
 from rich import pretty, print
 from rich.console import Console
+<<<<<<< HEAD
+=======
+from rich.progress import track
+>>>>>>> GUI
 from rich.traceback import install
 
 import gui
 import user
 import chatbot
+<<<<<<< HEAD
+=======
+import gui
+>>>>>>> GUI
 from handler.utilities import printn
 from handler.errors import error
 
@@ -40,7 +48,7 @@ def initlogs():
     # Create handlers
     c_handler = logging.StreamHandler()
     f_handler = logging.FileHandler(LOGNAME)
-    c_handler.setLevel(logging.WARNING)
+    c_handler.setLevel(51)
     f_handler.setLevel(logging.INFO)
 
     # Create formatters and add it to handlers
@@ -80,7 +88,10 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     sleep(0.9)
     console.log("Initiated User Module")
     bot: chatbot.Bot = chatbot.Bot()
-    sleep(1.5)
+    if not bot.process("Hi") == "Hi there!":
+        error(
+            "ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
+            severity=1)
     console.log("Initiated Chatbot Module")
     sleep(2)
     ui = gui.JarvisGui()
@@ -125,7 +136,11 @@ def start():
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
+<<<<<<< HEAD
     printn("Please enter your selection number: ", 'slate_blue1')
+=======
+    printn("Please enter your choice: ", 'slate_blue1')
+>>>>>>> GUI
     try:
         selection = int(input())
         selected_value = menu_items[selection]
@@ -137,5 +152,15 @@ def start():
 if __name__ == "__main__":
     start()
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
+<<<<<<< HEAD
     ui.USER = user_class.userdata
+=======
+    gui.USER = user_class.userdata
+    gui.bot.userset(user_class.username)
+    console.print("Press [cyan]ENTER[/cyan] to open Chat Interface.")
+    input()
+    # skipcq: PYL-W0612
+    for i in track(range(15), description="[bright_cyan]Loading GUI..."):
+        sleep(0.1)
+>>>>>>> GUI
     ui.run()
