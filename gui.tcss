@@ -1,6 +1,7 @@
 Screen {
     align: center middle;
     layout: vertical;
+    background: #212529;
 }
 Header {
   dock: top;
@@ -8,21 +9,52 @@ Header {
   content-align: center middle;
   background: blanchedalmond;
 }
-.box {
-    border: solid green;
+MessageBox {
+    layout: horizontal;
+    height: auto;
+    align-horizontal: center;
 }
-#Chat {
-    height: 80%;
+
+.message {
+    width: auto;
+    min-width: 25%;
+    border: tall black;
+    padding: 1 1;
+    margin: 1 0;
+    background: #343a40;
 }
-#inputarea {
-    height: 20%;
+#chatscreen {
+    border: tall black;
+    margin: 1 1 1 1;
 }
-#input-text {
-    border: solid green;
-    height: 100%;
-    width: 2fr;
+
+.info {
+    width: auto;
+    text-align: center;
 }
-#send {
-    width: 1fr;
-    height: 100%;
+
+.question {
+    margin: 1 0 1 55;
+}
+
+.answer {
+    margin: 1 55 1 0;
+}
+
+#input_box {
+    dock: bottom;
+    height: auto;
+    width: 95%;
+    margin: 0 0 1 0;
+    align_horizontal: center;
+}
+
+#message_input {
+    width: 90%;
+    background: #343a40;
+}
+
+#send_button {
+    width: auto;
+    content-align: center middle;
 }

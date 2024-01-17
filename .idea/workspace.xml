@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/codacy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/codacy.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/devskim.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/devskim.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.github/workflows/greetings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/greetings.yml" afterDir="false" />
