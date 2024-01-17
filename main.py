@@ -13,7 +13,7 @@ import logging
 import os
 import sys
 from os import system
-from rich import pretty, print
+from rich import pretty
 from rich.console import Console
 from rich.progress import track
 from rich.traceback import install
@@ -118,7 +118,7 @@ def Register():
 
 def Exit():
     """Exit"""
-    print("Goodbye")
+    console.print("Goodbye", style="bright_red")
     sys.exit()
 
 
