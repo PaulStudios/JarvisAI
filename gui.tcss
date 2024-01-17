@@ -1,0 +1,29 @@
+Screen {
+    align: center middle;
+    layout: grid;
+    grid-size: 5;
+}
+Header {
+  dock: top;
+  height: 1;
+  content-align: center middle;
+  background: blanchedalmond;
+}
+
+.box {
+    height: 100%;
+    border: solid green;
+}
+
+#profile {
+    dock: left;
+    width: 25%;
+    height: 95%;
+}
+#chat {
+    column-span: 5;
+    row-span: 5;
+}
+#input {
+    column-span:4;
+}

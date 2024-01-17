@@ -1,6 +1,7 @@
 # pylint: disable=E0401
 # pylint: disable=C0103
 
+# skipcq
 """
 Chatbot functions
 """
@@ -30,26 +31,11 @@ def wish_me():
     return "Hello,Good Evening"
 
 
-def choice_selector(argument):
-    """Replacement for switch-case function"""
-    switcher = {
-        1: "one",
-        2: "two",
-        3: "three",
-        4: "four",
-    }
-    return switcher.get(argument, "Invalid Choice")
-
-
 def take_picture():
     """Take a photo"""
     current_date_and_time = datetime.datetime.now()
     filename = "img-" + current_date_and_time.strftime("%f") + ".jpg"
     ec.capture(0, False, filename)
-    # if delay == 0:
-    #     ec.capture(0, False, filename)
-    # if delay >= 0:
-    #     ec.delay_imcapture(0, False, filename, delay)
     return filename
 
 
@@ -60,10 +46,11 @@ class Bot:
         self.reply: str = "No response has been generated yet..."
         self.creds: dict = config.chat_config()
         self.LOGGER: logging.Logger = logging.getLogger("JarvisAI.chatbot")
-        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(self.creds['brainid'],
-                                                              self.creds['brainkey'],
-                                                              history=True,
-                                                              debug=True)
+        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(
+            self.creds['brainid'],
+            self.creds['brainkey'],
+            history=True,
+            debug=True)
         webbrowser.get('windows-default')
 
     def userset(self, name: str):
