@@ -51,7 +51,8 @@ class Bot:
             self.creds['brainkey'],
             history=True,
             debug=True)
-       #  webbrowser.get('windows-default')
+
+    #  webbrowser.get('windows-default')
 
     def userset(self, name: str):
         """Set username"""
