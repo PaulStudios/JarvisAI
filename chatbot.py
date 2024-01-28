@@ -8,7 +8,7 @@ Chatbot functions
 import datetime
 import logging
 import time
-import webbrowser
+# import webbrowser
 from rich import pretty
 from rich.console import Console
 
@@ -51,7 +51,7 @@ class Bot:
             self.creds['brainkey'],
             history=True,
             debug=True)
-        webbrowser.get('windows-default')
+       #  webbrowser.get('windows-default')
 
     def userset(self, name: str):
         """Set username"""
@@ -60,17 +60,17 @@ class Bot:
     def process(self, msg):
         """Get response from bot"""
         if 'open youtube' in msg:
-            webbrowser.open_new_tab("https://www.youtube.com")
+            # webbrowser.open_new_tab("https://www.youtube.com")
             resp = "Youtube is open now"
             time.sleep(5)
 
         elif 'open google' in msg:
-            webbrowser.open_new_tab("https://www.google.com")
+            # webbrowser.open_new_tab("https://www.google.com")
             resp = "Google chrome is open now"
             time.sleep(5)
 
         elif 'open gmail' in msg:
-            webbrowser.open_new_tab("gmail.com")
+            # webbrowser.open_new_tab("gmail.com")
             resp = "Google Mail is open now"
             time.sleep(5)
 
@@ -79,7 +79,7 @@ class Bot:
             resp = f"The current time is {date_and_time_now}"
 
         elif "open stackoverflow" in msg:
-            webbrowser.open_new_tab("https://stackoverflow.com/login")
+            # webbrowser.open_new_tab("https://stackoverflow.com/login")
             resp = "Here is stackoverflow"
 
         elif "camera" in msg or "take a photo" in msg:
@@ -88,7 +88,7 @@ class Bot:
 
         elif 'search' in msg:
             msg = msg.replace("search", "")
-            webbrowser.open_new_tab(msg)
+            # webbrowser.open_new_tab(msg)
             resp = "Browser opened"
             time.sleep(5)
         else:
