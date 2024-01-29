@@ -27,7 +27,7 @@ class ProfileScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
-        yield Static("Profile")
+        yield Placeholder("Profile")
         yield Footer()
         yield Header()
 
@@ -37,7 +37,7 @@ class HelpScreen(Screen):
 
     def compose(self) -> ComposeResult:
         """Internal compose"""
-        yield Static("Help")
+        yield Placeholder("Help")
         yield Footer()
         yield Header()
 
