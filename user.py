@@ -89,13 +89,13 @@ class User:
         printn("Please confirm your password: ", "sky_blue1")
         pwd = input()
         if pwd == password:
-            console.print("Processing inputs...", style="pink")
+            console.print("Processing inputs...", style="bright_magenta")
         else:
             print("Your passwords do not match.")
             printn("Please re-confirm your password: ", "sky_blue1")
             pwd = input()
             if pwd == password:
-                console.print("Processing inputs...", style="pink")
+                console.print("Processing inputs...", style="bright_magenta")
             else:
                 error("ER5 - Incorrect Password during registration.", 1,
                       "auth")
@@ -130,7 +130,7 @@ class User:
         data = ["username", username]
         i = ()
         LOGGER.info("Logging in user")
-        console.print("Processing inputs...", style="pink")
+        console.print("Processing inputs...", style="bright_magenta")
         try:
             i = database.get_user(table=table_name, data=data)
         except Exception as e:  # skipcq: PYL-W0703

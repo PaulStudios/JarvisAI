@@ -13,16 +13,22 @@ import logging
 import os
 import sys
 from os import system
-from rich import pretty
+
 from rich.console import Console
 from rich.progress import track
 from rich.traceback import install
 
+import cfg
 import user
 import chatbot
 import gui
 from handler.utilities import printn
 from handler.errors import error
+from handler.logger import Logger
+
+
+LOGGER: Logger = Logger()
+LOGNAME: str = ""
 
 
 def initlogs():
@@ -30,41 +36,11 @@ def initlogs():
     global LOGNAME, LOGGER
     LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime(
         "%f") + ".log"
-    if os.path.exists('logs'):
-        pass
-    else:
-        os.mkdir('logs')
-    with open(LOGNAME, 'w', encoding='utf8') as file_test:
-        file_test.write("JarvisAI v3.0\n")
-    LOGGER.setLevel(logging.DEBUG)
-
-    # Create handlers
-    c_handler = logging.StreamHandler()
-    f_handler = logging.FileHandler(LOGNAME)
-    c_handler.setLevel(51)
-    f_handler.setLevel(logging.INFO)
-
-    # Create formatters and add it to handlers
-    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s',
-                                 "%Y-%m-%d %H:%M:%S")
-    f_format = logging.Formatter(
-        '%(asctime)s - %(name)s : %(levelname)s - %(message)s',
-        "%Y-%m-%d %H:%M:%S")
-    c_handler.setFormatter(c_format)
-    f_handler.setFormatter(f_format)
-
-    # Add handlers to the logging
-    LOGGER.addHandler(c_handler)
-    LOGGER.addHandler(f_handler)
-    # logging.basicConfig(
-    # filename=LOGNAME, level=logging.DEBUG, format='%(asctime)s :
-    # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+    cfg.log_name = LOGNAME
+    LOGGER.setup()
 
 
 system('cls')  # skipcq: BAN-B607
-LOGGER: logging.Logger = logging.getLogger("JarvisAI")
-LOGNAME: str = ""
-pretty.install()
 install(extra_lines=0, show_locals=False)
 console = Console()
 console.print('Loading your AI personal assistant - Jarvis...',
@@ -118,7 +94,7 @@ def Register():
 
 def Exit():
     """Exit"""
-    console.print("Goodbye", style="bright_red")
+    printn("Goodbye", "bright_red")
     sys.exit()
 
 
@@ -143,7 +119,7 @@ if __name__ == "__main__":
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
     gui.USER = user_class.userdata
     gui.bot.userset(user_class.username)
-    console.print("Press [cyan]ENTER[/cyan] to open Chat Interface.")
+    printn("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):

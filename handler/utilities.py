@@ -9,6 +9,7 @@ import sys
 
 from rich import pretty
 from rich.console import Console
+from textblob import TextBlob
 
 pretty.install()
 console = Console()
@@ -39,3 +40,10 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
+def correction(data):
+    """Spellcheck"""
+    text = TextBlob(data)
+    text = text.correct()
+    return str(text)

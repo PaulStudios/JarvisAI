@@ -5,36 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.deepsource.toml" beforeDir="false" afterPath="$PROJECT_DIR$/.deepsource.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/bug_report.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" beforeDir="false" afterPath="$PROJECT_DIR$/.github/ISSUE_TEMPLATE/feature_request.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/dependabot.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dependency-review.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/devskim.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/devskim.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/greetings.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/greetings.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/pylint.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/pylint.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/python-app.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/python-app.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cfg.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/handler/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/Jarvis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Jarvis.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui.tcss" beforeDir="false" afterPath="$PROJECT_DIR$/gui.tcss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/encryption.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/encryption.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/errors.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qodana.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/qodana.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,9 +51,10 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Coloured-Console-Output",
+    "git-widget-placeholder": "Profile-Management",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "F:/Coding/JarvisAI/handler",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
@@ -97,6 +76,13 @@
       <recent name="F:\Coding\JarvisAI\handler" />
       <recent name="F:\Coding\JarvisAI" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

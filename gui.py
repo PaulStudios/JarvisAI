@@ -13,13 +13,15 @@ from textual.screen import Screen
 from textual.widget import Widget
 from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
 
-from handler.utilities import resource_path
+from handler.utilities import resource_path, correction
 from chatbot import Bot
 
 LOGGER = logging.getLogger("JarvisAI.GUI")
 wrapper = textwrap.TextWrapper(width=60)
 bot: Bot = Bot()
 USER = ""
+mode_options = {"profile": 'open profile menu',
+                "help": 'open help screen'}
 
 
 class ProfileScreen(Screen):
@@ -115,6 +117,7 @@ class ChatScreen(Screen):
         toggle_widgets(message_input, button)
 
         # Create question message, add it to the conversation and scroll down
+        message_input.value = correction(message_input.value)
         q = USER[1] + ": " + message_input.value
         string = wrapper.fill(text=q)
         message_box = MessageBox(string, "question")
@@ -139,6 +142,9 @@ class ChatScreen(Screen):
         conversation_box.scroll_end(animate=True)
         conversation_box.scroll_end(animate=True)
         self.query_one(Input).focus()
+        if msg.lower() == "ct_profile":
+            await self.app.switch_mode("profile")
+
 
 
 class JarvisGui(App[None]):
