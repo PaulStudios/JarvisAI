@@ -9,8 +9,6 @@ Main file
 """
 import datetime
 from time import sleep
-import logging
-import os
 import sys
 from os import system
 
@@ -24,20 +22,10 @@ import chatbot
 import gui
 from handler.utilities import printn
 from handler.errors import error
-from handler.logger import Logger
+from handler.logger import Logger, setup_logger
 
 
-LOGGER: Logger = Logger()
-LOGNAME: str = ""
-
-
-def initlogs():
-    """Initialize logging module"""
-    global LOGNAME, LOGGER
-    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime(
-        "%f") + ".log"
-    cfg.log_name = LOGNAME
-    LOGGER.setup()
+LOGGER: Logger = Logger("JarvisAI.core")
 
 
 system('cls')  # skipcq: BAN-B607
@@ -47,26 +35,30 @@ console.print('Loading your AI personal assistant - Jarvis...',
               style="bright_yellow")
 with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Starting core systems...")
-    initlogs()
-    LOGGER.info("Loading logging module...")
     sleep(1)
     LOGGER.info("Setting up JarvisAI...")
     console.log("Connecting to PaulStudios Database")
     user_class: user.User = user.User()
+    LOGGER.info("Connected to PaulStudios Database")
     console.log("Connected")
     sleep(0.9)
     console.log("Initiated User Module")
+    LOGGER.info("Initiated User Module")
     bot: chatbot.Bot = chatbot.Bot()
     if not bot.process("Hi") == "Hi there!":
         error(
             "ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
             severity=1)
+    sleep(0.5)
     console.log("Initiated Chatbot Module")
+    LOGGER.info("Initiated Chatbot Module")
     sleep(2)
     ui = gui.JarvisGui()
     console.log("User Interface prepared.")
     sleep(1)
     console.log("Setup Complete")
+    LOGGER.info("Initial setup complete")
+    LOGNAME = cfg.log_name
 console.print(f"Logger module has been initiated in {LOGNAME}\n",
               style="bright_yellow")
 
@@ -94,6 +86,7 @@ def Register():
 
 def Exit():
     """Exit"""
+    print("\n")
     printn("Goodbye", "bright_red")
     sys.exit()
 
@@ -124,4 +117,5 @@ if __name__ == "__main__":
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)
+    LOGGER.info("Transitioning to GUI")
     ui.run()

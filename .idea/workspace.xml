@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cfg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/handler/logger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Jarvis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Jarvis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cfg.py" beforeDir="false" afterPath="$PROJECT_DIR$/cfg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handler/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/encryption.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/encryption.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/logger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +54,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Profile-Management",
+    "git-widget-placeholder": "Logger",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "F:/Coding/JarvisAI/handler",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"

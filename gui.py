@@ -14,10 +14,13 @@ from textual.widget import Widget
 from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
 
 from handler.utilities import resource_path, correction
+from handler.logger import Logger, initlogs
+from handler.utilities import printn
 from chatbot import Bot
 
-LOGGER = logging.getLogger("JarvisAI.GUI")
+LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
+initlogs()
 bot: Bot = Bot()
 USER = ""
 mode_options = {"profile": 'open profile menu',
@@ -27,7 +30,7 @@ mode_options = {"profile": 'open profile menu',
 class ProfileScreen(Screen):
     """Profile Management"""
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
         """Internal compose"""
         yield Placeholder("Profile")
         yield Footer()
@@ -37,7 +40,7 @@ class ProfileScreen(Screen):
 class HelpScreen(Screen):
     """Display commands"""
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
         """Internal compose"""
         yield Placeholder("Help")
         yield Footer()
@@ -70,7 +73,7 @@ def toggle_widgets(*widgets: Widget) -> None:
 class ChatScreen(Screen):
     """Main chat interface"""
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
         """Internal compose"""
         with Vertical(classes="chatscreen", id="chatscreen"):
             with FocusableContainer(id="conversation_box"):
@@ -159,18 +162,24 @@ class JarvisGui(App[None]):
         "chat": ChatScreen,
         "help": HelpScreen,
     }
-    LOGGER.info("Setting up Interface")
+    LOGGER.info("Setting up GUI Interface")
 
-    def compose(self) -> ComposeResult:
+    def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
         """Internal compose"""
         yield Placeholder()
 
-    def action_quit(self) -> None:  # skipcq: PYL-W0236
+    def action_quit(self) -> None:  # skipcq: PYL-W0236, PYL-R0201
         """Quit"""
         LOGGER.info("Exiting...")
-        sys.exit(0)
+        Exit()
 
     def on_mount(self) -> None:
         """On running the gui"""
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")
+
+def Exit():
+    """Exit"""
+    print("\n")
+    printn("Goodbye", "bright_red")
+    sys.exit()

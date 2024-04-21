@@ -10,6 +10,7 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 from .config import sec_config
+from handler.logger import Logger
 
 KDF_ALGORITHM = hashes.SHA256()
 KDF_LENGTH = 32
@@ -17,6 +18,7 @@ KDF_ITERATIONS = 120000
 
 priv = sec_config()
 
+LOGGER: Logger = Logger("JarvisAI.encryptor")
 
 def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     """Encrypt the message"""
@@ -28,6 +30,7 @@ def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     # Encrypt the message.
     f = Fernet(base64.urlsafe_b64encode(key))
     ciphertext = f.encrypt(plaintext.encode("utf-8"))
+    LOGGER.info("Encrytion Completed")
     return ciphertext
 
 
@@ -42,4 +45,5 @@ def decrypt(ciphertext: bytes, password: str = priv['pass'],
     # Decrypt the message
     f = Fernet(base64.urlsafe_b64encode(key))
     plaintext = f.decrypt(ciphertext)
+    LOGGER.info("Decryption Completed")
     return plaintext.decode("utf-8")

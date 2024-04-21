@@ -21,11 +21,13 @@ from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
 from handler.utilities import printn
+from handler.logger import Logger
 
 ser = ()
 table_name = config.program_config()['table']
 pretty.install()
 console = Console()
+LOGGER: Logger = Logger("JarvisAI.user")
 
 
 def checkdb():
@@ -48,9 +50,6 @@ def checkmail(email1=""):
     if re.match(regex, email2):
         return email2
     error("ER5 - Invalid email entered during registration.", 1, "auth")
-
-
-LOGGER = logging.getLogger("JarvisAI.user")
 
 
 class User:
