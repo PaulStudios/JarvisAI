@@ -7,8 +7,10 @@ import os
 import cfg
 from handler.utilities import printn
 
+
 class Logger:
     """Logging Class"""
+
     def __init__(self, name: str = "JarvisAI"):
         self.name = name
         self.filename = cfg.log_name

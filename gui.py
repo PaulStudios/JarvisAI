@@ -20,8 +20,7 @@ LOGGER = logging.getLogger("JarvisAI.GUI")
 wrapper = textwrap.TextWrapper(width=60)
 bot: Bot = Bot()
 USER = ""
-mode_options = {"profile": 'open profile menu',
-                "help": 'open help screen'}
+mode_options = {"profile": 'open profile menu', "help": 'open help screen'}
 
 
 class ProfileScreen(Screen):
@@ -144,7 +143,6 @@ class ChatScreen(Screen):
         self.query_one(Input).focus()
         if msg.lower() == "ct_profile":
             await self.app.switch_mode("profile")
-
 
 
 class JarvisGui(App[None]):

@@ -26,7 +26,6 @@ from handler.utilities import printn
 from handler.errors import error
 from handler.logger import Logger
 
-
 LOGGER: Logger = Logger()
 LOGNAME: str = ""
 
