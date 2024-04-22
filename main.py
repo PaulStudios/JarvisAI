@@ -105,15 +105,15 @@ def start():
 
 
 if __name__ == "__main__":
-    #start()
-    #ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
-    #gui.USER = (user_class.name, user_class.username,
+    # start()
+    # ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
+    # gui.USER = (user_class.name, user_class.username,
     #            user_class.country, user_class.userdata[3],
     #            user_class.userdata[5])
-    #gui.bot.userset(user_class.username)
+    # gui.bot.userset(user_class.username)
     gui.USER = ("Testing Bot", "test", "India", "tester@email.com", "tester")
     print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
-    #input()
+    # input()
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)

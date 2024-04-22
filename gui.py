@@ -50,8 +50,7 @@ class ProfileScreen(Screen):
                 )
             yield Markdown(profile_data, id="profile_info")
             with Horizontal(id="edit_box"):
-                yield Input(placeholder="Enter your Edit",
-                            id="edit_input")
+                yield Input(placeholder="Enter your Edit", id="edit_input")
                 yield Button(label="Submit", variant="success", id="send_edit")
         yield Footer()
         yield Header(show_clock=True)
@@ -97,8 +96,6 @@ class ProfileScreen(Screen):
 
         edit_input.value = ""
         toggle_widgets(edit_input, button)
-
-
 
 class HelpScreen(Screen):
     """Display commands"""
@@ -238,7 +235,7 @@ class JarvisGui(App[None]):
     def on_mount(self) -> None:
         """On running the gui"""
         LOGGER.info("Starting GUI")
-        #self.switch_mode("chat")
+        # self.switch_mode("chat")
         self.switch_mode("profile")
 
 
