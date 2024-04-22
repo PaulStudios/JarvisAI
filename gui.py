@@ -10,7 +10,7 @@ from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
 from textual.widget import Widget
-from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
+from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, Markdown
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
@@ -21,7 +21,7 @@ LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
 initlogs()
 bot: Bot = Bot()
-USER = ""
+USER = ()
 mode_options = {"profile": 'open profile menu', "help": 'open help screen'}
 
 
@@ -30,9 +30,51 @@ class ProfileScreen(Screen):
 
     def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
         """Internal compose"""
-        yield Placeholder("Profile")
+        profile_data = f"""\
+        ::Profile Information::
+        
+        Name: {USER[0]}
+        Username: {USER[1]}
+        Country: {USER[2]}
+        Email: {USER[3]}
+        Password: {USER[4]}
+        """
+        with Vertical(classes="infoscreen", id="infoscreen"):
+            with FocusableContainer(id="conversation_box"):
+                yield MessageBox(
+                    "Welcome to Profile Management!\n"
+                    "See you account details below\n"
+                    "Type '{Field Name} - {New Value}'\n"
+                    "Example : Name - John Doe",
+                    role="Info",
+                )
+            yield Markdown(profile_data, id="profile_info")
+            with Horizontal(id="edit_box"):
+                yield Input(placeholder="Enter your Edit",
+                            id="edit_input")
+                yield Button(label="Submit", variant="success", id="send_edit")
         yield Footer()
-        yield Header()
+        yield Header(show_clock=True)
+
+    async def on_button_pressed(self) -> None:
+        """Process when send was pressed."""
+        await self.process_edit()
+
+    async def on_input_submitted(self) -> None:
+        """Process when input was submitted."""
+        await self.process_edit()
+
+    async def process_edit(self) -> None:
+        """Editing"""
+        message_input = self.query_one("#edit_input", Input)
+        # Don't do anything if input is empty
+        if message_input.value == "":
+            return
+        button = self.query_one("#send_edit")
+
+        toggle_widgets(message_input, button)
+
+
 
 
 class HelpScreen(Screen):
@@ -173,7 +215,8 @@ class JarvisGui(App[None]):
     def on_mount(self) -> None:
         """On running the gui"""
         LOGGER.info("Starting GUI")
-        self.switch_mode("chat")
+        #self.switch_mode("chat")
+        self.switch_mode("profile")
 
 
 def Exit():

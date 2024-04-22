@@ -27,6 +27,10 @@ MessageBox {
     border: tall black;
     margin: 1 1 1 1;
 }
+#infoscreen {
+    border: tall black;
+    margin: 1 1 1 1;
+}
 
 .info {
     width: auto;
@@ -55,6 +59,28 @@ MessageBox {
 }
 
 #send_button {
+    width: auto;
+    content-align: center middle;
+}
+
+#profile_info {
+    border: tall black;
+    margin: 1 1 1 1;
+}
+
+#edit_box {
+    dock: bottom;
+    height: auto;
+    width: 95%;
+    margin: 0 0 1 0;
+    align_horizontal: center;
+}
+#edit_input {
+    width: 90%;
+    background: #343a40;
+}
+
+#send_edit {
     width: auto;
     content-align: center middle;
 }

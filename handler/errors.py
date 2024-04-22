@@ -43,7 +43,7 @@ def error(code, severity=0, errortype=""):
     LOGGER.warning("Error has been detected. Investigating...")
     # skipcq: PYL-W0612
     for i in track(
-            range(30),
+            range(5),
             description="[bright_red]Checking Background Processes for error..."
     ):
         sleep(0.1)

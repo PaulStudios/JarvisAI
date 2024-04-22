@@ -45,7 +45,7 @@ class Logger:
         self.update_path()
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        c_format = self.name + " : " + "ERROR" + " - " + msg
+        c_format = self.name + " : " + "WARNING" + " - " + msg
         er_format = "[" + dt_string + "]" + " - " + \
             self.name + " : " + "WARNING" + " - " + msg
         if f_level <= 3:
@@ -75,7 +75,7 @@ class Logger:
         self.update_path()
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        c_format = self.name + " : " + "ERROR" + " - " + msg
+        c_format = self.name + " : " + "CRITICAL" + " - " + msg
         er_format = "[" + dt_string + "]" + " - " + \
             self.name + " : " + "CRITICAL" + " - " + msg
         if f_level <= 5:
@@ -104,4 +104,4 @@ def initlogs():
     """Initialize logging module"""
     logname = "logs/JarvisAI_Logs-" + datetime.now().strftime("%f") + ".log"
     cfg.log_name = logname
-    setup_logger(2, 10)
+    setup_logger(2, 3)
