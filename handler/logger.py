@@ -15,8 +15,10 @@ console = Console()
 f_level = 0
 c_level = 0
 
+
 class Logger:
     """Logging Class"""
+
     def __init__(self, name: str = "JarvisAI"):
         self.name = name
         self.filename = cfg.log_name
