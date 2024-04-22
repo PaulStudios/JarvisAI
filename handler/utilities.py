@@ -9,12 +9,13 @@ import sys
 
 from rich import pretty
 from rich.console import Console
+from textblob import TextBlob
 
 pretty.install()
 console = Console()
 
 
-def printn(text: str, st: str = None):
+def print_custom(text: str, st: str = None):
     """Wrapper"""
     console.print(text, end='', style=st)
 
@@ -39,3 +40,10 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
+def correction(data):
+    """Spellcheck"""
+    text = TextBlob(data)
+    text = text.correct()
+    return str(text)
