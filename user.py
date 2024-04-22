@@ -12,16 +12,16 @@ Login and Register handling
 """
 
 import re
-import logging
+
 from rich import pretty, print
 from rich.console import Console
 
 import handler
-from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
-from handler.utilities import printn
+from handler.errors import error
 from handler.logger import Logger
+from handler.utilities import printn
 
 ser = ()
 table_name = config.program_config()['table']

@@ -7,23 +7,21 @@
 """
 Main file
 """
-import datetime
-from time import sleep
 import sys
 from os import system
+from time import sleep
 
 from rich.console import Console
 from rich.progress import track
 from rich.traceback import install
 
 import cfg
-import user
 import chatbot
 import gui
-from handler.utilities import printn
+import user
 from handler.errors import error
-from handler.logger import Logger, setup_logger
-
+from handler.logger import Logger
+from handler.utilities import printn
 
 LOGGER: Logger = Logger("JarvisAI.core")
 

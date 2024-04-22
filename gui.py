@@ -3,7 +3,6 @@
 GUI Handler
 """
 
-import logging
 import sys
 import textwrap
 
@@ -13,10 +12,10 @@ from textual.screen import Screen
 from textual.widget import Widget
 from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
 
-from handler.utilities import resource_path, correction
+from chatbot import Bot
 from handler.logger import Logger, initlogs
 from handler.utilities import printn
-from chatbot import Bot
+from handler.utilities import resource_path, correction
 
 LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)

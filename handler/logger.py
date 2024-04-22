@@ -24,6 +24,7 @@ class Logger:
         self.filename = cfg.log_name
 
     def update_path(self):
+        """Reads filepath from global config"""
         self.filename = cfg.log_name
 
     def info(self, msg: str = ""):
@@ -83,8 +84,8 @@ class Logger:
 
 
 def setup_logger(f_lvl: int = 0, c_lvl: int = 0):
-    global f_level, c_level
-    """Sets up file"""
+    """Sets up Module"""
+    global f_level, c_level  # skipcq: PYL-W0603
     if os.path.exists('logs'):
         pass
     else:
