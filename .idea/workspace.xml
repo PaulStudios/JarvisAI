@@ -7,7 +7,9 @@
     <list default="true" id="5702d307-d017-4d98-b747-3573e697daf4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gui.tcss" beforeDir="false" afterPath="$PROJECT_DIR$/gui.tcss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handler/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +47,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.c.executor": "Run",
+    "Python.check.executor": "Run",
+    "Python.gui.executor": "Run",
     "Python.main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",

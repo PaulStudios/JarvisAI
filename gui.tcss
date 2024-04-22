@@ -84,3 +84,6 @@ MessageBox {
     width: auto;
     content-align: center middle;
 }
+Pretty {
+    align_horizontal: center;
+}

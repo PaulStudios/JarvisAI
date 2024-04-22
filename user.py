@@ -21,7 +21,7 @@ from handler import database, config
 from handler import encrypt, decrypt
 from handler.errors import error
 from handler.logger import Logger
-from handler.utilities import print_custom
+from handler.utilities import print_custom, checkmail
 
 ser = ()
 table_name = config.program_config()['table']
@@ -41,13 +41,12 @@ def checkdb():
         error("ER11B - Failed to connect to Database", 1, "conn")
 
 
-def checkmail(email1=""):
+def checkmail_input(email1=""):
     """Validate mail"""
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if re.match(regex, email1):
+    if checkmail(email1):
         return email1
     email2 = input("Your email is invalid. Please re-enter your email: ")
-    if re.match(regex, email2):
+    if checkmail(email2):
         return email2
     error("ER5 - Invalid email entered during registration.", 1, "auth")
 
@@ -80,7 +79,7 @@ class User:
         country = input()
         print_custom("Please enter your email address: ", "sky_blue1")
         email = input()
-        email = checkmail(email)
+        email = checkmail_input(email)
         print_custom("Please enter a username: ", "sky_blue1")
         username = input()
         print_custom("Please enter a strong password for your account: ",

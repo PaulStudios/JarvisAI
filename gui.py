@@ -6,15 +6,17 @@ GUI Handler
 import sys
 import textwrap
 
+from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
 from textual.widget import Widget
-from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, Markdown
+from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, Markdown, Pretty
+from textual.validation import Function, ValidationResult, Validator
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
-from handler.utilities import print_custom, get_field_index
+from handler.utilities import print_custom, get_field_index, checkmail, countries_exist
 from handler.utilities import resource_path, correction
 
 LOGGER: Logger = Logger("JarvisAI.gui")
@@ -48,9 +50,13 @@ class ProfileScreen(Screen):
                     "Example : Name - John Doe",
                     role="Info",
                 )
+            yield Pretty([])
             yield Markdown(profile_data, id="profile_info")
             with Horizontal(id="edit_box"):
-                yield Input(placeholder="Enter your Edit", id="edit_input")
+                yield Input(placeholder="Enter your Edit", id="edit_input",
+                            validators=[edit_input_check()],
+                            validate_on=["changed", "submitted"]
+                            )
                 yield Button(label="Submit", variant="success", id="send_edit")
         yield Footer()
         yield Header(show_clock=True)
@@ -63,26 +69,53 @@ class ProfileScreen(Screen):
         """Process when input was submitted."""
         await self.process_edit()
 
+    @on(Input.Changed)
+    def show_invalid_reasons(self, event: Input.Changed) -> None:
+        # Updating the UI to show the reasons why validation failed
+        if not event.validation_result.is_valid:
+            self.query_one(Pretty).update(event.validation_result.failure_descriptions)
+            self.query_one("#send_edit").disabled = True
+        else:
+            self.query_one(Pretty).update("")
+            self.query_one("#send_edit").disabled = False
+
     async def process_edit(self) -> None:
-        """Editing"""
+        """Editing Process"""
         edit_input = self.query_one("#edit_input", Input)
-        # Don't do anything if input is empty
-        if edit_input.value == "":
+
+        # Don't do anything if input is empty or invalid
+        if edit_input.value == "" or " - " not in edit_input.value:
             return
+        try:
+            get_field_index(edit_input.value.split(" - ")[0])
+        except AttributeError:
+            return
+
         button = self.query_one("#send_edit")
         info_box = self.query_one("#profile_info")
         toggle_widgets(edit_input, button)
 
         field = edit_input.value.split(" - ")[0]
-        field_data = edit_input.value.split(" - ")[1] + "  [Changed]"
+        field_data = edit_input.value.split(" - ")[1]
         field_index = get_field_index(field)
+        
+        if field_index == 3 and not checkmail(field_data):
+            self.query_one(Pretty).update("Invalid Email entered...")
+            return
+        if field_index == 0 and " " not in field_data:
+            self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
+            return
+        if field_index == 2 and not countries_exist(field_data):
+            self.query_one(Pretty).update("Invalid Country Entered. Please check the spelling.")
+            return
 
+        field_data_edited = field_data + "  [Changed]"
         edit = {0: USER[0],
                 1: USER[1],
                 2: USER[2],
                 3: USER[3],
                 4: USER[4],
-                field_index: field_data}
+                field_index: field_data_edited}
         q = f"""\
         ::Profile Information::
         
@@ -96,6 +129,40 @@ class ProfileScreen(Screen):
 
         edit_input.value = ""
         toggle_widgets(edit_input, button)
+
+class edit_input_check(Validator):
+    def validate(self, value: str) -> ValidationResult:
+        """Check a string is equal to its reverse."""
+        a1, a2 = 0, 0
+        f = ""
+        if self.is_syntax(value):
+            a1 = 1
+            if self.field_exists(value):
+                a2 = 1
+            else:
+                f = f + "Please provide a valid Field"
+                a2 = 0
+        else:
+            f = "Please follow the format...\n"
+            a1 = 0
+            a2 = 0
+        if a1 == 1 and a2 == 1:
+            return self.success()
+        return self.failure(f)
+
+    @staticmethod
+    def is_syntax(value: str) -> bool:
+        if " - " in value:
+            return True
+        return False
+
+    @staticmethod
+    def field_exists(value: str) -> bool:
+        c = get_field_index(value.split(" - ")[0])
+        if c == 10:
+            return False
+        return True
+
 
 class HelpScreen(Screen):
     """Display commands"""
