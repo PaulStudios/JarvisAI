@@ -47,3 +47,16 @@ def correction(data):
     text = TextBlob(data)
     text = text.correct()
     return str(text)
+
+
+def get_field_index(field: str) -> int:
+    f = field
+    switcher = {
+        "Name": 0,
+        "Username": 1,
+        "Country": 2,
+        "Email": 3,
+        "Password": 4
+    }
+    i = switcher.get(f, 10)
+    return i

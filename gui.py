@@ -14,7 +14,7 @@ from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, 
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
-from handler.utilities import print_custom
+from handler.utilities import print_custom, get_field_index
 from handler.utilities import resource_path, correction
 
 LOGGER: Logger = Logger("JarvisAI.gui")
@@ -66,14 +66,37 @@ class ProfileScreen(Screen):
 
     async def process_edit(self) -> None:
         """Editing"""
-        message_input = self.query_one("#edit_input", Input)
+        edit_input = self.query_one("#edit_input", Input)
         # Don't do anything if input is empty
-        if message_input.value == "":
+        if edit_input.value == "":
             return
         button = self.query_one("#send_edit")
+        info_box = self.query_one("#profile_info")
+        toggle_widgets(edit_input, button)
 
-        toggle_widgets(message_input, button)
+        field = edit_input.value.split(" - ")[0]
+        field_data = edit_input.value.split(" - ")[1] + "  [Changed]"
+        field_index = get_field_index(field)
 
+        edit = {0: USER[0],
+                1: USER[1],
+                2: USER[2],
+                3: USER[3],
+                4: USER[4],
+                field_index: field_data}
+        q = f"""\
+        ::Profile Information::
+        
+        Name: {edit[0]}
+        Username: {edit[1]}
+        Country: {edit[2]}
+        Email: {edit[3]}
+        Password: {edit[4]}
+        """
+        info_box.update(q)
+
+        edit_input.value = ""
+        toggle_widgets(edit_input, button)
 
 
 
