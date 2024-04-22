@@ -14,7 +14,7 @@ from textual.widgets import Header, Footer, Static, Button, Placeholder, Input
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
-from handler.utilities import printn
+from handler.utilities import print_custom
 from handler.utilities import resource_path, correction
 
 LOGGER: Logger = Logger("JarvisAI.gui")
@@ -179,5 +179,5 @@ class JarvisGui(App[None]):
 def Exit():
     """Exit"""
     print("\n")
-    printn("Goodbye", "bright_red")
+    print_custom("Goodbye", "bright_red")
     sys.exit()

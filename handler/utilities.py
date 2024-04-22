@@ -15,7 +15,7 @@ pretty.install()
 console = Console()
 
 
-def printn(text: str, st: str = None):
+def print_custom(text: str, st: str = None):
     """Wrapper"""
     console.print(text, end='', style=st)
 

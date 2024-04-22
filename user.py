@@ -21,7 +21,7 @@ from handler import database, config
 from handler import encrypt, decrypt
 from handler.errors import error
 from handler.logger import Logger
-from handler.utilities import printn
+from handler.utilities import print_custom
 
 ser = ()
 table_name = config.program_config()['table']
@@ -71,27 +71,27 @@ class User:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        printn("Please enter your full name (Only First name and Last name): ",
+        print_custom("Please enter your full name (Only First name and Last name): ",
                "sky_blue1")
         name_in = input()
         name = name_in.split()
-        printn("In which country do you live? ", "sky_blue1")
+        print_custom("In which country do you live? ", "sky_blue1")
         country = input()
-        printn("Please enter your email address: ", "sky_blue1")
+        print_custom("Please enter your email address: ", "sky_blue1")
         email = input()
         email = checkmail(email)
-        printn("Please enter a username: ", "sky_blue1")
+        print_custom("Please enter a username: ", "sky_blue1")
         username = input()
-        printn("Please enter a strong password for your account: ",
+        print_custom("Please enter a strong password for your account: ",
                "sky_blue1")
         password = input()
-        printn("Please confirm your password: ", "sky_blue1")
+        print_custom("Please confirm your password: ", "sky_blue1")
         pwd = input()
         if pwd == password:
             console.print("Processing inputs...", style="bright_magenta")
         else:
             print("Your passwords do not match.")
-            printn("Please re-confirm your password: ", "sky_blue1")
+            print_custom("Please re-confirm your password: ", "sky_blue1")
             pwd = input()
             if pwd == password:
                 console.print("Processing inputs...", style="bright_magenta")
@@ -122,9 +122,9 @@ class User:
         if username is None or password is None:
             check = 1
         if check == 1:
-            printn("Please enter your username: ", "sky_blue1")
+            print_custom("Please enter your username: ", "sky_blue1")
             username = input()
-            printn("Please enter your password: ", "sky_blue1")
+            print_custom("Please enter your password: ", "sky_blue1")
             password = input()
         data = ["username", username]
         i = ()

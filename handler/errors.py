@@ -10,7 +10,7 @@ from rich.traceback import install
 from rich.progress import track
 
 from handler.logger import Logger
-from handler.utilities import printn
+from handler.utilities import print_custom
 
 LOGGER: Logger = Logger("JarvisAI.ErrorHandler")
 install(extra_lines=0, show_locals=False)
@@ -65,5 +65,5 @@ def error(code, severity=0, errortype=""):
 def Exit():
     """Exit"""
     print("\n")
-    printn("Goodbye", "bright_red")
+    print_custom("Goodbye", "bright_red")
     sys.exit()

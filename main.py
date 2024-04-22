@@ -20,6 +20,7 @@ import chatbot
 import gui
 import user
 from handler.errors import error
+from handler.utilities import print_custom
 from handler.logger import Logger
 
 LOGGER: Logger = Logger("JarvisAI.core")
@@ -83,7 +84,7 @@ def Register():
 def Exit():
     """Exit"""
     print("\n")
-    printn("Goodbye", "bright_red")
+    print_custom("Goodbye", "bright_red")
     sys.exit()
 
 
@@ -94,7 +95,7 @@ def start():
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
-    printn("Please enter your choice: ", 'slate_blue1')
+    print_custom("Please enter your choice: ", 'slate_blue1')
     try:
         selection = int(input())
         selected_value = menu_items[selection]
@@ -108,7 +109,7 @@ if __name__ == "__main__":
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
     gui.USER = user_class.userdata
     gui.bot.userset(user_class.username)
-    printn("Press [cyan]ENTER[/cyan] to open Chat Interface.")
+    print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
