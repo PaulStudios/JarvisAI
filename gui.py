@@ -176,6 +176,7 @@ class JarvisGui(App[None]):
         LOGGER.info("Starting GUI")
         self.switch_mode("chat")
 
+
 def Exit():
     """Exit"""
     print("\n")

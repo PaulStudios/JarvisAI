@@ -24,9 +24,7 @@ from handler.utilities import printn
 from handler.errors import error
 from handler.logger import Logger, setup_logger
 
-
 LOGGER: Logger = Logger("JarvisAI.core")
-
 
 system('cls')  # skipcq: BAN-B607
 install(extra_lines=0, show_locals=False)
