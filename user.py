@@ -71,8 +71,9 @@ class User:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        print_custom("Please enter your full name (Only First name and Last name): ",
-               "sky_blue1")
+        print_custom(
+            "Please enter your full name (Only First name and Last name): ",
+            "sky_blue1")
         name_in = input()
         name = name_in.split()
         print_custom("In which country do you live? ", "sky_blue1")
@@ -83,7 +84,7 @@ class User:
         print_custom("Please enter a username: ", "sky_blue1")
         username = input()
         print_custom("Please enter a strong password for your account: ",
-               "sky_blue1")
+                     "sky_blue1")
         password = input()
         print_custom("Please confirm your password: ", "sky_blue1")
         pwd = input()
