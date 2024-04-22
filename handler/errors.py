@@ -49,7 +49,8 @@ def error(code, severity=0, errortype=""):
         sleep(0.1)
     if severity > 0:
         if errortype == "auth":
-            LOGGER.critical("Authentication error detected. Error code : " + code)
+            LOGGER.critical("Authentication error detected. Error code : " +
+                            code)
         elif errortype == "args":
             LOGGER.critical("Argument error detected. Error code : " + code)
         elif errortype == "conn":
@@ -59,6 +60,7 @@ def error(code, severity=0, errortype=""):
         Exit()
     LOGGER.error("Error Code " + code)
     LOGGER.error("Severity is low. Continuing...")
+
 
 def Exit():
     """Exit"""

@@ -1,5 +1,4 @@
 # skipcq
-
 """
 Global Config
 """
