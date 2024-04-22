@@ -77,12 +77,14 @@ class ProfileScreen(Screen):
         field_data = edit_input.value.split(" - ")[1] + "  [Changed]"
         field_index = get_field_index(field)
 
-        edit = {0: USER[0],
-                1: USER[1],
-                2: USER[2],
-                3: USER[3],
-                4: USER[4],
-                field_index: field_data}
+        edit = {
+            0: USER[0],
+            1: USER[1],
+            2: USER[2],
+            3: USER[3],
+            4: USER[4],
+            field_index: field_data
+        }
         q = f"""\
         ::Profile Information::
         
@@ -96,6 +98,7 @@ class ProfileScreen(Screen):
 
         edit_input.value = ""
         toggle_widgets(edit_input, button)
+
 
 class HelpScreen(Screen):
     """Display commands"""
