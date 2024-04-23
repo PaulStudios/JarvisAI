@@ -151,3 +151,6 @@ class User:
         self.name = data[1] + " " + data[2]
         self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
         self.country = data[6]
+
+def process_edits(edits: dict) -> None:
+    pass

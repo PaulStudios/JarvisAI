@@ -6,6 +6,7 @@ GUI Handler
 import sys
 import textwrap
 
+from pymsgbox import prompt, password, confirm
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
@@ -18,6 +19,7 @@ from chatbot import Bot
 from handler.logger import Logger, initlogs
 from handler.utilities import print_custom, get_field_index, checkmail, countries_exist
 from handler.utilities import resource_path, correction
+from user import process_edits
 
 LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
@@ -25,6 +27,7 @@ initlogs()
 bot: Bot = Bot()
 USER = ()
 edited_user = {}
+_edit_list = {}
 mode_options = {"profile": 'open profile menu', "help": 'open help screen'}
 
 
@@ -53,7 +56,7 @@ class ProfileScreen(Screen):
                     "Type 'CANCEL' to go back without saving.",
                     role="Info",
                 )
-            yield Pretty([])
+            yield Pretty("All OK")
             yield Markdown(profile_data, id="profile_info")
             with Horizontal(id="edit_box"):
                 yield Input(placeholder="Enter your Edit",
@@ -80,7 +83,7 @@ class ProfileScreen(Screen):
                 event.validation_result.failure_descriptions)
             self.query_one("#send_edit").disabled = True
         else:
-            self.query_one(Pretty).update("")
+            self.query_one(Pretty).update("All OK")
             self.query_one("#send_edit").disabled = False
 
     def on_mount(self):
@@ -89,10 +92,16 @@ class ProfileScreen(Screen):
 
     async def process_edit(self) -> None:
         """Editing Process"""
-        global edited_user
+        global edited_user, _edit_list
         edit_input = self.query_one("#edit_input", Input)
+        button = self.query_one("#send_edit")
 
         if edit_input.value == "CANCEL":
+            await self.app.switch_mode("chat")
+        if edit_input.value == "OK":
+            toggle_widgets(edit_input, button)
+            process_edits(_edit_list)
+            toggle_widgets(edit_input, button)
             await self.app.switch_mode("chat")
 
         # Don't do anything if input is empty or invalid
@@ -103,10 +112,7 @@ class ProfileScreen(Screen):
         except AttributeError:
             return
 
-        button = self.query_one("#send_edit")
         info_box = self.query_one("#profile_info")
-        toggle_widgets(edit_input, button)
-
         field = edit_input.value.split(" - ")[0]
         field_data = edit_input.value.split(" - ")[1]
         field_index = get_field_index(field)
@@ -136,11 +142,41 @@ class ProfileScreen(Screen):
             toggle_widgets(edit_input, button)
             self.query_one(Input).focus()
             return
+        if field_index == 4:
+            if len(field_data) <= 8 or " " in field_data:
+                self.query_one(Pretty).update(
+                    "Invalid Password Entered. It should contain 8 characters. No whitespaces are allowed.")
+                toggle_widgets(edit_input, button)
+                self.query_one(Input).focus()
+                return
+            conf = password("Please re-enter your new password", title="Confirm New Password")
+            if not conf == field_data:
+                self.query_one(Pretty).update(
+                    "Passwords did not match. Please try again")
+                toggle_widgets(edit_input, button)
+                with edit_input.prevent(Input.Changed):
+                    edit_input.value = ""
+                self.query_one(Input).focus()
+                return
 
-        field_data_edited = field_data + "  [Changed]"
+        _edit_list.update({field_index: field_data})
         edit = {0: USER[0], 1: USER[1], 2: USER[2], 3: USER[3], 4: USER[4]}
         if not edited_user == {}:
             edit = edited_user
+        if field_index == 4:
+            f = field_data
+            field_data = ""
+            for i in f:
+                field_data = field_data + "*"
+        if field_index == 3:
+            full = field_data.split("@")
+            f = full[0]
+            field_data = ""
+            for i in f:
+                field_data = field_data + "*"
+            field_data = field_data + "@" + full[1]
+        field_data_edited = field_data + "  [Changed]"
+        self.query_one(Pretty).update(["All OK"])
         edit.update({field_index: field_data_edited})
 
         q = f"""\
@@ -155,7 +191,9 @@ class ProfileScreen(Screen):
         info_box.update(q)
         edited_user = edit
 
-        edit_input.value = ""
+        # Clean up the input without triggering events
+        with edit_input.prevent(Input.Changed):
+            edit_input.value = ""
         toggle_widgets(edit_input, button)
         self.query_one(Input).focus()
 
