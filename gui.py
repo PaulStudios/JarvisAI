@@ -18,10 +18,9 @@ from textual.widgets import (Header, Footer, Static, Button, Placeholder,
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
-from user import process_edits
 from handler.utilities import (print_custom, get_field_index, checkmail,
-                               countries_exist, hide_info, resource_path,
-                               correction)
+                               countries_exist, hide_info, resource_path)
+from user import process_edits
 
 LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
@@ -364,7 +363,6 @@ class ChatScreen(Screen):
         toggle_widgets(message_input, button)
 
         # Create question message, add it to the conversation and scroll down
-        message_input.value = correction(message_input.value)
         q = USER[1] + ": " + message_input.value
         string = wrapper.fill(text=q)
         message_box = MessageBox(string, "question")
@@ -389,7 +387,7 @@ class ChatScreen(Screen):
         conversation_box.scroll_end(animate=True)
         conversation_box.scroll_end(animate=True)
         self.query_one(Input).focus()
-        if msg.lower() == "ct_profile":
+        if msg.lower() == "open profile menu":
             await self.app.switch_mode("profile")
 
 

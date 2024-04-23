@@ -4,6 +4,7 @@ Error handling for the program.
 """
 
 import sys
+import time
 from time import sleep
 from rich.console import Console
 from rich.traceback import install
@@ -41,12 +42,6 @@ class FileAlreadyExistsError(Exception):
 def error(code, severity=0, errortype=""):
     """Error function to better handle and log errors"""
     LOGGER.warning("Error has been detected. Investigating...")
-    # skipcq: PYL-W0612
-    for i in track(
-            range(8),
-            description="[bright_red]Checking Background Processes for error..."
-    ):
-        sleep(0.1)
     if severity > 0:
         if errortype == "auth":
             LOGGER.critical("Authentication error detected. Error code : " +
@@ -66,4 +61,5 @@ def Exit():
     """Exit"""
     print("\n")
     print_custom("Goodbye", "bright_red")
+    time.sleep(6)
     sys.exit()
