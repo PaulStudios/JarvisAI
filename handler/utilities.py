@@ -82,7 +82,7 @@ def countries_exist(val: str):
     return False
 
 
-def hide_info( value: str, itype: int = 0) -> str:
+def hide_info(value: str, itype: int = 0) -> str:
     """Replaces sensitive info with '*'"""
     field_data = ""
     if itype == 1:
