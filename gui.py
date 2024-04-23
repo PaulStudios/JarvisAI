@@ -24,6 +24,7 @@ wrapper = textwrap.TextWrapper(width=60)
 initlogs()
 bot: Bot = Bot()
 USER = ()
+edited_user = {}
 mode_options = {"profile": 'open profile menu', "help": 'open help screen'}
 
 
@@ -47,7 +48,9 @@ class ProfileScreen(Screen):
                     "Welcome to Profile Management!\n"
                     "See you account details below\n"
                     "Type '{Field Name} - {New Value}'\n"
-                    "Example : Name - John Doe",
+                    "Example : Name - John Doe\n"
+                    "Type 'OK' to save your changes. "
+                    "Type 'CANCEL' to go back without saving.",
                     role="Info",
                 )
             yield Pretty([])
@@ -55,8 +58,7 @@ class ProfileScreen(Screen):
             with Horizontal(id="edit_box"):
                 yield Input(placeholder="Enter your Edit", id="edit_input",
                             validators=[edit_input_check()],
-                            validate_on=["changed", "submitted"]
-                            )
+                            validate_on=["changed", "submitted"])
                 yield Button(label="Submit", variant="success", id="send_edit")
         yield Footer()
         yield Header(show_clock=True)
@@ -79,10 +81,18 @@ class ProfileScreen(Screen):
             self.query_one(Pretty).update("")
             self.query_one("#send_edit").disabled = False
 
+    def on_mount(self):
+        """On run"""
+        self.query_one(Input).focus()
+
     async def process_edit(self) -> None:
         """Editing Process"""
+        global edited_user
         edit_input = self.query_one("#edit_input", Input)
 
+        if edit_input.value == "CANCEL":
+            await self.app.switch_mode("chat")
+            
         # Don't do anything if input is empty or invalid
         if edit_input.value == "" or " - " not in edit_input.value:
             return
@@ -101,12 +111,24 @@ class ProfileScreen(Screen):
         
         if field_index == 3 and not checkmail(field_data):
             self.query_one(Pretty).update("Invalid Email entered...")
+            toggle_widgets(edit_input, button)
+            self.query_one(Input).focus()
             return
-        if field_index == 0 and " " not in field_data:
-            self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
-            return
+        if field_index == 0:
+            if " " not in field_data:
+                self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
+                toggle_widgets(edit_input, button)
+                self.query_one(Input).focus()
+                return
+            if len(field_data.split(" ")[0]) < 3 or len(field_data.split(" ")[1]) < 3:
+                self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
+                toggle_widgets(edit_input, button)
+                self.query_one(Input).focus()
+                return
         if field_index == 2 and not countries_exist(field_data):
             self.query_one(Pretty).update("Invalid Country Entered. Please check the spelling.")
+            toggle_widgets(edit_input, button)
+            self.query_one(Input).focus()
             return
 
         field_data_edited = field_data + "  [Changed]"
@@ -114,8 +136,12 @@ class ProfileScreen(Screen):
                 1: USER[1],
                 2: USER[2],
                 3: USER[3],
-                4: USER[4],
-                field_index: field_data_edited}
+                4: USER[4]
+                }
+        if not edited_user == {}:
+            edit = edited_user
+        edit.update({field_index: field_data_edited})
+
         q = f"""\
         ::Profile Information::
         
@@ -126,13 +152,18 @@ class ProfileScreen(Screen):
         Password: {edit[4]}
         """
         info_box.update(q)
+        edited_user = edit
 
         edit_input.value = ""
         toggle_widgets(edit_input, button)
+        self.query_one(Input).focus()
 
 class edit_input_check(Validator):
     def validate(self, value: str) -> ValidationResult:
-        """Check a string is equal to its reverse."""
+        """Check if input is following format"""
+        if value == "OK" or value == "CANCEL":
+            return self.success()
+
         a1, a2 = 0, 0
         f = ""
         if self.is_syntax(value):
@@ -143,7 +174,7 @@ class edit_input_check(Validator):
                 f = f + "Please provide a valid Field"
                 a2 = 0
         else:
-            f = "Please follow the format...\n"
+            f = "Please follow the format..."
             a1 = 0
             a2 = 0
         if a1 == 1 and a2 == 1:
@@ -310,4 +341,5 @@ def Exit():
     """Exit"""
     print("\n")
     print_custom("Goodbye", "bright_red")
-    sys.exit()
+    LOGGER.warning("Shutting Down...")
+    sys.exit(0)
