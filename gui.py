@@ -126,7 +126,6 @@ class ProfileScreen(Screen):
                     edit_input.value = ""
                 self.query_one(Input).focus()
                 return
-
             t = process_edits(_edit_list, USER[1], pwd)
             if not t:
                 self.query_one(Pretty).update(
@@ -149,6 +148,7 @@ class ProfileScreen(Screen):
                     Password: {USER[4]}
                     """
             info_box.update(profile_data)
+            LOGGER.warning("User profile updated.")
             await self.app.switch_mode("chat")
 
         # Don't do anything if input is empty or invalid
@@ -235,6 +235,7 @@ class ProfileScreen(Screen):
         with edit_input.prevent(Input.Changed):
             edit_input.value = ""
         toggle_widgets(edit_input, button)
+        LOGGER.info("Change recorded")
         self.query_one(Input).focus()
 
 

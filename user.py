@@ -155,6 +155,7 @@ class User:
 
 def process_edits(edits: dict, username: str, password: str) -> bool:
     """Processes all edits to DB and encrypts sensitive info"""
+    LOGGER.info("Attempting Edits to user profile")
     namedata = ["username", username]
     i = []
     fields = []
@@ -183,7 +184,7 @@ def process_edits(edits: dict, username: str, password: str) -> bool:
                 fields.append(fields_full[n])
                 data.append(new[n])
         database.edit_user(table_name, fields, data, username)
-
+        LOGGER.info("Data update has been processed.")
         pass_i = get_field_index("Password") + 1
         mail_i = get_field_index("Email") + 1
         enc = {}
@@ -204,5 +205,7 @@ def process_edits(edits: dict, username: str, password: str) -> bool:
                     fields2.append(fields_full[n])
                     data2.append(enc[n])
             database.edit_user(table_name, fields2, data2, username)
+            LOGGER.info("Sensitive data has been encrypted")
         return True
+    error("ER11 - Profile update failed due to incorrect password", 0, "auth")
     return False
