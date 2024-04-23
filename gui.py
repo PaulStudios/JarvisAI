@@ -19,9 +19,9 @@ from textual.widgets import (Header, Footer, Static, Button, Placeholder,
 from chatbot import Bot
 from handler.logger import Logger, initlogs
 from user import process_edits
-from handler.utilities import (print_custom, get_field_index,
-                               checkmail, countries_exist, hide_info,
-                               resource_path, correction)
+from handler.utilities import (print_custom, get_field_index, checkmail,
+                               countries_exist, hide_info, resource_path,
+                               correction)
 
 LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
@@ -30,7 +30,10 @@ bot: Bot = Bot()
 USER = ()
 edited_user = {}
 _edit_list = {}
-mode_options = {"profile": 'open profile manager', "admin": 'open admin screen'}
+mode_options = {
+    "profile": 'open profile manager',
+    "admin": 'open admin screen'
+}
 
 
 class ProfileScreen(Screen):
@@ -113,7 +116,8 @@ class ProfileScreen(Screen):
                     edit_input.value = ""
                 self.query_one(Input).focus()
                 return
-            pwd = password("Please enter your old password", title="Confirm Password")
+            pwd = password("Please enter your old password",
+                           title="Confirm Password")
             if pwd == None:
                 self.query_one(Pretty).update(
                     "Please enter your old Password.")
@@ -146,7 +150,6 @@ class ProfileScreen(Screen):
                     """
             info_box.update(profile_data)
             await self.app.switch_mode("chat")
-
 
         # Don't do anything if input is empty or invalid
         if edit_input.value == "" or " - " not in edit_input.value:

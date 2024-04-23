@@ -159,7 +159,9 @@ def process_edits(edits: dict, username: str, password: str) -> bool:
     fields = []
     data = []
     new = {}
-    fields_full = ["first_name", "last_name", "username", "country", "email", "password"]
+    fields_full = [
+        "first_name", "last_name", "username", "country", "email", "password"
+    ]
     try:
         i = database.get_user(table=table_name, data=namedata)
     except Exception as e:  # skipcq: PYL-W0703
