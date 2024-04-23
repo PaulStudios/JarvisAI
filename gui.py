@@ -30,7 +30,7 @@ bot: Bot = Bot()
 USER = ()
 edited_user = {}
 _edit_list = {}
-mode_options = {"profile": 'open profile manager', "help": 'open help screen'}
+mode_options = {"profile": 'open profile manager', "admin": 'open admin screen'}
 
 
 class ProfileScreen(Screen):
@@ -274,7 +274,7 @@ class edit_input_check(Validator):
         return True
 
 
-class HelpScreen(Screen):
+class AdminScreen(Screen):
     """Display commands"""
 
     def compose(self) -> ComposeResult:  # skipcq: PYL-R0201
@@ -397,7 +397,7 @@ class JarvisGui(App[None]):
     MODES = {
         "profile": ProfileScreen,
         "chat": ChatScreen,
-        "help": HelpScreen,
+        "admin": AdminScreen,
     }
     LOGGER.info("Setting up GUI Interface")
 
@@ -413,8 +413,7 @@ class JarvisGui(App[None]):
     def on_mount(self) -> None:
         """On running the gui"""
         LOGGER.info("Starting GUI")
-        # self.switch_mode("chat")
-        self.switch_mode("profile")
+        self.switch_mode("chat")
 
 
 def Exit():
