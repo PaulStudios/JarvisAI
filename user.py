@@ -30,11 +30,11 @@ LOGGER: Logger = Logger("JarvisAI.user")
 
 def checkdb():
     """Check connection"""
-    print("Connecting to User Database...")
+    #print("Connecting to User Database...")
     try:
         database.connect()
         database.check()
-        print("Using Database : JarvisAI.")
+        #print("Using Database : JarvisAI.")
     except (Exception, handler.database.DataBaseError):  # skipcq: PYL-W0714
         error("ER11B - Failed to connect to Database", 1, "conn")
 
@@ -54,7 +54,7 @@ class User:
 
     def __init__(self):
         LOGGER.info("Connecting to database...")
-        database.check()
+        checkdb()
         self.userdata: tuple = ()
         self.username: str = ""
         self.name: str = ""
