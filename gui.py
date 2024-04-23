@@ -10,9 +10,9 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
+from textual.validation import ValidationResult, Validator
 from textual.widget import Widget
 from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, Markdown, Pretty
-from textual.validation import Function, ValidationResult, Validator
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
@@ -73,7 +73,7 @@ class ProfileScreen(Screen):
 
     @on(Input.Changed)
     def show_invalid_reasons(self, event: Input.Changed) -> None:
-        # Updating the UI to show the reasons why validation failed
+        """Updating the UI to show the reasons why validation failed"""
         if not event.validation_result.is_valid:
             self.query_one(Pretty).update(event.validation_result.failure_descriptions)
             self.query_one("#send_edit").disabled = True
@@ -159,9 +159,10 @@ class ProfileScreen(Screen):
         self.query_one(Input).focus()
 
 class edit_input_check(Validator):
+    """Validator"""
     def validate(self, value: str) -> ValidationResult:
         """Check if input is following format"""
-        if value == "OK" or value == "CANCEL":
+        if value in ["OK", "CANCEL"]:
             return self.success()
 
         a1, a2 = 0, 0
@@ -183,12 +184,14 @@ class edit_input_check(Validator):
 
     @staticmethod
     def is_syntax(value: str) -> bool:
+        """Validates syntax"""
         if " - " in value:
             return True
         return False
 
     @staticmethod
     def field_exists(value: str) -> bool:
+        """Validates field"""
         c = get_field_index(value.split(" - ")[0])
         if c == 10:
             return False

@@ -11,8 +11,6 @@
 Login and Register handling
 """
 
-import re
-
 from rich import pretty, print
 from rich.console import Console
 

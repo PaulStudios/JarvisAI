@@ -53,6 +53,7 @@ def correction(data):
 
 
 def get_field_index(field: str) -> int:
+    """Returns index for a field name"""
     f = field
     switcher = {
         "Name": 0,
@@ -66,6 +67,7 @@ def get_field_index(field: str) -> int:
 
 
 def checkmail(email: str) -> bool:
+    """Checks Syntax for emails"""
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if re.match(regex, email):
         return True
