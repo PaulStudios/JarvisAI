@@ -82,24 +82,24 @@ def countries_exist(val: str):
     return False
 
 
-def hide_info( value: str, type: int = 0) -> str:
+def hide_info( value: str, itype: int = 0) -> str:
     """Replaces sensitive info with '*'"""
     field_data = ""
-    if type == 1:
+    if itype == 1:
         full = value.split("@")
         f = full[0]
         field_data = ""
-        for i in f:
+        for unused_i in f:
             field_data = field_data + "*"
         field_data = field_data + "@" + full[1]
-    elif type == 0:
+    elif itype == 0:
         f = value
         field_data = ""
-        for i in f:
+        for unused_i in f:
             field_data = field_data + "*"
     return field_data
 
 
 def createlist(r) -> list:
     """Creates list from a number"""
-    return [item for item in range(0, r)]
+    return list(range(0, r))
