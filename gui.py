@@ -56,7 +56,8 @@ class ProfileScreen(Screen):
             yield Pretty([])
             yield Markdown(profile_data, id="profile_info")
             with Horizontal(id="edit_box"):
-                yield Input(placeholder="Enter your Edit", id="edit_input",
+                yield Input(placeholder="Enter your Edit",
+                            id="edit_input",
                             validators=[edit_input_check()],
                             validate_on=["changed", "submitted"])
                 yield Button(label="Submit", variant="success", id="send_edit")
@@ -75,7 +76,8 @@ class ProfileScreen(Screen):
     def show_invalid_reasons(self, event: Input.Changed) -> None:
         # Updating the UI to show the reasons why validation failed
         if not event.validation_result.is_valid:
-            self.query_one(Pretty).update(event.validation_result.failure_descriptions)
+            self.query_one(Pretty).update(
+                event.validation_result.failure_descriptions)
             self.query_one("#send_edit").disabled = True
         else:
             self.query_one(Pretty).update("")
@@ -92,7 +94,7 @@ class ProfileScreen(Screen):
 
         if edit_input.value == "CANCEL":
             await self.app.switch_mode("chat")
-            
+
         # Don't do anything if input is empty or invalid
         if edit_input.value == "" or " - " not in edit_input.value:
             return
@@ -108,7 +110,7 @@ class ProfileScreen(Screen):
         field = edit_input.value.split(" - ")[0]
         field_data = edit_input.value.split(" - ")[1]
         field_index = get_field_index(field)
-        
+
         if field_index == 3 and not checkmail(field_data):
             self.query_one(Pretty).update("Invalid Email entered...")
             toggle_widgets(edit_input, button)
@@ -116,28 +118,27 @@ class ProfileScreen(Screen):
             return
         if field_index == 0:
             if " " not in field_data:
-                self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
+                self.query_one(Pretty).update(
+                    "Invalid Name Entered. Please enter your full name.")
                 toggle_widgets(edit_input, button)
                 self.query_one(Input).focus()
                 return
-            if len(field_data.split(" ")[0]) < 3 or len(field_data.split(" ")[1]) < 3:
-                self.query_one(Pretty).update("Invalid Name Entered. Please enter your full name.")
+            if len(field_data.split(" ")[0]) < 3 or len(
+                    field_data.split(" ")[1]) < 3:
+                self.query_one(Pretty).update(
+                    "Invalid Name Entered. Please enter your full name.")
                 toggle_widgets(edit_input, button)
                 self.query_one(Input).focus()
                 return
         if field_index == 2 and not countries_exist(field_data):
-            self.query_one(Pretty).update("Invalid Country Entered. Please check the spelling.")
+            self.query_one(Pretty).update(
+                "Invalid Country Entered. Please check the spelling.")
             toggle_widgets(edit_input, button)
             self.query_one(Input).focus()
             return
 
         field_data_edited = field_data + "  [Changed]"
-        edit = {0: USER[0],
-                1: USER[1],
-                2: USER[2],
-                3: USER[3],
-                4: USER[4]
-                }
+        edit = {0: USER[0], 1: USER[1], 2: USER[2], 3: USER[3], 4: USER[4]}
         if not edited_user == {}:
             edit = edited_user
         edit.update({field_index: field_data_edited})
@@ -158,7 +159,9 @@ class ProfileScreen(Screen):
         toggle_widgets(edit_input, button)
         self.query_one(Input).focus()
 
+
 class edit_input_check(Validator):
+
     def validate(self, value: str) -> ValidationResult:
         """Check if input is following format"""
         if value == "OK" or value == "CANCEL":
@@ -193,7 +196,6 @@ class edit_input_check(Validator):
         if c == 10:
             return False
         return True
-
 
 
 class HelpScreen(Screen):
