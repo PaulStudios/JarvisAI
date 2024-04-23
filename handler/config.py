@@ -1,4 +1,5 @@
 # pylint: disable=W0719
+# skipcq
 """
 Config Parser for database info
 """

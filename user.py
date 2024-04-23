@@ -11,7 +11,7 @@
 Login and Register handling
 """
 
-from rich import pretty, print
+from rich import pretty
 from rich.console import Console
 
 import handler
@@ -30,11 +30,9 @@ LOGGER: Logger = Logger("JarvisAI.user")
 
 def checkdb():
     """Check connection"""
-    # print("Connecting to User Database...")
     try:
         database.connect()
         database.check()
-        # print("Using Database : JarvisAI.")
     except (Exception, handler.database.DataBaseError):  # skipcq: PYL-W0714
         error("ER11B - Failed to connect to Database", 1, "conn")
 

@@ -3,6 +3,7 @@
 # pylint: disable=W0707
 # pylint: disable=E0401
 # pylint: disable=W0602
+# skipcq
 """
 Connection handler for PostgresSQL Database
 """

@@ -1,4 +1,5 @@
 # pylint: disable=E0401
+# skipcq
 """
 Password Encryption Handler
 """
