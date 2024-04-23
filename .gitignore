@@ -122,7 +122,6 @@ test_main.txt
 test_notfunctional.py
 
 # User-specific stuff
-.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
@@ -204,3 +203,5 @@ Procfile
 .env
 config.ini
 .idea/.name
+.idea
+output
