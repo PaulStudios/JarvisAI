@@ -96,9 +96,9 @@ class ProfileScreen(Screen):
         LOGGER.info("Profile Manager Started")
         self.query_one(Input).focus()
 
-    async def process_edit(self) -> None:  #skipcq: PY-R1000
+    async def process_edit(self) -> None:  # skipcq: PY-R1000
         """Editing Process"""
-        global edited_user, _edit_list  #skipcq: PYL-W0602
+        global edited_user, _edit_list  # skipcq: PYL-W0602
         edit_input = self.query_one("#edit_input", Input)
         button = self.query_one("#send_edit")
         info_box = self.query_one("#profile_info")
