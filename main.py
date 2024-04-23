@@ -19,8 +19,9 @@ import cfg
 import chatbot
 import gui
 import user
+from handler import decrypt
 from handler.errors import error
-from handler.utilities import print_custom
+from handler.utilities import print_custom, hide_info
 from handler.logger import Logger
 
 LOGGER: Logger = Logger("JarvisAI.core")
@@ -105,15 +106,18 @@ def start():
 
 
 if __name__ == "__main__":
-    # start()
-    # ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
-    # gui.USER = (user_class.name, user_class.username,
-    #            user_class.country, user_class.userdata[3],
-    #            user_class.userdata[5])
-    # gui.bot.userset(user_class.username)
-    gui.USER = ("Testing Bot", "test", "India", "tester@email.com", "tester")
+    start()
+    ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
+    a = hide_info(decrypt(user_class.userdata[3].tobytes(),
+                          decrypt(user_class.userdata[5].tobytes())), 1)
+    b = hide_info(decrypt(user_class.userdata[5].tobytes()))
+    gui.USER = (user_class.name, user_class.username,
+                user_class.country, a,
+                b)
+    gui.bot.userset(user_class.username)
+    #gui.USER = ("Testing Bot", "test", "India", "******@email.com", "******")
     print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
-    # input()
+    input()
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)

@@ -19,7 +19,7 @@ from handler import database, config
 from handler import encrypt, decrypt
 from handler.errors import error
 from handler.logger import Logger
-from handler.utilities import print_custom, checkmail
+from handler.utilities import print_custom, checkmail, createlist, get_field_index
 
 ser = ()
 table_name = config.program_config()['table']
@@ -88,7 +88,7 @@ class User:
         if pwd == password:
             console.print("Processing inputs...", style="bright_magenta")
         else:
-            print("Your passwords do not match.")
+            print_custom("Your passwords do not match.", "bright_red")
             print_custom("Please re-confirm your password: ", "sky_blue1")
             pwd = input()
             if pwd == password:
@@ -152,5 +152,54 @@ class User:
         self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
         self.country = data[6]
 
-def process_edits(edits: dict) -> None:
-    pass
+
+def process_edits(edits: dict, username: str, password: str) -> bool:
+    namedata = ["username", username]
+    i = []
+    fields = []
+    data = []
+    new = {}
+    fields_full = ["first_name", "last_name", "username", "country", "email", "password"]
+    try:
+        i = database.get_user(table=table_name, data=namedata)
+    except Exception as e:  # skipcq: PYL-W0703
+        error("ER10 - Database fetch failed, " + str(e), 1)
+    if i is None:
+        error("ER2 - Incorrect username", 1, "auth")
+    if password == decrypt(i[5].tobytes()):
+        LOGGER.info("Starting Profile Edits")
+        if 0 in edits:
+            new.update({0: edits[0].split(" ")[0]})
+            new.update({1: edits[0].split(" ")[1]})
+            edits.pop(0)
+        for key, value in edits.items():
+            new.update({key + 1: value})
+
+        for n in createlist(len(fields_full)):
+            if n in new:
+                fields.append(fields_full[n])
+                data.append(new[n])
+        database.edit_user(table_name, fields, data, username)
+
+        pass_i = get_field_index("Password") + 1
+        mail_i = get_field_index("Email") + 1
+        enc = {}
+        if pass_i in new:
+            passwrd = new[pass_i]
+            enc_pass = encrypt(passwrd)
+            enc.update({pass_i: enc_pass})
+        else:
+            passwrd = password
+        if mail_i in new:
+            mail = new[mail_i]
+            enc_mail = encrypt(mail, passwrd)
+            enc.update({mail_i: enc_mail})
+        if pass_i in enc or mail_i in enc:
+            fields2, data2 = [], []
+            for n in createlist(len(fields_full)):
+                if n in enc:
+                    fields2.append(fields_full[n])
+                    data2.append(enc[n])
+            database.edit_user(table_name, fields2, data2, username)
+        return True
+    return False

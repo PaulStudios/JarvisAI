@@ -13,13 +13,15 @@ from textual.containers import Horizontal, Vertical, ScrollableContainer
 from textual.screen import Screen
 from textual.validation import ValidationResult, Validator
 from textual.widget import Widget
-from textual.widgets import Header, Footer, Static, Button, Placeholder, Input, Markdown, Pretty
+from textual.widgets import (Header, Footer, Static, Button, Placeholder,
+                             Input, Markdown, Pretty)
 
 from chatbot import Bot
 from handler.logger import Logger, initlogs
-from handler.utilities import print_custom, get_field_index, checkmail, countries_exist
-from handler.utilities import resource_path, correction
 from user import process_edits
+from handler.utilities import (print_custom, get_field_index,
+                               checkmail, countries_exist, hide_info,
+                               resource_path, correction)
 
 LOGGER: Logger = Logger("JarvisAI.gui")
 wrapper = textwrap.TextWrapper(width=60)
@@ -28,7 +30,7 @@ bot: Bot = Bot()
 USER = ()
 edited_user = {}
 _edit_list = {}
-mode_options = {"profile": 'open profile menu', "help": 'open help screen'}
+mode_options = {"profile": 'open profile manager', "help": 'open help screen'}
 
 
 class ProfileScreen(Screen):
@@ -88,6 +90,7 @@ class ProfileScreen(Screen):
 
     def on_mount(self):
         """On run"""
+        LOGGER.info("Profile Manager Started")
         self.query_one(Input).focus()
 
     async def process_edit(self) -> None:
@@ -95,14 +98,55 @@ class ProfileScreen(Screen):
         global edited_user, _edit_list
         edit_input = self.query_one("#edit_input", Input)
         button = self.query_one("#send_edit")
+        info_box = self.query_one("#profile_info")
+        toggle_widgets(edit_input, button)
 
         if edit_input.value == "CANCEL":
+            toggle_widgets(edit_input, button)
             await self.app.switch_mode("chat")
         if edit_input.value == "OK":
+            if _edit_list == {}:
+                self.query_one(Pretty).update(
+                    "Please make some changes first.")
+                toggle_widgets(edit_input, button)
+                with edit_input.prevent(Input.Changed):
+                    edit_input.value = ""
+                self.query_one(Input).focus()
+                return
+            pwd = password("Please enter your old password", title="Confirm Password")
+            if pwd == None:
+                self.query_one(Pretty).update(
+                    "Please enter your old Password.")
+                toggle_widgets(edit_input, button)
+                with edit_input.prevent(Input.Changed):
+                    edit_input.value = ""
+                self.query_one(Input).focus()
+                return
+
+            t = process_edits(_edit_list, USER[1], pwd)
+            if not t:
+                self.query_one(Pretty).update(
+                    "Incorrect Password. Please try again")
+                toggle_widgets(edit_input, button)
+                with edit_input.prevent(Input.Changed):
+                    edit_input.value = ""
+                self.query_one(Input).focus()
+                return
             toggle_widgets(edit_input, button)
-            process_edits(_edit_list)
-            toggle_widgets(edit_input, button)
+            with edit_input.prevent(Input.Changed):
+                edit_input.value = ""
+            profile_data = f"""\
+                    ::Profile Information::  [To Update the below info, please restart.]
+
+                    Name: {USER[0]}
+                    Username: {USER[1]}
+                    Country: {USER[2]}
+                    Email: {USER[3]}
+                    Password: {USER[4]}
+                    """
+            info_box.update(profile_data)
             await self.app.switch_mode("chat")
+
 
         # Don't do anything if input is empty or invalid
         if edit_input.value == "" or " - " not in edit_input.value:
@@ -112,7 +156,6 @@ class ProfileScreen(Screen):
         except AttributeError:
             return
 
-        info_box = self.query_one("#profile_info")
         field = edit_input.value.split(" - ")[0]
         field_data = edit_input.value.split(" - ")[1]
         field_index = get_field_index(field)
@@ -164,17 +207,9 @@ class ProfileScreen(Screen):
         if not edited_user == {}:
             edit = edited_user
         if field_index == 4:
-            f = field_data
-            field_data = ""
-            for i in f:
-                field_data = field_data + "*"
+            field_data = hide_info(field_data, 0)
         if field_index == 3:
-            full = field_data.split("@")
-            f = full[0]
-            field_data = ""
-            for i in f:
-                field_data = field_data + "*"
-            field_data = field_data + "@" + full[1]
+            field_data = hide_info(field_data, 1)
         field_data_edited = field_data + "  [Changed]"
         self.query_one(Pretty).update(["All OK"])
         edit.update({field_index: field_data_edited})
@@ -294,6 +329,7 @@ class ChatScreen(Screen):
 
     def on_mount(self):
         """On run"""
+        LOGGER.info("Chat Screen started...")
         self.query_one(Input).focus()
 
     def action_clear(self) -> None:
