@@ -188,11 +188,13 @@ class ProfileScreen(Screen):
         if field_index == 4:
             if len(field_data) <= 8 or " " in field_data:
                 self.query_one(Pretty).update(
-                    "Invalid Password Entered. It should contain 8 characters. No whitespaces are allowed.")
+                    "Invalid Password Entered. It should contain 8 characters. No whitespaces are allowed."
+                )
                 toggle_widgets(edit_input, button)
                 self.query_one(Input).focus()
                 return
-            conf = password("Please re-enter your new password", title="Confirm New Password")
+            conf = password("Please re-enter your new password",
+                            title="Confirm New Password")
             if not conf == field_data:
                 self.query_one(Pretty).update(
                     "Passwords did not match. Please try again")
