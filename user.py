@@ -11,21 +11,21 @@
 Login and Register handling
 """
 
-import re
-import logging
 from rich import pretty, print
 from rich.console import Console
 
 import handler
-from handler.errors import error
 from handler import database, config
 from handler import encrypt, decrypt
-from handler.utilities import printn
+from handler.errors import error
+from handler.logger import Logger
+from handler.utilities import print_custom, checkmail, createlist, get_field_index
 
 ser = ()
 table_name = config.program_config()['table']
 pretty.install()
 console = Console()
+LOGGER: Logger = Logger("JarvisAI.user")
 
 
 def checkdb():
@@ -39,18 +39,14 @@ def checkdb():
         error("ER11B - Failed to connect to Database", 1, "conn")
 
 
-def checkmail(email1=""):
+def checkmail_input(email1=""):
     """Validate mail"""
-    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if re.match(regex, email1):
+    if checkmail(email1):
         return email1
     email2 = input("Your email is invalid. Please re-enter your email: ")
-    if re.match(regex, email2):
+    if checkmail(email2):
         return email2
     error("ER5 - Invalid email entered during registration.", 1, "auth")
-
-
-LOGGER = logging.getLogger("JarvisAI.user")
 
 
 class User:
@@ -72,30 +68,31 @@ class User:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
         # Taking inputs
-        printn("Please enter your full name (Only First name and Last name): ",
-               "sky_blue1")
+        print_custom(
+            "Please enter your full name (Only First name and Last name): ",
+            "sky_blue1")
         name_in = input()
         name = name_in.split()
-        printn("In which country do you live? ", "sky_blue1")
+        print_custom("In which country do you live? ", "sky_blue1")
         country = input()
-        printn("Please enter your email address: ", "sky_blue1")
+        print_custom("Please enter your email address: ", "sky_blue1")
         email = input()
-        email = checkmail(email)
-        printn("Please enter a username: ", "sky_blue1")
+        email = checkmail_input(email)
+        print_custom("Please enter a username: ", "sky_blue1")
         username = input()
-        printn("Please enter a strong password for your account: ",
-               "sky_blue1")
+        print_custom("Please enter a strong password for your account: ",
+                     "sky_blue1")
         password = input()
-        printn("Please confirm your password: ", "sky_blue1")
+        print_custom("Please confirm your password: ", "sky_blue1")
         pwd = input()
         if pwd == password:
-            console.print("Processing inputs...", style="pink")
+            console.print("Processing inputs...", style="bright_magenta")
         else:
-            print("Your passwords do not match.")
-            printn("Please re-confirm your password: ", "sky_blue1")
+            print_custom("Your passwords do not match.", "bright_red")
+            print_custom("Please re-confirm your password: ", "sky_blue1")
             pwd = input()
             if pwd == password:
-                console.print("Processing inputs...", style="pink")
+                console.print("Processing inputs...", style="bright_magenta")
             else:
                 error("ER5 - Incorrect Password during registration.", 1,
                       "auth")
@@ -123,14 +120,14 @@ class User:
         if username is None or password is None:
             check = 1
         if check == 1:
-            printn("Please enter your username: ", "sky_blue1")
+            print_custom("Please enter your username: ", "sky_blue1")
             username = input()
-            printn("Please enter your password: ", "sky_blue1")
+            print_custom("Please enter your password: ", "sky_blue1")
             password = input()
         data = ["username", username]
         i = ()
         LOGGER.info("Logging in user")
-        console.print("Processing inputs...", style="pink")
+        console.print("Processing inputs...", style="bright_magenta")
         try:
             i = database.get_user(table=table_name, data=data)
         except Exception as e:  # skipcq: PYL-W0703
@@ -154,3 +151,61 @@ class User:
         self.name = data[1] + " " + data[2]
         self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
         self.country = data[6]
+
+
+def process_edits(edits: dict, username: str, password: str) -> bool:
+    """Processes all edits to DB and encrypts sensitive info"""
+    LOGGER.info("Attempting Edits to user profile")
+    namedata = ["username", username]
+    i = []
+    fields = []
+    data = []
+    new = {}
+    fields_full = [
+        "first_name", "last_name", "username", "country", "email", "password"
+    ]
+    try:
+        i = database.get_user(table=table_name, data=namedata)
+    except Exception as e:  # skipcq: PYL-W0703
+        error("ER10 - Database fetch failed, " + str(e), 1)
+    if i is None:
+        error("ER2 - Incorrect username", 1, "auth")
+    if password == decrypt(i[5].tobytes()):
+        LOGGER.info("Starting Profile Edits")
+        if 0 in edits:
+            new.update({0: edits[0].split(" ")[0]})
+            new.update({1: edits[0].split(" ")[1]})
+            edits.pop(0)
+        for key, value in edits.items():
+            new.update({key + 1: value})
+
+        for n in createlist(len(fields_full)):
+            if n in new:
+                fields.append(fields_full[n])
+                data.append(new[n])
+        database.edit_user(table_name, fields, data, username)
+        LOGGER.info("Data update has been processed.")
+        pass_i = get_field_index("Password") + 1
+        mail_i = get_field_index("Email") + 1
+        enc = {}
+        if pass_i in new:
+            passwrd = new[pass_i]
+            enc_pass = encrypt(passwrd)
+            enc.update({pass_i: enc_pass})
+        else:
+            passwrd = password
+        if mail_i in new:
+            mail = new[mail_i]
+            enc_mail = encrypt(mail, passwrd)
+            enc.update({mail_i: enc_mail})
+        if pass_i in enc or mail_i in enc:
+            fields2, data2 = [], []
+            for n in createlist(len(fields_full)):
+                if n in enc:
+                    fields2.append(fields_full[n])
+                    data2.append(enc[n])
+            database.edit_user(table_name, fields2, data2, username)
+            LOGGER.info("Sensitive data has been encrypted")
+        return True
+    error("ER11 - Profile update failed due to incorrect password", 0, "auth")
+    return False

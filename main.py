@@ -7,90 +7,56 @@
 """
 Main file
 """
-import datetime
-from time import sleep
-import logging
-import os
 import sys
 from os import system
-from rich import pretty
+from time import sleep
+
 from rich.console import Console
 from rich.progress import track
 from rich.traceback import install
 
-import user
+import cfg
 import chatbot
 import gui
-from handler.utilities import printn
+import user
+from handler import decrypt
 from handler.errors import error
+from handler.utilities import print_custom, hide_info
+from handler.logger import Logger
 
-
-def initlogs():
-    """Initialize logging module"""
-    global LOGNAME, LOGGER
-    LOGNAME = "logs/JarvisAI_Logs-" + datetime.datetime.now().strftime(
-        "%f") + ".log"
-    if os.path.exists('logs'):
-        pass
-    else:
-        os.mkdir('logs')
-    with open(LOGNAME, 'w', encoding='utf8') as file_test:
-        file_test.write("JarvisAI v3.0\n")
-    LOGGER.setLevel(logging.DEBUG)
-
-    # Create handlers
-    c_handler = logging.StreamHandler()
-    f_handler = logging.FileHandler(LOGNAME)
-    c_handler.setLevel(51)
-    f_handler.setLevel(logging.INFO)
-
-    # Create formatters and add it to handlers
-    c_format = logging.Formatter('%(name)s : %(levelname)s - %(message)s',
-                                 "%Y-%m-%d %H:%M:%S")
-    f_format = logging.Formatter(
-        '%(asctime)s - %(name)s : %(levelname)s - %(message)s',
-        "%Y-%m-%d %H:%M:%S")
-    c_handler.setFormatter(c_format)
-    f_handler.setFormatter(f_format)
-
-    # Add handlers to the logging
-    LOGGER.addHandler(c_handler)
-    LOGGER.addHandler(f_handler)
-    # logging.basicConfig(
-    # filename=LOGNAME, level=logging.DEBUG, format='%(asctime)s :
-    # %(levelname)s : %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
-
+LOGGER: Logger = Logger("JarvisAI.core")
 
 system('cls')  # skipcq: BAN-B607
-LOGGER: logging.Logger = logging.getLogger("JarvisAI")
-LOGNAME: str = ""
-pretty.install()
 install(extra_lines=0, show_locals=False)
 console = Console()
 console.print('Loading your AI personal assistant - Jarvis...',
               style="bright_yellow")
 with console.status("[bold green]Setting up JarvisAI...") as status:
     console.log("Starting core systems...")
-    initlogs()
-    LOGGER.info("Loading logging module...")
     sleep(1)
     LOGGER.info("Setting up JarvisAI...")
     console.log("Connecting to PaulStudios Database")
     user_class: user.User = user.User()
+    LOGGER.info("Connected to PaulStudios Database")
     console.log("Connected")
-    sleep(0.9)
+    sleep(0.5)
     console.log("Initiated User Module")
+    LOGGER.info("Initiated User Module")
     bot: chatbot.Bot = chatbot.Bot()
     if not bot.process("Hi") == "Hi there!":
         error(
             "ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
             severity=1)
+    sleep(0.5)
     console.log("Initiated Chatbot Module")
-    sleep(2)
+    LOGGER.info("Initiated Chatbot Module")
+    sleep(1)
     ui = gui.JarvisGui()
     console.log("User Interface prepared.")
     sleep(1)
     console.log("Setup Complete")
+    LOGGER.info("Initial setup complete")
+    LOGNAME = cfg.log_name
 console.print(f"Logger module has been initiated in {LOGNAME}\n",
               style="bright_yellow")
 
@@ -118,7 +84,8 @@ def Register():
 
 def Exit():
     """Exit"""
-    console.print("Goodbye", style="bright_red")
+    print("\n")
+    print_custom("Goodbye", "bright_red")
     sys.exit()
 
 
@@ -129,7 +96,7 @@ def start():
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)
-    printn("Please enter your choice: ", 'slate_blue1')
+    print_custom("Please enter your choice: ", 'slate_blue1')
     try:
         selection = int(input())
         selected_value = menu_items[selection]
@@ -141,11 +108,16 @@ def start():
 if __name__ == "__main__":
     start()
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
-    gui.USER = user_class.userdata
+    a = hide_info(
+        decrypt(user_class.userdata[3].tobytes(),
+                decrypt(user_class.userdata[5].tobytes())), 1)
+    b = hide_info(decrypt(user_class.userdata[5].tobytes()))
+    gui.USER = (user_class.name, user_class.username, user_class.country, a, b)
     gui.bot.userset(user_class.username)
-    console.print("Press [cyan]ENTER[/cyan] to open Chat Interface.")
+    print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612
     for i in track(range(15), description="[bright_cyan]Loading GUI..."):
         sleep(0.1)
+    LOGGER.info("Transitioning to GUI")
     ui.run()

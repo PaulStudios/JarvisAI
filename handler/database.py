@@ -12,6 +12,7 @@ from psycopg2 import sql
 from psycopg2.sql import Composed
 
 from .config import db_config
+from .utilities import createlist
 
 
 class DataBaseError(Exception):
@@ -19,8 +20,8 @@ class DataBaseError(Exception):
 
 
 params = db_config()
-conn = ""
-cur = ""
+conn = None
+cur = None
 
 
 def connect():
@@ -91,4 +92,38 @@ def form_get_query(table_name: str, fields: list, data: list) -> Composed:
     """).format(table=sql.Identifier(table_name),
                 cred_1=sql.Identifier(fields),
                 data_1=sql.Literal(data))
+    return stmt
+
+
+def edit_user(table: str, fields: list, data: list, name: str):
+    """Updates existing data on DB"""
+    global cur
+    query = form_edit_query(table, fields, data, name)
+    print(query)
+    check()
+    cur.execute(query)
+    conn.commit()
+
+
+def form_edit_query(table_name: str, fields: list, data: list,
+                    name: str) -> Composed:
+    """Generate sql query for edit_user()"""
+    i = []
+    q = createlist(len(fields))
+    for a in q:
+        c = sql.SQL("{field} = {data}").format(field=sql.Identifier(fields[a]),
+                                               data=sql.Literal(data[a]))
+        i.append(c)
+    b = sql.SQL(',').join(n for n in i)
+    stmt = sql.SQL("""
+        UPDATE
+            {table}
+        SET
+            {edited}
+        WHERE
+            {username} = {name}
+    """).format(table=sql.Identifier(table_name),
+                edited=b,
+                name=sql.Literal(name),
+                username=sql.Identifier("username"))
     return stmt

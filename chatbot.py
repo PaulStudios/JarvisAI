@@ -6,7 +6,6 @@
 Chatbot functions
 """
 import datetime
-import logging
 import time
 import webbrowser
 from rich import pretty
@@ -16,6 +15,7 @@ import ChatbotAPI
 import ecapture as ec
 
 from handler import config
+from handler.logger import Logger
 
 pretty.install()
 console = Console()
@@ -45,7 +45,8 @@ class Bot:
     def __init__(self):
         self.reply: str = "No response has been generated yet..."
         self.creds: dict = config.chat_config()
-        self.LOGGER: logging.Logger = logging.getLogger("JarvisAI.chatbot")
+        self.LOGGER: Logger = Logger("JarvisAI.chatbot")
+        self.LOGGER.info("Authenticating with ChatBotAPI")
         self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(
             self.creds['brainid'],
             self.creds['brainkey'],
@@ -94,5 +95,5 @@ class Bot:
         else:
             resp = self.Chatbot.sendmsg(msg)
         self.reply = resp
-        logging.info("Bot response module process completed")
+        self.LOGGER.info("Bot response module process completed")
         return resp
