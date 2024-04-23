@@ -108,14 +108,13 @@ def start():
 if __name__ == "__main__":
     start()
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
-    a = hide_info(decrypt(user_class.userdata[3].tobytes(),
-                          decrypt(user_class.userdata[5].tobytes())), 1)
+    a = hide_info(
+        decrypt(user_class.userdata[3].tobytes(),
+                decrypt(user_class.userdata[5].tobytes())), 1)
     b = hide_info(decrypt(user_class.userdata[5].tobytes()))
-    gui.USER = (user_class.name, user_class.username,
-                user_class.country, a,
-                b)
+    gui.USER = (user_class.name, user_class.username, user_class.country, a, b)
     gui.bot.userset(user_class.username)
-    #gui.USER = ("Testing Bot", "test", "India", "******@email.com", "******")
+    # gui.USER = ("Testing Bot", "test", "India", "******@email.com", "******")
     print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612

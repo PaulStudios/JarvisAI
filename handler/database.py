@@ -104,14 +104,14 @@ def edit_user(table: str, fields: list, data: list, name: str):
     conn.commit()
 
 
-def form_edit_query(table_name: str, fields: list, data: list, name: str) -> Composed:
+def form_edit_query(table_name: str, fields: list, data: list,
+                    name: str) -> Composed:
     """Generate sql query for edit_user()"""
     i = []
     q = createlist(len(fields))
     for a in q:
         c = sql.SQL("{field} = {data}").format(field=sql.Identifier(fields[a]),
-                        data=sql.Literal(data[a])
-                        )
+                                               data=sql.Literal(data[a]))
         i.append(c)
     b = sql.SQL(',').join(n for n in i)
     stmt = sql.SQL("""
