@@ -154,6 +154,7 @@ class User:
 
 
 def process_edits(edits: dict, username: str, password: str) -> bool:
+    """Processes all edits to DB and encrypts sensitive info"""
     namedata = ["username", username]
     i = []
     fields = []

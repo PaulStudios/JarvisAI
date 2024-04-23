@@ -114,7 +114,6 @@ if __name__ == "__main__":
     b = hide_info(decrypt(user_class.userdata[5].tobytes()))
     gui.USER = (user_class.name, user_class.username, user_class.country, a, b)
     gui.bot.userset(user_class.username)
-    # gui.USER = ("Testing Bot", "test", "India", "******@email.com", "******")
     print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")
     input()
     # skipcq: PYL-W0612

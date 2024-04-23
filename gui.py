@@ -6,7 +6,7 @@ GUI Handler
 import sys
 import textwrap
 
-from pymsgbox import prompt, password, confirm
+from pymsgbox import password
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal, Vertical, ScrollableContainer
@@ -96,9 +96,9 @@ class ProfileScreen(Screen):
         LOGGER.info("Profile Manager Started")
         self.query_one(Input).focus()
 
-    async def process_edit(self) -> None:
+    async def process_edit(self) -> None:  #skipcq: PY-R1000
         """Editing Process"""
-        global edited_user, _edit_list
+        global edited_user, _edit_list  #skipcq: PYL-W0602
         edit_input = self.query_one("#edit_input", Input)
         button = self.query_one("#send_edit")
         info_box = self.query_one("#profile_info")
@@ -118,7 +118,7 @@ class ProfileScreen(Screen):
                 return
             pwd = password("Please enter your old password",
                            title="Confirm Password")
-            if pwd == None:
+            if pwd is None:
                 self.query_one(Pretty).update(
                     "Please enter your old Password.")
                 toggle_widgets(edit_input, button)

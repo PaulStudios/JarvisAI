@@ -96,6 +96,7 @@ def form_get_query(table_name: str, fields: list, data: list) -> Composed:
 
 
 def edit_user(table: str, fields: list, data: list, name: str):
+    """Updates existing data on DB"""
     global cur
     query = form_edit_query(table, fields, data, name)
     print(query)
