@@ -19,7 +19,7 @@ from handler import database, config
 from handler import encrypt, decrypt
 from handler.errors import error
 from handler.logger import Logger
-from handler.utilities import print_custom, checkmail, createlist, get_field_index
+from handler.utilities import print_custom, checkmail, createlist, get_field_index, countries_exist
 
 ser = ()
 table_name = config.program_config()['table']
@@ -35,16 +35,6 @@ def checkdb():
         database.check()
     except (Exception, handler.database.DataBaseError):  # skipcq: PYL-W0714
         error("ER11B - Failed to connect to Database", 1, "conn")
-
-
-def checkmail_input(email1=""):
-    """Validate mail"""
-    if checkmail(email1):
-        return email1
-    email2 = input("Your email is invalid. Please re-enter your email: ")
-    if checkmail(email2):
-        return email2
-    error("ER5 - Invalid email entered during registration.", 1, "auth")
 
 
 class User:
@@ -65,19 +55,59 @@ class User:
     def register(self) -> None:
         """Registers new user"""
         LOGGER.info("Initiating registration module")
+
         # Taking inputs
-        print_custom(
-            "Please enter your full name (Only First name and Last name): ",
-            "sky_blue1")
-        name_in = input()
-        name = name_in.split()
-        print_custom("In which country do you live? ", "sky_blue1")
-        country = input()
-        print_custom("Please enter your email address: ", "sky_blue1")
-        email = input()
-        email = checkmail_input(email)
-        print_custom("Please enter a username: ", "sky_blue1")
-        username = input()
+        name_check = False
+        country_check = False
+        email_check = False
+        user_check = False
+        name = country = email = username = ""
+
+        while not name_check:
+            print_custom(
+                "Please enter your full name (Only First name and Last name): ",
+                "sky_blue1")
+            name_in = input()
+            if " " not in name_in:
+                print_custom("Invalid Name Entered.","bright_red")
+                print("\n")
+                continue
+            name = name_in.split()
+            if len(name[0]) < 3 or len(name[1]) < 2:
+                print_custom("Invalid Name Entered.", "bright_red")
+                print("\n")
+                continue
+            name_check = True
+
+        while not country_check:
+            print_custom("In which country do you live? ", "sky_blue1")
+            country = input()
+            if not countries_exist(country):
+                print_custom(
+                    "Invalid Country Entered. Please check the spelling.",
+                    "bright_red")
+                print("\n")
+                continue
+            country_check = True
+
+        while not email_check:
+            print_custom("Please enter your email address: ", "sky_blue1")
+            email = input()
+            if not checkmail(email):
+                print_custom("Invalid Email Entered.","bright_red")
+                print("\n")
+                continue
+            email_check = True
+
+        while not user_check:
+            print_custom("Please enter a username: ", "sky_blue1")
+            username = input()
+            if len(username) < 5:
+                print_custom("Username is too short.", "bright_red")
+                print("\n")
+                continue
+            user_check = True
+
         print_custom("Please enter a strong password for your account: ",
                      "sky_blue1")
         password = input()
