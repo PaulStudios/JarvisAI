@@ -1,3 +1,5 @@
+[![DeepSource](https://app.deepsource.com/gh/PaulStudios/JarvisAI.svg/?label=active+issues&show_trend=false&token=T8aMhvJzN7ljJMoxCN_N3ej4)](https://app.deepsource.com/gh/PaulStudios/JarvisAI/)
+[![DeepSource](https://app.deepsource.com/gh/PaulStudios/JarvisAI.svg/?label=resolved+issues&show_trend=false&token=T8aMhvJzN7ljJMoxCN_N3ej4)](https://app.deepsource.com/gh/PaulStudios/JarvisAI/)
 
 # Jarvis AI
 
