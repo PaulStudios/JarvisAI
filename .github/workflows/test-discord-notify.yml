@@ -1,18 +1,26 @@
-- name: Test Info
-    uses: rjstone/discord-webhook-notify@v1
-    with:
-        severity: info
-        details: Test succeeded.
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-- name: Test Warn
-    uses: rjstone/discord-webhook-notify@v1
-    with:
-        severity: warn
-        details: Test warning.
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-- name: Test Error
-    uses: rjstone/discord-webhook-notify@v1
-    with:
-        severity: error
-        details: Test failed.
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+name: Discord Notifications
+
+on: [push]
+
+jobs:
+  github-releases-to-discord:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Test Info
+          uses: rjstone/discord-webhook-notify@v1
+          with:
+            severity: info
+            details: Test succeeded.
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        - name: Test Warn
+          uses: rjstone/discord-webhook-notify@v1
+          with:
+            severity: warn
+            details: Test warning.
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        - name: Test Error
+          uses: rjstone/discord-webhook-notify@v1
+          with:
+            severity: error
+            details: Test failed.
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
