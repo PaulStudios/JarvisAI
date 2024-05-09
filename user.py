@@ -69,7 +69,7 @@ class User:
                 "sky_blue1")
             name_in = input()
             if " " not in name_in:
-                print_custom("Invalid Name Entered.","bright_red")
+                print_custom("Invalid Name Entered.", "bright_red")
                 print("\n")
                 continue
             name = name_in.split()
@@ -94,7 +94,7 @@ class User:
             print_custom("Please enter your email address: ", "sky_blue1")
             email = input()
             if not checkmail(email):
-                print_custom("Invalid Email Entered.","bright_red")
+                print_custom("Invalid Email Entered.", "bright_red")
                 print("\n")
                 continue
             email_check = True

@@ -168,7 +168,8 @@ class ProfileScreen(Screen):
             self.query_one(Input).focus()
             return
         if field_index == 3:
-            self.query_one(Pretty).update("Email change is currently unsupported. COMING SOON...")
+            self.query_one(Pretty).update(
+                "Email change is currently unsupported. COMING SOON...")
             toggle_widgets(edit_input, button)
             self.query_one(Input).focus()
             return
@@ -193,7 +194,8 @@ class ProfileScreen(Screen):
             self.query_one(Input).focus()
             return
         if field_index == 4:
-            self.query_one(Pretty).update("Password change is currently unsupported. COMING SOON...")
+            self.query_one(Pretty).update(
+                "Password change is currently unsupported. COMING SOON...")
             toggle_widgets(edit_input, button)
             self.query_one(Input).focus()
             return
