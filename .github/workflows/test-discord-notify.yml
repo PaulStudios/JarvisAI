@@ -3,7 +3,7 @@ name: Discord Notifications
 on: [push]
 
 jobs:
-  github-releases-to-discord:
+  github-notify-to-discord:
     runs-on: ubuntu-latest
     steps:
         - name: Discord Commits
