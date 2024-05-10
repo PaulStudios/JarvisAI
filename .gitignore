@@ -116,10 +116,6 @@ dmypy.json
 
 #Others
 logs/
-MicAI.py
-TypeAI.py
-test_main.txt
-test_notfunctional.py
 
 # User-specific stuff
 .idea/**/tasks.xml
@@ -196,12 +192,12 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 fileparser.py
-.dockerignore
-Procfile
+
 
 #Secure data
 .env
 config.ini
-.idea/.name
-.idea
 output
+.dockerignore
+Procfile
+auto-py-to-exe.json
