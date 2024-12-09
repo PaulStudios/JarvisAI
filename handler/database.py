@@ -20,6 +20,7 @@ from .utilities import createlist
 class DataBaseError(Exception):
     """Error during connecting to database"""
 
+
 LOGGER: Logger = Logger("JarvisAI.database")
 params = db_config()
 conn = None
