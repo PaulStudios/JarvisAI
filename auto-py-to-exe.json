@@ -7,7 +7,7 @@
   },
   {
    "optionDest": "filenames",
-   "value": "D:/Coding/JarvisAI/main.py"
+   "value": "/home/hilfing/Documents/JarvisAI/main.py"
   },
   {
    "optionDest": "onefile",
@@ -19,7 +19,7 @@
   },
   {
    "optionDest": "icon_file",
-   "value": "D:/Coding/JarvisAI/assets/icon.ico"
+   "value": "/home/hilfing/Documents/JarvisAI/assets/icon.ico"
   },
   {
    "optionDest": "clean_build",
@@ -55,11 +55,11 @@
   },
   {
    "optionDest": "datas",
-   "value": "D:/Coding/JarvisAI/config.ini;."
+   "value": "/home/hilfing/Documents/JarvisAI/config.ini:."
   },
   {
    "optionDest": "datas",
-   "value": "D:/Coding/JarvisAI/gui.tcss;."
+   "value": "/home/hilfing/Documents/JarvisAI/gui.tcss:."
   }
  ],
  "nonPyinstallerOptions": {

@@ -87,8 +87,8 @@ def Exit():
 
 def start():
     """Start"""
-    console.print("Loading Jarvis 3.0", style="chartreuse3")
-    LOGGER.info("Starting Jarvis 3.0")
+    console.print("Loading Jarvis 3.2", style="chartreuse3")
+    LOGGER.info("Starting Jarvis 3.2")
     functions_names = [Login, Register, Exit]
     menu_items = dict(enumerate(functions_names, start=1))
     display_menu(menu_items)

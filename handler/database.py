@@ -13,13 +13,14 @@ from psycopg2 import sql
 from psycopg2.sql import Composed
 
 from .config import db_config
+from .logger import Logger
 from .utilities import createlist
 
 
 class DataBaseError(Exception):
     """Error during connecting to database"""
 
-
+LOGGER: Logger = Logger("JarvisAI.database")
 params = db_config()
 conn = None
 cur = None
@@ -33,6 +34,7 @@ def connect():
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
     except (Exception, psycopg2.DatabaseError) as err:
+        LOGGER.info(f"DB Connection Error: {err}")
         raise DataBaseError
 
 
@@ -40,6 +42,7 @@ def check():
     """Check DB Connection"""
     try:
         connect()
+        LOGGER.info("Connected to Database")
     except Exception as err:
         print(err)
         raise DataBaseError from err
@@ -54,6 +57,7 @@ def insert(table, fields: list, data: list) -> None:
     check()
     cur.execute(query)
     conn.commit()
+    LOGGER.info("Data Inserted Successfully")
 
 
 def form_insert_query(table_name: str, fields: list, data: list) -> Composed:
@@ -69,6 +73,7 @@ def form_insert_query(table_name: str, fields: list, data: list) -> Composed:
     """).format(table=sql.Identifier(table_name),
                 fields=sql.SQL(',').join(sql.Identifier(n) for n in fields),
                 user_data=sql.SQL(',').join(sql.Literal(n) for n in data))
+    LOGGER.info("Query Formed [INSERT]")
     return stmt
 
 
@@ -78,6 +83,7 @@ def get_user(table: str, data: list):
     query = form_get_query(table, data[0], data[1])
     check()
     cur.execute(query)
+    LOGGER.info("User Data Fetched Successfully")
     return cur.fetchone()
 
 
@@ -93,6 +99,7 @@ def form_get_query(table_name: str, fields: list, data: list) -> Composed:
     """).format(table=sql.Identifier(table_name),
                 cred_1=sql.Identifier(fields),
                 data_1=sql.Literal(data))
+    LOGGER.info("Query Formed [SELECT]")
     return stmt
 
 
@@ -103,6 +110,7 @@ def edit_user(table: str, fields: list, data: list, name: str):
     print(query)
     check()
     cur.execute(query)
+    LOGGER.info("Data Updated Successfully")
     conn.commit()
 
 
@@ -127,4 +135,5 @@ def form_edit_query(table_name: str, fields: list, data: list,
                 edited=b,
                 name=sql.Literal(name),
                 username=sql.Identifier("username"))
+    LOGGER.info("Query Formed [UPDATE]")
     return stmt

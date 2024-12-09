@@ -16,7 +16,6 @@ from rich.console import Console
 from g4f.client import Client
 import ecapture as ec
 
-from handler import config
 from handler.logger import Logger
 
 pretty.install()
@@ -46,7 +45,6 @@ class Bot:
 
     def __init__(self):
         self.reply: str = "No response has been generated yet..."
-        self.creds: dict = config.chat_config()
         self.LOGGER: Logger = Logger("JarvisAI.chatbot")
         self.LOGGER.info("Authenticating with ChatBot")
         self.username = ""
