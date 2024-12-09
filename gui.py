@@ -322,7 +322,8 @@ class ChatScreen(Screen):
                 yield MessageBox(
                     "Welcome to JarvisAI v3.0!\n"
                     "Type your question, click enter or 'send' button "
-                    "and wait for the response.",
+                    "and wait for the response. "
+                    "Type 'open profile menu' to manage your profile. ",
                     role="Info",
                 )
             with Horizontal(id="input_box"):
@@ -364,6 +365,7 @@ class ChatScreen(Screen):
 
         # Create question message, add it to the conversation and scroll down
         q = USER[1] + ": " + message_input.value
+        LOGGER.info(q)
         string = wrapper.fill(text=q)
         message_box = MessageBox(string, "question")
         await conversation_box.mount(message_box)
@@ -376,6 +378,7 @@ class ChatScreen(Screen):
 
         # Take answer from the chat and add it to the conversation
         ans = "JarvisAI: " + bot.process(msg)
+        LOGGER.info(ans)
         string = wrapper.fill(text=ans)
         await conversation_box.mount(MessageBox(
             string,
