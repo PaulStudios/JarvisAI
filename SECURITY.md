@@ -7,7 +7,8 @@
 | 1.5     | :x:                |
 | 1.9     | :x:                |
 | 2.3.1   | :x:                |
-| 3.0.0   | :white_check_mark: |
+| 3.0.0   | :x: |
+| 3.2.0   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
