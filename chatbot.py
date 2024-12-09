@@ -8,10 +8,12 @@ Chatbot functions
 import datetime
 import time
 import webbrowser
+
+from g4f.Provider import OpenaiChat, Gemini
 from rich import pretty
 from rich.console import Console
 
-import ChatbotAPI
+from g4f.client import Client
 import ecapture as ec
 
 from handler import config
@@ -46,17 +48,17 @@ class Bot:
         self.reply: str = "No response has been generated yet..."
         self.creds: dict = config.chat_config()
         self.LOGGER: Logger = Logger("JarvisAI.chatbot")
-        self.LOGGER.info("Authenticating with ChatBotAPI")
-        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(
-            self.creds['brainid'],
-            self.creds['brainkey'],
-            history=True,
-            debug=True)
-        webbrowser.get('windows-default')
+        self.LOGGER.info("Authenticating with ChatBot")
+        self.username = ""
+        self.client = Client(
+            provider=OpenaiChat,
+            image_provider=Gemini,
+        )
+        webbrowser.get()
 
     def userset(self, name: str):
         """Set username"""
-        self.Chatbot.changename(name=name)
+        self.username = name
 
     def process(self, msg):
         """Get response from bot"""
@@ -93,7 +95,12 @@ class Bot:
             resp = "Browser opened"
             time.sleep(5)
         else:
-            resp = self.Chatbot.sendmsg(msg)
+            response = self.client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[{"role": "user", "content": msg}]
+            )
+            resp = response.choices[0].message.content
         self.reply = resp
         self.LOGGER.info("Bot response module process completed")
         return resp
+

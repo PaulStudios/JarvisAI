@@ -8,7 +8,6 @@
 Main file
 """
 import sys
-from os import system
 from time import sleep
 
 from rich.console import Console
@@ -21,12 +20,12 @@ import gui
 import user
 from handler import decrypt
 from handler.errors import error
-from handler.utilities import print_custom, hide_info
+from handler.utilities import print_custom, hide_info, clear_console
 from handler.logger import Logger
 
 LOGGER: Logger = Logger("JarvisAI.core")
 
-system('cls')  # skipcq: BAN-B607
+clear_console()
 install(extra_lines=0, show_locals=False)
 console = Console()
 console.print('Loading your AI personal assistant - Jarvis...',
@@ -42,12 +41,9 @@ with console.status("[bold green]Setting up JarvisAI...") as status:
     sleep(0.5)
     console.log("Initiated User Module")
     LOGGER.info("Initiated User Module")
+    sleep(0.1)
+    console.log("Connecting to Chatbot")
     bot: chatbot.Bot = chatbot.Bot()
-    if not bot.process("Hi") == "Hi there!":
-        error(
-            "ER1 - Cannot connect to ChatbotAPI. Please contact developer with corresponding logfile.",
-            severity=1)
-    sleep(0.5)
     console.log("Initiated Chatbot Module")
     LOGGER.info("Initiated Chatbot Module")
     sleep(1)
@@ -101,7 +97,8 @@ def start():
         selection = int(input())
         selected_value = menu_items[selection]
         selected_value()
-    except (TypeError, KeyError, ValueError):
+    except (TypeError, KeyError, ValueError) as e:
+        LOGGER.info("Error in input: " + str(e))
         error("ER1 - Incorrect input", 1, "args")
 
 
@@ -109,9 +106,9 @@ if __name__ == "__main__":
     start()
     ui.sub_title = ui.sub_title + "  { User : " + user_class.name + "}"
     a = hide_info(
-        decrypt(user_class.userdata[3].tobytes(),
-                decrypt(user_class.userdata[5].tobytes())), 1)
-    b = hide_info(decrypt(user_class.userdata[5].tobytes()))
+        decrypt(bytes(user_class.userdata[3]),
+                decrypt(bytes(user_class.userdata[6]))), 1)
+    b = hide_info(decrypt(bytes(user_class.userdata[6])))
     gui.USER = (user_class.name, user_class.username, user_class.country, a, b)
     gui.bot.userset(user_class.username)
     print_custom("Press [cyan]ENTER[/cyan] to open Chat Interface.")

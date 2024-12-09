@@ -103,3 +103,11 @@ def hide_info(value: str, itype: int = 0) -> str:
 def createlist(r) -> list:
     """Creates list from a number"""
     return list(range(0, r))
+
+def clear_console():
+    """Clears the console"""
+    # Detect the operating system
+    if os.name == 'nt':  # Windows
+        os.system('cls')  # skipcq: BAN-B607
+    else:  # Unix-based (Linux, macOS, etc.)
+        os.system('clear')  # skipcq: BAN-B607

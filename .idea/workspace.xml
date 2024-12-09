@@ -4,12 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1221cf15-499a-4a7f-85aa-f8fc1c5563be" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Jarvis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Jarvis.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1221cf15-499a-4a7f-85aa-f8fc1c5563be" name="Changes" comment="Small Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/gui.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbot.py" beforeDir="false" afterPath="$PROJECT_DIR$/chatbot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/encryption.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/encryption.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/errors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/logger.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/logger.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handler/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/handler/utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,8 +48,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "Python.chatbot.executor": "Run",
     "Python.gui.executor": "Run",
     "Python.main.executor": "Run",
+    "Python.user.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "#72 on Fixes-and-Updates",
@@ -55,7 +62,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "discord-project",
+    "settings.editor.selected.configurable": "discord-application",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -77,8 +84,17 @@
       <updated>1713879553005</updated>
       <workItem from="1733727603697" duration="42000" />
       <workItem from="1733727649579" duration="323000" />
-      <workItem from="1733727977180" duration="477000" />
+      <workItem from="1733727977180" duration="11804000" />
     </task>
+    <task id="LOCAL-00001" summary="Small Fixes">
+      <option name="closed" value="true" />
+      <created>1733728487173</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1733728487173</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,5 +110,15 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Small Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Small Fixes" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/JarvisAI$main.coverage" NAME="main Coverage Results" MODIFIED="1733736498115" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JarvisAI$chatbot.coverage" NAME="chatbot Coverage Results" MODIFIED="1733736487491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JarvisAI$gui.coverage" NAME="gui Coverage Results" MODIFIED="1733728284697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JarvisAI$user.coverage" NAME="user Coverage Results" MODIFIED="1733730835600" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

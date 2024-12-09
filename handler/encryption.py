@@ -23,7 +23,7 @@ LOGGER: Logger = Logger("JarvisAI.encryptor")
 
 def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
     """Encrypt the message"""
-    salt = int(priv['salt']).to_bytes(5)
+    salt = int(priv['salt']).to_bytes(5, 'big')
     kdf = PBKDF2HMAC(algorithm=KDF_ALGORITHM,
                      length=KDF_LENGTH,
                      salt=salt,
@@ -39,7 +39,7 @@ def encrypt(plaintext: str, password: str = priv['pass']) -> bytes:
 def decrypt(
     ciphertext: bytes,
     password: str = priv['pass'],
-    salt: bytes = int(priv['salt']).to_bytes(5)
+    salt: bytes = int(priv['salt']).to_bytes(5, 'big')
 ) -> str:
     """Decrypt Message"""
     # Derive the symmetric key using the password and provided salt.

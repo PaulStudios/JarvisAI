@@ -29,10 +29,10 @@ def connect():
     """Connect to database"""
     global conn, cur, params
     try:
+        params['sslmode'] = 'require'
         conn = psycopg2.connect(**params)
         cur = conn.cursor()
     except (Exception, psycopg2.DatabaseError) as err:
-        print(err)
         raise DataBaseError
 
 

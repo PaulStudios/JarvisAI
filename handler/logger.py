@@ -30,7 +30,7 @@ class Logger:
         """Error :- INFO"""
         self.update_path()
         now = datetime.now()
-        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S:%f")
         er_format = "[" + dt_string + "]" + " - " + \
             self.name + " : " + "INFO" + " - " + msg
         if f_level <= 2:
