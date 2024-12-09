@@ -152,17 +152,19 @@ class User:
             username = input()
             print_custom("Please enter your password: ", "sky_blue1")
             password = input()
+            console.print("Processing inputs...", style="bright_magenta")
         data = ["username", username]
         i = ()
         LOGGER.info("Logging in user")
-        console.print("Processing inputs...", style="bright_magenta")
         try:
             i = database.get_user(table=table_name, data=data)
+            LOGGER.info("User data fetched")
+            LOGGER.info(f"User data: {i}")
         except Exception as e:  # skipcq: PYL-W0703
             error("ER10 - Database fetch failed, " + str(e), 1)
         if i is None:
             error("ER2 - Incorrect username", 1, "auth")
-        if password == decrypt(i[5].tobytes()):
+        if password == decrypt(bytes(i[6])):
             self.userdata = i
             self.__putdata(self.userdata)
             self.auth = True
@@ -177,8 +179,8 @@ class User:
         LOGGER.info("Setting up user profile...")
         self.username = data[4]
         self.name = data[1] + " " + data[2]
-        self._mail = decrypt(data[3].tobytes(), decrypt(data[5].tobytes()))
-        self.country = data[6]
+        self._mail = decrypt(bytes(data[3]), decrypt(bytes(data[6])))
+        self.country = data[5]
 
 
 def process_edits(edits: dict, username: str, password: str) -> bool:
@@ -198,7 +200,7 @@ def process_edits(edits: dict, username: str, password: str) -> bool:
         error("ER10 - Database fetch failed, " + str(e), 1)
     if i is None:
         error("ER2 - Incorrect username", 1, "auth")
-    if password == decrypt(i[5].tobytes()):
+    if password == decrypt(bytes(i[6])):
         LOGGER.info("Starting Profile Edits")
         if 0 in edits:
             new.update({0: edits[0].split(" ")[0]})

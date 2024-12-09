@@ -28,20 +28,6 @@ def db_config(filename='config.ini', section='database'):
     return db
 
 
-def chat_config(filename='config.ini', section='chatbot'):
-    """Parsing Chatbot credentials from config file"""
-    parser = ConfigParser()
-    parser.read(resource_path(filename))
-    creds = {}
-    if parser.has_section(section):
-        params = parser.items(section)
-        for param in params:
-            creds[param[0]] = param[1]
-    else:
-        raise Exception(f'Section {section} not found in the {filename} file')
-    return creds
-
-
 def sec_config(filename='config.ini', section='security'):
     """Parsing Encryption credentials from config file"""
     parser = ConfigParser()

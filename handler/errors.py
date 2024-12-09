@@ -5,6 +5,7 @@ Error handling for the program.
 
 import sys
 import time
+import inspect
 from time import sleep
 from rich.console import Console
 from rich.traceback import install
@@ -42,6 +43,17 @@ class FileAlreadyExistsError(Exception):
 def error(code, severity=0, errortype=""):
     """Error function to better handle and log errors"""
     LOGGER.warning("Error has been detected. Investigating...")
+
+    frame = inspect.currentframe()
+    caller_frame = frame.f_back
+    filename = caller_frame.f_code.co_filename
+    function_name = caller_frame.f_code.co_name
+    line_number = caller_frame.f_lineno
+
+    error_context = f"File: {filename}, Function: {function_name}, Line: {line_number}"
+
+    LOGGER.info("Error Context: " + error_context)
+
     if severity > 0:
         if errortype == "auth":
             LOGGER.critical("Authentication error detected. Error code : " +
@@ -60,6 +72,9 @@ def error(code, severity=0, errortype=""):
 def Exit():
     """Exit"""
     print("\n")
-    print_custom("Goodbye", "bright_red")
+    print_custom(
+        "Goodbye. Please contact the developer with relevant log-file.",
+        "bright_red")
+    print()
     time.sleep(6)
     sys.exit()

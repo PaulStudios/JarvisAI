@@ -8,13 +8,14 @@ Chatbot functions
 import datetime
 import time
 import webbrowser
+
+from g4f.Provider import OpenaiChat, Gemini
 from rich import pretty
 from rich.console import Console
 
-import ChatbotAPI
+from g4f.client import Client
 import ecapture as ec
 
-from handler import config
 from handler.logger import Logger
 
 pretty.install()
@@ -44,19 +45,18 @@ class Bot:
 
     def __init__(self):
         self.reply: str = "No response has been generated yet..."
-        self.creds: dict = config.chat_config()
         self.LOGGER: Logger = Logger("JarvisAI.chatbot")
-        self.LOGGER.info("Authenticating with ChatBotAPI")
-        self.Chatbot: ChatbotAPI.ChatBot = ChatbotAPI.ChatBot(
-            self.creds['brainid'],
-            self.creds['brainkey'],
-            history=True,
-            debug=True)
-        webbrowser.get('windows-default')
+        self.LOGGER.info("Authenticating with ChatBot")
+        self.username = ""
+        self.client = Client(
+            provider=OpenaiChat,
+            image_provider=Gemini,
+        )
+        webbrowser.get()
 
     def userset(self, name: str):
         """Set username"""
-        self.Chatbot.changename(name=name)
+        self.username = name
 
     def process(self, msg):
         """Get response from bot"""
@@ -93,7 +93,20 @@ class Bot:
             resp = "Browser opened"
             time.sleep(5)
         else:
-            resp = self.Chatbot.sendmsg(msg)
+            try:
+                self.LOGGER.info("Bot response module process started")
+                response = self.client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[{
+                        "role": "user",
+                        "content": msg
+                    }])
+                resp = response.choices[0].message.content
+            except Exception as e:
+                self.LOGGER.info(f"Error in Bot response module: {e}")
+                resp = "I am sorry. You have exceeded the limit of requests in the free version. Please try again later."
+                self.LOGGER.error(
+                    "User exceeded the limit of requests in the free version")
         self.reply = resp
         self.LOGGER.info("Bot response module process completed")
         return resp
