@@ -72,7 +72,9 @@ def error(code, severity=0, errortype=""):
 def Exit():
     """Exit"""
     print("\n")
-    print_custom("Goodbye. Please contact the developer with relevant log-file.", "bright_red")
+    print_custom(
+        "Goodbye. Please contact the developer with relevant log-file.",
+        "bright_red")
     print()
     time.sleep(6)
     sys.exit()

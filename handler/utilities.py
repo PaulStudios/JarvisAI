@@ -104,6 +104,7 @@ def createlist(r) -> list:
     """Creates list from a number"""
     return list(range(0, r))
 
+
 def clear_console():
     """Clears the console"""
     # Detect the operating system

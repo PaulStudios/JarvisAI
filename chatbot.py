@@ -95,12 +95,14 @@ class Bot:
             resp = "Browser opened"
             time.sleep(5)
         else:
-            response = self.client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[{"role": "user", "content": msg}]
-            )
+            response = self.client.chat.completions.create(model="gpt-4o-mini",
+                                                           messages=[{
+                                                               "role":
+                                                               "user",
+                                                               "content":
+                                                               msg
+                                                           }])
             resp = response.choices[0].message.content
         self.reply = resp
         self.LOGGER.info("Bot response module process completed")
         return resp
-
