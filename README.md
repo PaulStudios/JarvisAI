@@ -33,6 +33,6 @@ Jarvis AI is an AI powered chatbot and assistant with several features.
 
 ## Support
 
-For support, email indradip.paul@outlook.com
+For support, email [me](mailto:indradip.paul@outlook.com)
 
 
