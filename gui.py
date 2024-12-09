@@ -167,12 +167,6 @@ class ProfileScreen(Screen):
             toggle_widgets(edit_input, button)
             self.query_one(Input).focus()
             return
-        if field_index == 3:
-            self.query_one(Pretty).update(
-                "Email change is currently unsupported. COMING SOON...")
-            toggle_widgets(edit_input, button)
-            self.query_one(Input).focus()
-            return
         if field_index == 0:
             if " " not in field_data:
                 self.query_one(Pretty).update(
@@ -194,11 +188,6 @@ class ProfileScreen(Screen):
             self.query_one(Input).focus()
             return
         if field_index == 4:
-            self.query_one(Pretty).update(
-                "Password change is currently unsupported. COMING SOON...")
-            toggle_widgets(edit_input, button)
-            self.query_one(Input).focus()
-            return
             if len(field_data) < 8 or " " in field_data:
                 self.query_one(Pretty).update(
                     "Invalid Password Entered. It should contain 8 characters. No whitespaces are allowed."
