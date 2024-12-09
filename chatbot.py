@@ -93,14 +93,20 @@ class Bot:
             resp = "Browser opened"
             time.sleep(5)
         else:
-            response = self.client.chat.completions.create(model="gpt-4o-mini",
-                                                           messages=[{
-                                                               "role":
-                                                               "user",
-                                                               "content":
-                                                               msg
-                                                           }])
-            resp = response.choices[0].message.content
+            try:
+                self.LOGGER.info("Bot response module process started")
+                response = self.client.chat.completions.create(model="gpt-4o-mini",
+                                                               messages=[{
+                                                                   "role":
+                                                                   "user",
+                                                                   "content":
+                                                                   msg
+                                                               }])
+                resp = response.choices[0].message.content
+            except Exception as e:
+                self.LOGGER.info(f"Error in Bot response module: {e}")
+                resp =  "I am sorry. You have exceeded the limit of requests in the free version. Please try again later."
+                self.LOGGER.error("User exceeded the limit of requests in the free version")
         self.reply = resp
         self.LOGGER.info("Bot response module process completed")
         return resp
